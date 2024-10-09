@@ -6,6 +6,7 @@ import java.util.List;
 public class Member {
     private String name;
     private String email;
+    private String password;
     private int phoneNum;
     private int memberID;
     private int creationDate;
@@ -15,11 +16,20 @@ public class Member {
 
     
     
-    public Member(String name, String email, int phoneNum, int credit) {
+    public Member(String name, String email, int phoneNum, String password) {
         setName(name);
         setEmail(email);
         setPhoneNum(phoneNum);
-        setCredit(credit);
+        setPassword(password);
+    }
+    public Member(){}
+    
+    private void setPassword(String password) {
+        this.password = password;
+       
+    }
+    public String getPassword(){
+        return password;
     }
     public String getName() {
         return name;

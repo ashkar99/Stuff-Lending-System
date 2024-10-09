@@ -1,9 +1,21 @@
 package controller;
-
+import model.*;
 public class MemberCont {
-    private model.Member createMember(){
-        model.Member m = new model.Member(null, null, 0, 0);
-        return m;
-    }
-    
+
+  public MemberCont() {
+
+  }
+
+  public void createMember(String name, String mail, int phoneNum, String password) {
+    Member m = new model.Member(name, mail, phoneNum, password);
+
+
+  }
+  public void viewMember(){
+    Member m = new Member();
+    String l = m.getName();
+    System.out.println(l);
+
+  }
+
 }

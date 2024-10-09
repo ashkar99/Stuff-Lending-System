@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Member {
     private String name;
@@ -9,7 +10,8 @@ public class Member {
     private int memberID;
     private int creationDate;
     private int credit;
-    private ArrayList<Item> items;
+    private List<Item> items = new ArrayList<>();
+    
 
     
     
@@ -55,7 +57,7 @@ public class Member {
     private void setCredit(int credit) {
         this.credit = credit;
     }
-    public ArrayList<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
     private void addItem(Item item) {

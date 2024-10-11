@@ -1,6 +1,6 @@
 package model;
 
 public enum CategoryEnum {
-    TOOL, VEHICLE, GAME, TOY, SPORT, OTHER
+  TOOL, VEHICLE, GAME, TOY, SPORT, OTHER
 
 }

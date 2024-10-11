@@ -1,15 +1,17 @@
 package controller;
 
 public final class Basic {
-    private static controller.SystemController controller;
-    private Basic (){
-   
+  private static controller.SystemController controller;
+
+  private Basic() {
+
+  }
+
+  public static SystemController getInstance() {
+    if (controller == null) {
+      controller = new SystemController();
     }
-    public static SystemController getInstance() {
-        if (controller == null) {
-            controller = new SystemController();
-        }
-        return controller;
-    }
+    return controller;
+  }
 
 }

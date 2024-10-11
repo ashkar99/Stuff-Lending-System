@@ -22,8 +22,9 @@ public class App {
   public static void main(String[] args) {
     app.generated();
   }
-  private void generated(){
-      // Initialize System Controller
+
+  private void generated() {
+    // Initialize System Controller
 
     // Load initial data
     Basic.getInstance().addMember("Alice", "alice@example.com", "1234567890", "password");

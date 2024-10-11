@@ -31,6 +31,17 @@ public class Register {
     String password = input.nextLine();
     Basic.getInstance().logIn(email, password);
 
+
+    System.out.println("Welcome to Stuff Lending System App");
+    System.out.println("Press S to list all member");
+    String choice = input.nextLine().toLowerCase();
+    switch (choice) {
+      case "s":
+        showAllMembers();
+        break;
+      default:
+        break;
+    }
   }
 
   private void signIn() {
@@ -47,7 +58,7 @@ public class Register {
   }
 
   private void showAllMembers() {
-    Basic.getInstance().getMembers();
+    System.out.println(Basic.getInstance().getMembers());
 
   }
 }

@@ -1,77 +1,88 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
     private String name;
     private String email;
+    private String phoneNumber;
     private String password;
-    private int phoneNum;
-    private int memberID;
-    private int creationDate;
-    private int credit;
-    private List<Item> items = new ArrayList<>();
-    
+    private int credits;
+    private LocalDate creationDate;
+    private List<Item> itemsOwned;
+    private List<Contract> lendingHistory;
 
-    
-    
-    public Member(String name, String email, int phoneNum, String password) {
+    // Constructor
+    public Member(String name, String email, String phoneNumber, String password) {
         setName(name);
         setEmail(email);
-        setPhoneNum(phoneNum);
+        setPhoneNumber(phoneNumber);
         setPassword(password);
+        this.credits = 0; // initial credits set to 0
+        this.creationDate = LocalDate.now();
+        this.itemsOwned = new ArrayList<>();
+        this.lendingHistory = new ArrayList<>();
     }
-    public Member(){}
-    
+
     private void setPassword(String password) {
         this.password = password;
-       
     }
-    public String getPassword(){
-        return password;
+
+    // Getters and Setters
+    public String getMemberId() {
+        return email;
     }
+
     public String getName() {
         return name;
     }
+
     private void setName(String name) {
         this.name = name;
     }
+
     public String getEmail() {
         return email;
     }
-    private void setEmail(String email) {
+
+    public void setEmail(String email) {
         this.email = email;
     }
-    public int getPhoneNum() {
-        return phoneNum;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
-    private void setPhoneNum(int phoneNum) {
-        this.phoneNum = phoneNum;
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
-    public int getMemberID() {
-        return memberID;
+
+    public int getCredits() {
+        return credits;
     }
-    private void setMemberID(int memberID) {
-        this.memberID = memberID;
+
+    public List<Item> getItemsOwned() {
+        return itemsOwned;
     }
-    public int getCreationDate() {
-        return creationDate;
+
+    public List<Contract> getLendingHistory() {
+        return lendingHistory;
     }
-    private void setCreationDate(int creationDate) {
-        this.creationDate = creationDate;
+
+    // Methods for managing items
+    public void addItem(Item item) {
+        itemsOwned.add(item);
+        credits += 100; // Add 100 credits for each new item
     }
-    public int getCredit() {
-        return credit;
+
+    public void removeItem(Item item) {
+        itemsOwned.remove(item);
     }
-    private void setCredit(int credit) {
-        this.credit = credit;
+
+    public String getPassword() {
+        return password;
     }
-    public List<Item> getItems() {
-        return items;
-    }
-    private void addItem(Item item) {
-        this.items.add(item);
-    }
-    
+
 }

@@ -1,48 +1,56 @@
 package model;
 
 public class Contract {
-    private int startDate;
-    private int endDate;
-    private Item item;
-    private Member borrower;
+    private String contractId;
     private Member lender;
+    private Member borrower;
+    private Item item;
+    private int startDay;
+    private int endDay;
+    private int totalCost;
+    private String status; // "Active", "Completed", or "Canceled"
 
-    public Contract(int startDate, int endDate, Item item, Member borrower, Member lender) {
-        setStartDate(startDate);
-        setEndDate(endDate);
-        setItem(item);
-        setBorrower(borrower);
-        setLender(lender);
-    }
-    public int getStartDate() {
-        return startDate;
-    }
-    private void setStartDate(int startDate) {
-        this.startDate = startDate;
-    }
-    public int getEndDate() {
-        return endDate;
-    }
-    private void setEndDate(int endDate) {
-        this.endDate = endDate;
-    }
-    public Item getItem() {
-        return item;
-    }
-    private void setItem(Item item) {
-        this.item = item;
-    }
-    public Member getBorrower() {
-        return borrower;
-    }
-    private void setBorrower(Member borrower) {
-        this.borrower = borrower;
-    }
-    public Member getLender() {
-        return lender;
-    }
-    private void setLender(Member lender) {
+    // Constructor
+    public Contract(Member lender, Member borrower, Item item, int startDay, int endDay) {
+        this.contractId = generateContractId();
         this.lender = lender;
+        this.borrower = borrower;
+        this.item = item;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.totalCost = calculateTotalCost();
+        this.status = "Active";
     }
 
+    // Getters and Setters
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTotalCost() {
+        return totalCost;
+    }
+
+    // Private Methods
+    private int calculateTotalCost() {
+        return item.getCostPerDay() * (endDay - startDay);
+    }
+
+    private String generateContractId() {
+        return "CON" + System.nanoTime() % 1000000;
+    }
+
+    public void completeContract() {
+        this.status = "Completed";
+        item.markAsAvailable();
+    }
+
+    public int getEndDay() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEndDay'");
+    }
 }

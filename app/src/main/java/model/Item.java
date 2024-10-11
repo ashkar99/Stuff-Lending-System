@@ -1,58 +1,73 @@
 package model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Item {
+    private String itemId;
+    private String category;
     private String name;
     private String description;
-    private int cost;
-    private int creationDate;
-    private Boolean availabilty;
-    private CategoryEnum category;
+    private LocalDate creationDate;
+    private int costPerDay;
+    private Member owner;
+    private List<Contract> lendingHistory;
+    private boolean isAvailable;
 
-    
-    public Item(String name, String description, int cost, int creationDate, Boolean availabilty, CategoryEnum category) {
-        setName(name);
-        setDescription(description);
-        setCost(cost);
-        setCreationDate(creationDate);
-        setAvailabilty(availabilty);
-        setCategory(category);
-        
+    // Constructor
+    public Item(String category, String name, String description, int costPerDay, Member owner) {
+        this.itemId = generateItemId();
+        this.category = category;
+        this.name = name;
+        this.description = description;
+        this.creationDate = LocalDate.now();
+        this.costPerDay = costPerDay;
+        this.owner = owner;
+        this.lendingHistory = new ArrayList<>();
+        this.isAvailable = true;
     }
+
+    // Getters
+    public String getItemId() {
+        return itemId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
     public String getName() {
         return name;
     }
-    private void setName(String name) {
-        this.name = name;
-    }
+
     public String getDescription() {
         return description;
     }
-    private void setDescription(String description) {
-        this.description = description;
-    }
-    public int getCost() {
-        return cost;
-    }
-    private void setCost(int cost) {
-        this.cost = cost;
-    }
-    public int getCreationDate() {
-        return creationDate;
-    }
-    private void setCreationDate(int creationDate) {
-        this.creationDate = creationDate;
-    }
-    public Boolean getAvailabilty() {
-        return availabilty;
-    }
-    private void setAvailabilty(Boolean availabilty) {
-        this.availabilty = availabilty;
-    }
-    public CategoryEnum getCategory() {
-        return category;
-    }
-    private void setCategory(CategoryEnum category) {
-        this.category = category;
+
+    public int getCostPerDay() {
+        return costPerDay;
     }
 
+    public Member getOwner() {
+        return owner;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    // Methods for managing contracts
+    public void addContract(Contract contract) {
+        lendingHistory.add(contract);
+        this.isAvailable = false;
+    }
+
+    public void markAsAvailable() {
+        this.isAvailable = true;
+    }
+
+    private String generateItemId() {
+        return "ITEM" + System.nanoTime() % 1000000;
+    }
 }

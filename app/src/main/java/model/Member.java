@@ -1,7 +1,8 @@
 package model;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Member {
   private String memberId;
@@ -47,7 +48,6 @@ public class Member {
     setCreationDate(creationDate);
   }
 
-  // Getters and Setters
   public String getMemberId() {
     return memberId;
   }
@@ -114,7 +114,6 @@ public class Member {
     return lendingHistory;
   }
 
-  // Private method for updating credits
   private void updateCredits(int amount) {
     this.credits += amount;
   }

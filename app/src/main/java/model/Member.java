@@ -1,67 +1,150 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Member {
-    private String name;
-    private String email;
-    private int phoneNum;
-    private int memberID;
-    private int creationDate;
-    private int credit;
-    private List<Item> items = new ArrayList<>();
-    
+  private String memberId;
+  private String name;
+  private String email;
+  private String phoneNumber;
+  private String password;
+  private int credits = 0;
+  private LocalDate creationDate;
+  private List<Item> itemsOwned = new ArrayList<>();
+  private List<Contract> lendingHistory = new ArrayList<>();
 
-    
-    
-    public Member(String name, String email, int phoneNum, int credit) {
-        setName(name);
-        setEmail(email);
-        setPhoneNum(phoneNum);
-        setCredit(credit);
+  // Constructor
+  public Member(String name, String email, String phoneNumber, String password) {
+    if (!isValidEmail(email)) {
+      throw new IllegalArgumentException("Invalid email format.");
     }
-    public String getName() {
-        return name;
+    if (!isValidPhoneNumber(phoneNumber)) {
+      throw new IllegalArgumentException("Invalid phone number format.");
     }
-    private void setName(String name) {
-        this.name = name;
+
+    setMemberId(email);
+    setName(name);
+    setEmail(email);
+    setPhoneNumber(phoneNumber);
+    setPassword(password);
+    this.creationDate = LocalDate.now(); 
+  }
+
+  public Member(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
+    if (!isValidEmail(email)) {
+      throw new IllegalArgumentException("Invalid email format.");
     }
-    public String getEmail() {
-        return email;
+    if (!isValidPhoneNumber(phoneNumber)) {
+      throw new IllegalArgumentException("Invalid phone number format.");
     }
-    private void setEmail(String email) {
-        this.email = email;
+
+    setMemberId(email);
+    setName(name);
+    setEmail(email);
+    setPhoneNumber(phoneNumber);
+    setPassword(password);
+    setCreationDate(creationDate);
+  }
+
+  // Getters and Setters
+  public String getMemberId() {
+    return memberId;
+  }
+
+  private void setMemberId(String memberId){
+    this.memberId = memberId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  private void setName(String name) {
+    this.name = name;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  private void setEmail(String email) {
+    if (!isValidEmail(email)) {
+      throw new IllegalArgumentException("Invalid email format.");
     }
-    public int getPhoneNum() {
-        return phoneNum;
+    this.email = email;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  private void setPhoneNumber(String phoneNumber) {
+    if (!isValidPhoneNumber(phoneNumber)) {
+      throw new IllegalArgumentException("Invalid phone number format.");
     }
-    private void setPhoneNum(int phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-    public int getMemberID() {
-        return memberID;
-    }
-    private void setMemberID(int memberID) {
-        this.memberID = memberID;
-    }
-    public int getCreationDate() {
-        return creationDate;
-    }
-    private void setCreationDate(int creationDate) {
-        this.creationDate = creationDate;
-    }
-    public int getCredit() {
-        return credit;
-    }
-    private void setCredit(int credit) {
-        this.credit = credit;
-    }
-    public List<Item> getItems() {
-        return items;
-    }
-    private void addItem(Item item) {
-        this.items.add(item);
-    }
-    
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  private void setPassword(String password) {
+    this.password = password;
+  }
+
+  public int getCredits() {
+    return credits;
+  }
+
+  private void setCreationDate(LocalDate creationDate){
+    this.creationDate = creationDate;
+  }
+
+  public LocalDate getCreationDate() {
+    return creationDate;
+  }
+
+  public List<Item> getItemsOwned() {
+    return itemsOwned;
+  }
+
+  public List<Contract> getLendingHistory() {
+    return lendingHistory;
+  }
+
+  // Private method for updating credits
+  private void updateCredits(int amount) {
+    this.credits += amount;
+  }
+
+  // Validation for email format
+  private boolean isValidEmail(String email) {
+    String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    Pattern pattern = Pattern.compile(emailRegex);
+    return pattern.matcher(email).matches();
+  }
+
+  // Validation for phone number format (basic numeric check)
+  private boolean isValidPhoneNumber(String phoneNumber) {
+    String phoneRegex = "\\d{10}"; // Assuming a 10-digit number for simplicity
+    Pattern pattern = Pattern.compile(phoneRegex);
+    return pattern.matcher(phoneNumber).matches();
+  }
+
+  // toString method for easy display of member information
+  @Override
+  public String toString() {
+    return "Member ID: " + memberId + "\n" +
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Phone: " + phoneNumber + "\n" +
+        "Credits: " + credits + "\n" +
+        "Creation Date: " + creationDate + "\n" +
+        "Owned Items: " + itemsOwned.size() + "\n" +
+        "Lending History: " + lendingHistory.size();
+  }
 }

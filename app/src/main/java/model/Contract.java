@@ -12,27 +12,70 @@ public class Contract {
 
   // Constructor
   public Contract(Member lender, Member borrower, Item item, int startDay, int endDay) {
-    this.contractId = generateContractId();
-    this.lender = lender;
-    this.borrower = borrower;
-    this.item = item;
-    this.startDay = startDay;
-    this.endDay = endDay;
-    this.totalCost = calculateTotalCost();
+    setContractId(contractId);
+    setLender(lender);
+    setBorrower(borrower);
+    setItem(item);
+    setStartDay(startDay);
+    setEndDay(endDay);
+    setTotalCost(totalCost);
     this.status = "Active";
   }
 
-  // Getters and Setters
-  public String getStatus() {
-    return status;
+  public String getContractId() {
+    return contractId;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  private void setContractId(String contractId) {
+    this.contractId = generateContractId();
+  }
+
+  public Member getLender() {
+    return lender;
+  }
+
+  private void setLender(Member lender) {
+    this.lender = lender;
+  }
+
+  public Member getBorrower() {
+    return borrower;
+  }
+
+  private void setBorrower(Member borrower) {
+    this.borrower = borrower;
+  }
+
+  public Item getItem() {
+    return item;
+  }
+
+  private void setItem(Item item) {
+    this.item = item;
+  }
+
+  public int getStartDay() {
+    return startDay;
+  }
+
+  private void setStartDay(int startDay) {
+    this.startDay = startDay;
+  }
+
+  public int getEndDay() {
+    return endDay;
+  }
+
+  private void setEndDay(int endDay) {
+    this.endDay = endDay;
   }
 
   public int getTotalCost() {
     return totalCost;
+  }
+
+  private void setTotalCost(int totalCost) {
+    totalCost = calculateTotalCost();
   }
 
   // Private Methods
@@ -49,8 +92,4 @@ public class Contract {
     item.markAsAvailable();
   }
 
-  public int getEndDay() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getEndDay'");
-  }
 }

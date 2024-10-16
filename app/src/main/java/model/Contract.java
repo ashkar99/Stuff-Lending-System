@@ -10,8 +10,7 @@ public class Contract {
   private int totalCost;
   private String status; // "Active", "Completed", or "Canceled"
 
-  // Constructor
-  public Contract(Member lender, Member borrower, Item item, int startDay, int endDay) {
+  public Contract(String contractId, Member lender, Member borrower, Item item, int startDay, int endDay) {
     setContractId(contractId);
     setLender(lender);
     setBorrower(borrower);
@@ -27,7 +26,10 @@ public class Contract {
   }
 
   private void setContractId(String contractId) {
-    this.contractId = generateContractId();
+    if (contractId == null) {
+      this.contractId = "CON" + System.nanoTime() % 1000000;
+    }
+    this.contractId = contractId;
   }
 
   public Member getLender() {
@@ -81,10 +83,6 @@ public class Contract {
   // Private Methods
   private int calculateTotalCost() {
     return item.getCostPerDay() * (endDay - startDay);
-  }
-
-  private String generateContractId() {
-    return "CON" + System.nanoTime() % 1000000;
   }
 
   public void completeContract() {

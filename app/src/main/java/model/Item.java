@@ -15,31 +15,61 @@ public class Item {
   private List<Contract> lendingHistory;
   private boolean isAvailable;
 
+
   // Constructor
   public Item(String category, String name, String description, int costPerDay, Member owner) {
-    this.itemId = generateItemId();
-    this.category = category;
-    this.name = name;
-    this.description = description;
-    this.creationDate = LocalDate.now();
-    this.costPerDay = costPerDay;
-    this.owner = owner;
+    setItemId(itemId);
+    setCategory(category);
+    setName(name);
+    setDescription(description);
+    setCreationDate(creationDate);
+    setCostPerDay(costPerDay);
+    setOwner(owner);
+    setAvailable(isAvailable);
     this.lendingHistory = new ArrayList<>();
-    this.isAvailable = true;
+    
   }
   public Item(String category, String name, String description, int costPerDay, Member owner, LocalDate creationDate, String itemId) {
-    this.itemId = itemId;
-    this.category = category;
+    setItemId(itemId);
+    setCategory(category);
+    setName(name);
     setDescription(description);
-    this.creationDate = creationDate;
-    this.costPerDay = costPerDay;
-    this.owner = owner;
+    setCreationDate(creationDate);
+    setCostPerDay(costPerDay);
+    setOwner(owner);
+    setAvailable(isAvailable);
     this.lendingHistory = new ArrayList<>();
-    this.isAvailable = true;
+
+  }
+  private void setCreationDate(LocalDate creationDate) {
+   this.creationDate = creationDate;
+  }
+  public void setItemId(String itemId) {
+    if (itemId == null){
+      itemId = "ITEM" + System.nanoTime() % 1000000;
+    }else this.itemId = itemId;
+     
+  }
+  public void setCategory(String category) {
+    this.category = category;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  private void setDescription(String description){
-    this.description = description;
+  
+  public void setCostPerDay(int costPerDay) {
+    this.costPerDay = costPerDay;
+  }
+  public void setOwner(Member owner) {
+    this.owner = owner;
+  }
+ 
+  public void setAvailable(boolean isAvailable) {
+    this.isAvailable = true;
   }
   // Getters
   public String getItemId() {
@@ -80,7 +110,4 @@ public class Item {
     this.isAvailable = true;
   }
 
-  private String generateItemId() {
-    return "ITEM" + System.nanoTime() % 1000000;
-  }
 }

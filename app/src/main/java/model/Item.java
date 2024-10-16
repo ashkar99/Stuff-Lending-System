@@ -27,7 +27,20 @@ public class Item {
     this.lendingHistory = new ArrayList<>();
     this.isAvailable = true;
   }
+  public Item(String category, String name, String description, int costPerDay, Member owner, LocalDate creationDate, String itemId) {
+    this.itemId = itemId;
+    this.category = category;
+    setDescription(description);
+    this.creationDate = creationDate;
+    this.costPerDay = costPerDay;
+    this.owner = owner;
+    this.lendingHistory = new ArrayList<>();
+    this.isAvailable = true;
+  }
 
+  private void setDescription(String description){
+    this.description = description;
+  }
   // Getters
   public String getItemId() {
     return itemId;

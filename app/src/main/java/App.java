@@ -37,7 +37,7 @@ public class App {
     Member charlie = Basic.getInstance().findMemberById("charlie@example.com");
 
     // Add Items to members
-    Basic.getInstance().addItemToMember(alice.getMemberId(), "Tool", "Hammer", "Steel hammer", 5);
+    Basic.getInstance().addItemToMember(alice.getMemberId(), "Ite123", "Hammer", "Steel hammer", 5,"Ite123","");
     Basic.getInstance().addItemToMember(alice.getMemberId(), "Game", "Board Game", "Monopoly game", 2);
     Basic.getInstance().addItemToMember(bob.getMemberId(), "Toy", "Toy Car", "Red remote control car", 3);
     Basic.getInstance().addItemToMember(charlie.getMemberId(), "Sport", "Tennis Racket", "Wilson Pro racket", 4);

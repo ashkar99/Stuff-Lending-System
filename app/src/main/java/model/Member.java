@@ -1,38 +1,59 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
+  private String memberId;
   private String name;
   private String email;
   private String phoneNumber;
   private String password;
-  private int credits;
+  private int credits = 0;
   private LocalDate creationDate;
-  private List<Item> itemsOwned;
-  private List<Contract> lendingHistory;
+  private List<Item> itemsOwned = new ArrayList<>();
+  private List<Contract> lendingHistory = new ArrayList<>();
 
   // Constructor
   public Member(String name, String email, String phoneNumber, String password) {
+    if (!isValidEmail(email)) {
+      throw new IllegalArgumentException("Invalid email format.");
+    }
+    if (!isValidPhoneNumber(phoneNumber)) {
+      throw new IllegalArgumentException("Invalid phone number format.");
+    }
+
+    setMemberId(email);
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);
     setPassword(password);
-    this.credits = 0; // initial credits set to 0
-    this.creationDate = LocalDate.now();
-    this.itemsOwned = new ArrayList<>();
-    this.lendingHistory = new ArrayList<>();
+    this.creationDate = LocalDate.now(); 
   }
 
-  private void setPassword(String password) {
-    this.password = password;
+  public Member(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
+    if (!isValidEmail(email)) {
+      throw new IllegalArgumentException("Invalid email format.");
+    }
+    if (!isValidPhoneNumber(phoneNumber)) {
+      throw new IllegalArgumentException("Invalid phone number format.");
+    }
+
+    setMemberId(email);
+    setName(name);
+    setEmail(email);
+    setPhoneNumber(phoneNumber);
+    setPassword(password);
+    setCreationDate(creationDate);
   }
 
   // Getters and Setters
   public String getMemberId() {
-    return email;
+    return memberId;
+  }
+
+  private void setMemberId(String memberId){
+    this.memberId = memberId;
   }
 
   public String getName() {
@@ -47,7 +68,10 @@ public class Member {
     return email;
   }
 
-  public void setEmail(String email) {
+  private void setEmail(String email) {
+    if (!isValidEmail(email)) {
+      throw new IllegalArgumentException("Invalid email format.");
+    }
     this.email = email;
   }
 
@@ -55,12 +79,31 @@ public class Member {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(String phoneNumber) {
+  private void setPhoneNumber(String phoneNumber) {
+    if (!isValidPhoneNumber(phoneNumber)) {
+      throw new IllegalArgumentException("Invalid phone number format.");
+    }
     this.phoneNumber = phoneNumber;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  private void setPassword(String password) {
+    this.password = password;
   }
 
   public int getCredits() {
     return credits;
+  }
+
+  private void setCreationDate(LocalDate creationDate){
+    this.creationDate = creationDate;
+  }
+
+  public LocalDate getCreationDate() {
+    return creationDate;
   }
 
   public List<Item> getItemsOwned() {
@@ -71,18 +114,35 @@ public class Member {
     return lendingHistory;
   }
 
-  // Methods for managing items
-  public void addItem(Item item) {
-    itemsOwned.add(item);
-    credits += 100; // Add 100 credits for each new item
+  // Private method for updating credits
+  private void updateCredits(int amount) {
+    this.credits += amount;
   }
 
-  public void removeItem(Item item) {
-    itemsOwned.remove(item);
+  // Validation for email format
+  private boolean isValidEmail(String email) {
+    String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    Pattern pattern = Pattern.compile(emailRegex);
+    return pattern.matcher(email).matches();
   }
 
-  public String getPassword() {
-    return password;
+  // Validation for phone number format (basic numeric check)
+  private boolean isValidPhoneNumber(String phoneNumber) {
+    String phoneRegex = "\\d{10}"; // Assuming a 10-digit number for simplicity
+    Pattern pattern = Pattern.compile(phoneRegex);
+    return pattern.matcher(phoneNumber).matches();
   }
 
+  // toString method for easy display of member information
+  @Override
+  public String toString() {
+    return "Member ID: " + memberId + "\n" +
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Phone: " + phoneNumber + "\n" +
+        "Credits: " + credits + "\n" +
+        "Creation Date: " + creationDate + "\n" +
+        "Owned Items: " + itemsOwned.size() + "\n" +
+        "Lending History: " + lendingHistory.size();
+  }
 }

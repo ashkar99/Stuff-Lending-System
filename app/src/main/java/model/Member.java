@@ -1,4 +1,5 @@
 package model;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,31 +16,7 @@ public class Member {
   private List<Item> itemsOwned = new ArrayList<>();
   private List<Contract> lendingHistory = new ArrayList<>();
 
-  // Constructor
-  public Member(String name, String email, String phoneNumber, String password) {
-    if (!isValidEmail(email)) {
-      throw new IllegalArgumentException("Invalid email format.");
-    }
-    if (!isValidPhoneNumber(phoneNumber)) {
-      throw new IllegalArgumentException("Invalid phone number format.");
-    }
-
-    setMemberId(email);
-    setName(name);
-    setEmail(email);
-    setPhoneNumber(phoneNumber);
-    setPassword(password);
-    this.creationDate = LocalDate.now(); 
-  }
-
   public Member(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
-    if (!isValidEmail(email)) {
-      throw new IllegalArgumentException("Invalid email format.");
-    }
-    if (!isValidPhoneNumber(phoneNumber)) {
-      throw new IllegalArgumentException("Invalid phone number format.");
-    }
-
     setMemberId(email);
     setName(name);
     setEmail(email);
@@ -52,7 +29,7 @@ public class Member {
     return memberId;
   }
 
-  private void setMemberId(String memberId){
+  private void setMemberId(String memberId) {
     this.memberId = memberId;
   }
 
@@ -98,8 +75,12 @@ public class Member {
     return credits;
   }
 
-  private void setCreationDate(LocalDate creationDate){
-    this.creationDate = creationDate;
+  private void setCreationDate(LocalDate creationDate) {
+    if (creationDate == null) {
+      this.creationDate = LocalDate.now();
+    } else {
+      this.creationDate = creationDate;
+    }
   }
 
   public LocalDate getCreationDate() {

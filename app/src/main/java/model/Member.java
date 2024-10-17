@@ -17,7 +17,7 @@ public class Member {
   private List<Contract> lendingHistory = new ArrayList<>();
 
   public Member(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
-    setMemberId(email);
+    setMemberId(email); //Use email as unique member id
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);

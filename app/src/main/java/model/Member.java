@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Member {
@@ -30,7 +31,11 @@ public class Member {
   }
 
   private void setMemberId(String memberId) {
-    this.memberId = memberId;
+    if (memberId == null) {
+      this.memberId = generateUniqueMemberId();
+    } else {
+      this.memberId = memberId;
+    }
   }
 
   public String getName() {
@@ -113,7 +118,11 @@ public class Member {
     return pattern.matcher(phoneNumber).matches();
   }
 
-  // toString method for easy display of member information
+  private String generateUniqueMemberId() {
+    String uuid = UUID.randomUUID().toString();
+    return uuid.substring(0, 5); // Take the first 6 characters
+  }
+
   @Override
   public String toString() {
     return "Member ID: " + memberId + "\n" +

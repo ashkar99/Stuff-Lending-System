@@ -2,7 +2,7 @@ import controller.Basic;
 import controller.SystemController;
 import model.Contract;
 import model.Member;
-import view.Register;
+import view.*;
 
 /**
  * Responsible for staring the application.
@@ -37,7 +37,7 @@ public class App {
     Member charlie = Basic.getInstance().findMemberById("charlie@example.com");
 
     // Add Items to members
-    Basic.getInstance().addItemToMember(alice.getMemberId(), "Ite123", "Hammer", "Steel hammer", 5,"Ite123","");
+    Basic.getInstance().addItemToMember(alice.getMemberId(), "Ite123", "Hammer", "Steel hammer", 5);
     Basic.getInstance().addItemToMember(alice.getMemberId(), "Game", "Board Game", "Monopoly game", 2);
     Basic.getInstance().addItemToMember(bob.getMemberId(), "Toy", "Toy Car", "Red remote control car", 3);
     Basic.getInstance().addItemToMember(charlie.getMemberId(), "Sport", "Tennis Racket", "Wilson Pro racket", 4);
@@ -56,7 +56,8 @@ public class App {
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
     System.out.println(Basic.getInstance().getMembers().toString());
-    Register r = new Register();
+    Viewer viewer = new Viewer();
+    viewer.StartScreen();
   }
 
 }

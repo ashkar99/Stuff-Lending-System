@@ -28,8 +28,9 @@ public class Contract {
   private void setContractId(String contractId) {
     if (contractId == null) {
       this.contractId = "CON" + System.nanoTime() % 1000000;
+    } else {
+      this.contractId = contractId;
     }
-    this.contractId = contractId;
   }
 
   public Member getLender() {

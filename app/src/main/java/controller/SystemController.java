@@ -25,18 +25,6 @@ public class SystemController {
 
   }
 
-  // Methods for managing members
-  public void addMember(String name, String email, String phoneNumber, String password) {
-    Member newMember = new Member(name, email, phoneNumber, password);
-    members.add(newMember);
-  }
-
-  public void deleteMember(String memberId) {
-    Member member = findMemberById(memberId);
-    if (member != null) {
-      members.remove(member);
-    }
-  }
 
   // Methods for managing items
   public void addItemToMember(String memberId, String category, String name, String description, int costPerDay) {
@@ -74,15 +62,6 @@ public class SystemController {
     }
   }
 
-  // Helper methods to find members and items
-  public Member findMemberById(String email) {
-    for (Member member : members) {
-      if (member.getEmail().equals(email))
-        return member;
-    }
-    return null;
-  }
-
   public void checkPassword(Member member, String password) {
     if (member.getPassword().equals(password)) {
       System.out.println(member.getName() + "Inloggad");
@@ -98,7 +77,5 @@ public class SystemController {
     return null;
   }
 
-  public List<Member> getMembers() {
-    return members;
-  }
+  
 }

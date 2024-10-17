@@ -27,6 +27,7 @@ public class Contract {
   }
 
   private void setContractId(String contractId) {
+    if
     this.contractId = generateContractId();
   }
 

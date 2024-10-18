@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-import model.Member;
+import model.*;
 
 public class MemberDaoImpl implements MemberDaoInterface {
   private List<Member> members = new ArrayList<>();
@@ -21,7 +21,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public void modifyMember(String memberId, String name, String email, String phoneNumber, String password) {
-    Member member = findMemberById(memberId);
+    Member member = getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
@@ -53,7 +53,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public void deleteMember(String memberId, String password) {
-    Member member = findMemberById(memberId);
+    Member member = getMemberById(memberId);
     if (member != null && !member.getPassword().equals(password)) {
       members.remove(member);
     } else {
@@ -63,7 +63,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public Member showSpecificMemberInfo(String memberId) {
-    Member member = findMemberById(memberId);
+    Member member = getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
@@ -107,7 +107,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public Member findMemberById(String memberId) {
+  public Member getMemberById(String memberId) {
     for (Member member : members) {
       if (member.getMemberId().equals(memberId)) {
         return member;

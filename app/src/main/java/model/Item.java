@@ -9,20 +9,20 @@ public class Item {
   private String category;
   private String name;
   private String description;
-  private LocalDate creationDate;
+  private int creationDate;
   private int costPerDay;
   private Member owner;
   private List<Contract> lendingHistory = new ArrayList<>();
   private boolean isAvailable;
 
   // Constructor
-  public Item(String itemId, String category, String name, String description, LocalDate creationDate, int costPerDay,
+  public Item(String itemId, String category, String name, String description, int creationDate, int costPerDay,
       Member owner) {
     setItemId(itemId);
     setCategory(category);
     setName(name);
     setDescription(description);
-    setCreationDate(creationDate);
+    setCreationDate();
     setCostPerDay(costPerDay);
     setOwner(owner);
     markAsAvailable();
@@ -64,16 +64,13 @@ public class Item {
     this.description = description;
   }
 
-  public LocalDate getCreationDate() {
+  public int getCreationDate() {
     return creationDate;
   }
 
-  private void setCreationDate(LocalDate creationDate) {
-    if (creationDate == null) {
-      this.creationDate = LocalDate.now();
-    } else {
-      this.creationDate = creationDate;
-    }
+  private void setCreationDate() {
+    Time t = new Time();
+    this.creationDate = t.getCurrentDay();
   }
 
   public int getCostPerDay() {

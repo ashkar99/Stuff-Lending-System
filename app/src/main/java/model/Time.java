@@ -6,7 +6,8 @@ public class Time {
   public Time() {
     this.dayCounter = 0;
   }
-
+  
+  
   public int getCurrentDay() {
     return dayCounter;
   }

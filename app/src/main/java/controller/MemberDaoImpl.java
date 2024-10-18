@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-import model.Member;
+import model.*;
 
 public class MemberDaoImpl implements MemberDaoInterface {
   private List<Member> members = new ArrayList<>();
@@ -13,9 +13,9 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public void addMember(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
+  public void addMember(String name, String email, String phoneNumber, String password) {
     checkUnique(email, phoneNumber);
-    Member newMember = new Member(name, email, phoneNumber, password, creationDate);
+    Member newMember = new Member(name, email, phoneNumber, password);
     members.add(newMember);
   }
 
@@ -31,9 +31,9 @@ public class MemberDaoImpl implements MemberDaoInterface {
     String newEmail = (email != null && !email.isBlank()) ? email : member.getEmail();
     String newPhoneNumber = (phoneNumber != null && !phoneNumber.isBlank()) ? phoneNumber : member.getPhoneNumber();
     String newPassword = (password != null && !password.isBlank()) ? password : member.getPassword();
-    LocalDate creationDate = member.getCreationDate(); // Keep original creation date
+    int creationDate = member.getCreationDate(); // Keep original creation date
 
-    Member updatedMember = new Member(newName, newEmail, newPhoneNumber, newPassword, creationDate);
+    Member updatedMember = new Member(newName, newEmail, newPhoneNumber, newPassword);
 
     // Remove the old member and add the updated member
     members.remove(member);
@@ -72,8 +72,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
         member.getName(),
         member.getEmail(),
         member.getPhoneNumber(),
-        member.getPassword(),
-        member.getCreationDate());
+        member.getPassword());
   }
 
   @Override
@@ -85,8 +84,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
           member.getName(),
           member.getEmail(),
           member.getPhoneNumber(),
-          member.getPassword(),
-          member.getCreationDate()));
+          member.getPassword()));
     }
     return simpleMembersList;
   }
@@ -100,8 +98,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
           member.getName(),
           member.getEmail(),
           member.getPhoneNumber(),
-          member.getPassword(),
-          member.getCreationDate()));
+          member.getPassword()));
     }
     return verboseMembersList;
   }

@@ -6,7 +6,7 @@ import model.*;
 
 public interface MemberDaoInterface { // Using DAO pattern if data source changed in future
 
-  void addMember(String name, String email, String phoneNumber, String password, LocalDate creationDate);
+  void addMember(String name, String email, String phoneNumber, String password);
 
   void deleteMember(String memberId, String password);
 

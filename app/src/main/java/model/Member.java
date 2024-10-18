@@ -1,6 +1,6 @@
 package model;
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,17 +13,17 @@ public class Member {
   private String phoneNumber;
   private String password;
   private int credits = 0;
-  private LocalDate creationDate;
+  private int creationDate;
   private List<Item> itemsOwned = new ArrayList<>();
   private List<Contract> lendingHistory = new ArrayList<>();
 
-  public Member(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
+  public Member(String name, String email, String phoneNumber, String password) {
     setMemberId(email); //Use email as unique member id
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);
     setPassword(password);
-    setCreationDate(creationDate);
+    setCreationDate();
   }
 
   public String getMemberId() {
@@ -80,15 +80,14 @@ public class Member {
     return credits;
   }
 
-  private void setCreationDate(LocalDate creationDate) {
-    if (creationDate == null) {
-      this.creationDate = LocalDate.now();
-    } else {
-      this.creationDate = creationDate;
-    }
+  private void setCreationDate() {
+    Time time = new Time();
+      this.creationDate = time.getCurrentDay();
+
   }
 
-  public LocalDate getCreationDate() {
+  public int getCreationDate() {
+
     return creationDate;
   }
 

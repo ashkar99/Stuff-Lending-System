@@ -30,10 +30,10 @@ public class App {
     Time t = new Time();
     
     // Load initial data
-    Basic.getInstance().addMember("Alice", "alice@example.com", "1234567890", "password");
+    Basic.getMemberInstance().addMember("Alice", "alice@example.com", "1234567890", "password");
     t.advanceDays(5);
-    Basic.getInstance().addMember("Bob", "bob@example.com", "0987654321", "password");
-    Basic.getInstance().addMember("Charlie", "charlie@example.com", "1122334455", "password");
+    Basic.getMemberInstance().addMember("Bob", "bob@example.com", "0987654321", "password");
+    Basic.getMemberInstance().addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
     // // Retrieve members for easy reference
     // Member alice = Basic.getInstance().findMemberById("alice@example.com");
@@ -59,8 +59,8 @@ public class App {
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
-    List<Member>  member = Basic.getInstance().getMembers();
-    for (Member m : Basic.getInstance().getMembers()){
+    List<Member>  member = Basic.getMemberInstance().getMembers();
+    for (Member m : Basic.getMemberInstance().getMembers()){
       System.out.println(m.getCreationDate());
     }
 

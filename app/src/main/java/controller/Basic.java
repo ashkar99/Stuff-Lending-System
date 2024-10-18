@@ -7,7 +7,7 @@ public final class Basic {
 
   }
 
-  public static MemberDaoImpl getInstance() {
+  public static MemberDaoImpl getMemberInstance() {
     if (memberController == null) {
       memberController = new MemberDaoImpl();
     }

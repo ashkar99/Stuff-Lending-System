@@ -74,7 +74,7 @@ public class MemberViewer {
     System.out.println("ENTER YOUR PHONE NUMBER:");
     String phonNum = input.nextLine();
 
-    Basic.getMemberInstance().addMember(name, email, phonNum, password,null);
+    Basic.getMemberInstance().addMember(name, email, phonNum, password);
   }
 
   private void showSimpleAllMembers() {

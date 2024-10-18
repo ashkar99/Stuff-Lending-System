@@ -14,11 +14,11 @@ public class Member {
   private String password;
   private int credits = 0;
   private LocalDate creationDate;
-  private List<Item> itemsOwned = new ArrayList<>();
+  private List<Item> items = new ArrayList<>();
   private List<Contract> lendingHistory = new ArrayList<>();
 
   public Member(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
-    setMemberId(email); //Use email as unique member id
+    setMemberId(email); // Use email as unique member id
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);
@@ -92,15 +92,23 @@ public class Member {
     return creationDate;
   }
 
-  public List<Item> getItemsOwned() {
-    return itemsOwned;
+  public List<Item> getItems() {
+    return items;
+  }
+
+  public void addItem(Item item) {
+    items.add(item);
+  }
+
+  public void removeItem(Item item) {
+    items.remove(item);
   }
 
   public List<Contract> getLendingHistory() {
     return lendingHistory;
   }
 
-  private void updateCredits(int amount) {
+  public void updateCredits(int amount) {
     this.credits += amount;
   }
 
@@ -131,7 +139,7 @@ public class Member {
         "Phone: " + phoneNumber + "\n" +
         "Credits: " + credits + "\n" +
         "Creation Date: " + creationDate + "\n" +
-        "Owned Items: " + itemsOwned.size() + "\n" +
+        "Owned Items: " + items.size() + "\n" +
         "Lending History: " + lendingHistory.size();
   }
 }

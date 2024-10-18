@@ -1,17 +1,17 @@
 package controller;
 
 public final class Basic {
-  private static controller.SystemController controller;
+  private static controller.MemberController memberController;
 
   private Basic() {
 
   }
 
-  public static SystemController getInstance() {
-    if (controller == null) {
-      controller = new SystemController();
+  public static MemberController getInstance() {
+    if (memberController == null) {
+      memberController = new MemberController();
     }
-    return controller;
+    return memberController;
   }
 
 }

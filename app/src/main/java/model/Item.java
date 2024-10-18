@@ -16,7 +16,8 @@ public class Item {
   private boolean isAvailable;
 
   // Constructor
-  public Item(String itemId, String category, String name, String description, LocalDate creationDate, int costPerDay, Member owner) {
+  public Item(String itemId, String category, String name, String description, LocalDate creationDate, int costPerDay,
+      Member owner) {
     setItemId(itemId);
     setCategory(category);
     setName(name);
@@ -32,8 +33,8 @@ public class Item {
   }
 
   private void setItemId(String itemId) {
-    if (itemId == null){
-      this.itemId = "ITEM" + System.nanoTime() % 1000000; //Generate a unique ID by using cuurrent nano Time 
+    if (itemId == null) {
+      this.itemId = "ITEM" + System.nanoTime() % 1000000; // Generate a unique ID by using cuurrent nano Time
     } else {
       this.itemId = itemId;
     }
@@ -70,8 +71,9 @@ public class Item {
   private void setCreationDate(LocalDate creationDate) {
     if (creationDate == null) {
       this.creationDate = LocalDate.now();
+    } else {
+      this.creationDate = creationDate;
     }
-    this.creationDate = creationDate;
   }
 
   public int getCostPerDay() {

@@ -37,27 +37,69 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public void modifyMember(String memberId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'modifyMember'");
+  public void modifyMember(String memberId, String name, String email, String phoneNumber, String password) {
+    Member member = findMemberById(memberId);
+    if (member == null) {
+      throw new IllegalArgumentException("Member not found!");
+    }
+    // Create a new member instance with updated information
+    // If name is valid -> assign as the new name otherwise keep the old name
+    String newName = (name != null && !name.isBlank()) ? name : member.getName();
+    String newEmail = (email != null && !email.isBlank()) ? email : member.getEmail();
+    String newPhoneNumber = (phoneNumber != null && !phoneNumber.isBlank()) ? phoneNumber : member.getPhoneNumber();
+    String newPassword = (password != null && !password.isBlank()) ? password : member.getPassword();
+    LocalDate creationDate = member.getCreationDate(); // Keep original creation date
+
+    Member updatedMember = new Member(newName, newEmail, newPhoneNumber, newPassword, creationDate);
+
+    // Remove the old member and add the updated member
+    members.remove(member);
+    members.add(updatedMember);
   }
 
   @Override
-  public void showSpecificMember(String memberId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'showSpecificMember'");
+  public Member showSpecificMemberInfo(String memberId) {
+    Member member = findMemberById(memberId);
+    if (member == null) {
+      throw new IllegalArgumentException("Member not found!");
+    }
+    // Return a copy of the member data to the view
+    return new Member(
+        member.getName(),
+        member.getEmail(),
+        member.getPhoneNumber(),
+        member.getPassword(),
+        member.getCreationDate());
   }
 
   @Override
-  public void listSimpleMembersInfo() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listSimpleMembersInfo'");
+  public List<Member> listSimpleMembersInfo() {
+    List<Member> simpleMembersList = new ArrayList<>();
+    for (Member member : members) {
+      // Return simple date in a list
+      simpleMembersList.add(new Member(
+          member.getName(),
+          member.getEmail(),
+          member.getPhoneNumber(),
+          member.getPassword(),
+          member.getCreationDate()));
+    }
+    return simpleMembersList;
   }
 
   @Override
-  public void listAllMembersInfo() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listAllMembersInfo'");
+  public List<Member> listAllMembersInfo() {
+    List<Member> verboseMembersList = new ArrayList<>();
+    for (Member member : members) {
+      // Return the full member data for verbose info
+      verboseMembersList.add(new Member(
+          member.getName(),
+          member.getEmail(),
+          member.getPhoneNumber(),
+          member.getPassword(),
+          member.getCreationDate()));
+    }
+    return verboseMembersList;
   }
 
   @Override

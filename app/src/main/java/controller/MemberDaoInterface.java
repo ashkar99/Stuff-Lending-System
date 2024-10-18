@@ -10,13 +10,13 @@ public interface MemberDaoInterface { //Using DAO pattern if data source changed
 
   void deleteMember(String memberId, String password);
 
-  void modifyMember(String memberId);
+  void modifyMember(String memberId, String name, String email, String phoneNumber, String password);
 
-  void showSpecificMember(String memberId);
+  Member showSpecificMemberInfo(String memberId);
 
-  void listSimpleMembersInfo();
+  List<Member> listSimpleMembersInfo();
 
-  void listAllMembersInfo();
+  List<Member> listAllMembersInfo();
 
   Member findMemberById(String memberId);
 

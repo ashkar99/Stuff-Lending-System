@@ -1,5 +1,4 @@
 import controller.Basic;
-import controller.SystemController;
 import model.Contract;
 import model.Member;
 import view.*;
@@ -27,20 +26,20 @@ public class App {
     // Initialize System Controller
 
     // Load initial data
-    Basic.getInstance().addMember("Alice", "alice@example.com", "1234567890", "password");
-    Basic.getInstance().addMember("Bob", "bob@example.com", "0987654321", "password");
-    Basic.getInstance().addMember("Charlie", "charlie@example.com", "1122334455", "password");
+    Basic.getMemberInstance().addMember("Alice", "alice@example.com", "1234567890", "password",null);
+    Basic.getMemberInstance().addMember("Bob", "bob@example.com", "0987654321", "password",null);
+    Basic.getMemberInstance().addMember("Charlie", "charlie@example.com", "1122334455", "password",null);
 
     // Retrieve members for easy reference
-    Member alice = Basic.getInstance().findMemberById("alice@example.com");
-    Member bob = Basic.getInstance().findMemberById("bob@example.com");
-    Member charlie = Basic.getInstance().findMemberById("charlie@example.com");
+    // Member alice = Basic.getInstance().findMemberById("alice@example.com");
+    // Member bob = Basic.getInstance().findMemberById("bob@example.com");
+    // Member charlie = Basic.getInstance().findMemberById("charlie@example.com");
 
     // Add Items to members
-    Basic.getInstance().addItemToMember(alice.getMemberId(), "Ite123", "Hammer", "Steel hammer", 5);
-    Basic.getInstance().addItemToMember(alice.getMemberId(), "Game", "Board Game", "Monopoly game", 2);
-    Basic.getInstance().addItemToMember(bob.getMemberId(), "Toy", "Toy Car", "Red remote control car", 3);
-    Basic.getInstance().addItemToMember(charlie.getMemberId(), "Sport", "Tennis Racket", "Wilson Pro racket", 4);
+    // Basic.getMemberInstance().addItemToMember(alice.getMemberId(), "Ite123", "Hammer", "Steel hammer", 5);
+    // Basic.getMemberInstance().addItemToMember(alice.getMemberId(), "Game", "Board Game", "Monopoly game", 2);
+    // Basic.getInstance().addItemToMember(bob.getMemberId(), "Toy", "Toy Car", "Red remote control car", 3);
+    // Basic.getInstance().addItemToMember(charlie.getMemberId(), "Sport", "Tennis Racket", "Wilson Pro racket", 4);
 
     // List initial members and their items
     // System.out.println("Initial Members and Items:");
@@ -55,7 +54,6 @@ public class App {
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
-    System.out.println(Basic.getInstance().getMembers().toString());
     Viewer viewer = new Viewer();
     viewer.StartScreen();
   }

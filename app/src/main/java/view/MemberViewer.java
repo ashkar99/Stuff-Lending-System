@@ -3,6 +3,7 @@ package view;
 import controller.*;
 import model.Member;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MemberViewer {
@@ -22,7 +23,7 @@ public class MemberViewer {
     String email = input.nextLine();
     System.out.println("ENTER YOUR PASSWORD:");
     String password = input.nextLine();
-    Basic.getInstance().logIn(email, password);
+   // Basic.getMemberInstance().logIn(email, password);
 
     System.out.println("Welcome to Stuff Lending System App");
     System.out.println("Press S to list all member");
@@ -49,9 +50,9 @@ public class MemberViewer {
 
   private void specificFullInfo() {
     showSimpleAllMembers();
-    System.out.println("Enter the email of the selected member");
-    String email = input.nextLine();
-    Member member = Basic.getInstanceMember().findMemberById(email);
+    System.out.println("Enter the memberId of the selected member");
+    String memberID = input.nextLine();
+    Basic.getMemberInstance().showSpecificMemberInfo(memberID);
   }
 
   private void deleteMember() {
@@ -59,7 +60,7 @@ public class MemberViewer {
     String email = input.nextLine();
     System.out.println("ENTER YOUR PASSWORD:");
     String password = input.nextLine();
-    Basic.getInstanceMember().deleteMember(email, password);
+    Basic.getMemberInstance().deleteMember(email, password);
 
   }
 
@@ -73,21 +74,36 @@ public class MemberViewer {
     System.out.println("ENTER YOUR PHONE NUMBER:");
     String phonNum = input.nextLine();
 
-    Basic.getInstance().addMember(name, email, phonNum, password);
+    Basic.getMemberInstance().addMember(name, email, phonNum, password,null);
   }
 
   private void showSimpleAllMembers() {
-    for (Member member : Basic.getInstance().getMembers()) {
-      System.out.println(member.toString());
-      System.out.println();
+    List<Member> simplList=  Basic.getMemberInstance().listSimpleMembersInfo();
+    for(Member member : simplList){
+      System.out.println("----------------------------------------");
+      System.out.println(member.getName());
+      System.out.println(member.getEmail());
+      System.out.println(member.getPhoneNumber());
+      System.out.println(member.getPassword());
+      System.out.println(member.getCreationDate());
+      System.out.println("----------------------------------------");
+      
+      
+      
     }
 
   }
 
   private void showVerboseAllMembers() {
-    for (Member member : Basic.getInstance().getMembers()) {
-      System.out.println(member.toString());
-      System.out.println(member.getItemsOwned());
+    List<Member> verboseList=  Basic.getMemberInstance().listSimpleMembersInfo();
+    for(Member member : verboseList){
+      System.out.println("----------------------------------------");
+      System.out.println(member.getName());
+      System.out.println(member.getEmail());
+      System.out.println(member.getPhoneNumber());
+      System.out.println(member.getPassword());
+      System.out.println(member.getCreationDate());
+      System.out.println("----------------------------------------");
 
     }
   }

@@ -123,15 +123,15 @@ public class Member {
     return uuid.substring(0, 5); // Take the first 6 characters
   }
 
-  @Override
-  public String toString() {
-    return "Member ID: " + memberId + "\n" +
-        "Name: " + name + "\n" +
-        "Email: " + email + "\n" +
-        "Phone: " + phoneNumber + "\n" +
-        "Credits: " + credits + "\n" +
-        "Creation Date: " + creationDate + "\n" +
-        "Owned Items: " + itemsOwned.size() + "\n" +
-        "Lending History: " + lendingHistory.size();
-  }
+  // @Override
+  // public String toString() {
+  //   return "Member ID: " + memberId + "\n" +
+  //       "Name: " + name + "\n" +
+  //       "Email: " + email + "\n" +
+  //       "Phone: " + phoneNumber + "\n" +
+  //       "Credits: " + credits + "\n" +
+  //       "Creation Date: " + creationDate + "\n" +
+  //       "Owned Items: " + itemsOwned.size() + "\n" +
+  //       "Lending History: " + lendingHistory.size();
+  // }
 }

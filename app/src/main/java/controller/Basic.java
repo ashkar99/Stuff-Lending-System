@@ -1,15 +1,15 @@
 package controller;
 
 public final class Basic {
-  private static controller.MemberController memberController;
+  private static controller.MemberDaoImpl memberController;
 
   private Basic() {
 
   }
 
-  public static MemberController getInstance() {
+  public static MemberDaoImpl getMemberInstance() {
     if (memberController == null) {
-      memberController = new MemberController();
+      memberController = new MemberDaoImpl();
     }
     return memberController;
   }

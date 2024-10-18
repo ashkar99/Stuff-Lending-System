@@ -14,26 +14,9 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public void addMember(String name, String email, String phoneNumber, String password, LocalDate creationDate) {
-    for (Member member : members) {
-      if (member.getEmail().equals(email)) {
-        throw new IllegalArgumentException("The email is already in use");
-      }
-      if (member.getPhoneNumber().equals(phoneNumber)) {
-        throw new IllegalArgumentException("The phone number is already in use");
-      }
-    }
+    checkUnique(email, phoneNumber);
     Member newMember = new Member(name, email, phoneNumber, password, creationDate);
     members.add(newMember);
-  }
-
-  @Override
-  public void deleteMember(String memberId, String password) {
-    Member member = findMemberById(memberId);
-    if (member != null && !member.getPassword().equals(password)) {
-      members.remove(member);
-    } else {
-      throw new IllegalArgumentException("Member not found or password is incorrect!");
-    }
   }
 
   @Override
@@ -55,6 +38,27 @@ public class MemberDaoImpl implements MemberDaoInterface {
     // Remove the old member and add the updated member
     members.remove(member);
     members.add(updatedMember);
+  }
+
+  public void checkUnique(String email, String phoneNumber) {
+    for (Member member : members) {
+      if (member.getEmail().equals(email)) {
+        throw new IllegalArgumentException("The email is already in use");
+      }
+      if (member.getPhoneNumber().equals(phoneNumber)) {
+        throw new IllegalArgumentException("The phone number is already in use");
+      }
+    }
+  }
+
+  @Override
+  public void deleteMember(String memberId, String password) {
+    Member member = findMemberById(memberId);
+    if (member != null && !member.getPassword().equals(password)) {
+      members.remove(member);
+    } else {
+      throw new IllegalArgumentException("Member not found or password is incorrect!");
+    }
   }
 
   @Override

@@ -20,8 +20,7 @@ public interface MemberDaoInterface { // Using DAO pattern if data source change
 
   List<Member> listAllMembersInfo();
 
-  Member findMemberById(String memberId);
+  Member getMemberById(String memberId);
 
   List<Member> getMembers();
-
 }

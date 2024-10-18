@@ -91,15 +91,23 @@ public class Member {
     return creationDate;
   }
 
-  public List<Item> getItemsOwned() {
-    return itemsOwned;
+  public List<Item> getItems() {
+    return items;
+  }
+
+  public void addItem(Item item) {
+    items.add(item);
+  }
+
+  public void removeItem(Item item) {
+    items.remove(item);
   }
 
   public List<Contract> getLendingHistory() {
     return lendingHistory;
   }
 
-  private void updateCredits(int amount) {
+  public void updateCredits(int amount) {
     this.credits += amount;
   }
 
@@ -122,15 +130,15 @@ public class Member {
     return uuid.substring(0, 5); // Take the first 6 characters
   }
 
-  // @Override
-  // public String toString() {
-  //   return "Member ID: " + memberId + "\n" +
-  //       "Name: " + name + "\n" +
-  //       "Email: " + email + "\n" +
-  //       "Phone: " + phoneNumber + "\n" +
-  //       "Credits: " + credits + "\n" +
-  //       "Creation Date: " + creationDate + "\n" +
-  //       "Owned Items: " + itemsOwned.size() + "\n" +
-  //       "Lending History: " + lendingHistory.size();
-  // }
+  @Override
+  public String toString() {
+    return "Member ID: " + memberId + "\n" +
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Phone: " + phoneNumber + "\n" +
+        "Credits: " + credits + "\n" +
+        "Creation Date: " + creationDate + "\n" +
+        "Owned Items: " + items.size() + "\n" +
+        "Lending History: " + lendingHistory.size();
+  }
 }

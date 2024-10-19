@@ -1,9 +1,7 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * The Item class represents an item that can be rented out by a member.
@@ -11,7 +9,7 @@ import java.util.UUID;
  * day, and its availability status.
  * The item also maintains a lending history of contracts it has been a part of.
  */
-public class Item extends FunctionFather {
+public class Item extends FatherOfFunction {
 
   private String category;
   private String name;

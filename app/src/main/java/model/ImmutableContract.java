@@ -1,7 +1,5 @@
 package model;
 
-import java.util.UUID;
-
 /**
  * The Contract class represents a rental agreement between a lender and a
  * borrower
@@ -10,7 +8,7 @@ import java.util.UUID;
  * total cost. The contract can also be marked as completed or canceled.
  * This class is immutable.
  */
-public final class ImmutableContract extends FunctionFather {
+public final class ImmutableContract extends FatherOfFunction {
 
   private final String contractId;
   private final Member lender;
@@ -25,8 +23,6 @@ public final class ImmutableContract extends FunctionFather {
    * Constructor to initialize a new Contract with the provided details.
    * By default, the contract's status is set to "Active".
    *
-   * @param contractId The unique identifier for the contract. If null, it will be
-   *                   auto-generated.
    * @param lender     The member who is lending the item.
    * @param borrower   The member who is borrowing the item.
    * @param item       The item being borrowed.
@@ -47,15 +43,6 @@ public final class ImmutableContract extends FunctionFather {
     this.totalCost = calculateTotalCost();
     this.status = "Active";
     this.creationDate = setCreationDate();
-  }
-
-  /**
-   * Gets the contract's unique identifier.
-   *
-   * @return The contract ID.
-   */
-  public String getContractId() {
-    return contractId;
   }
 
   /**

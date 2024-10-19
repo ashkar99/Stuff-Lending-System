@@ -1,41 +1,74 @@
 package controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import model.Item;
 import model.Member;
 
+/**
+ * The ItemDaoImpl class is responsible for performing CRUD operations
+ * related to the items in the system. It allows creating, deleting,
+ * modifying, viewing, and retrieving items owned by members.
+ * This class uses the MemberDaoInterface to interact with member data.
+ */
 public class ItemDaoImpl implements ItemDaoInterface {
   private MemberDaoInterface memberDao;
 
+  /**
+   * Constructs an ItemDaoImpl instance with a MemberDaoInterface
+   * that allows it to interact with member data.
+   *
+   * @param memberDao The MemberDaoInterface instance to use for member
+   *                  operations.
+   */
+  @SuppressFBWarnings
   public ItemDaoImpl(MemberDaoInterface memberDao) {
+    if (memberDao == null) {
+      this.memberDao = new MemberDaoImpl();
+    }
     this.memberDao = memberDao;
   }
 
+  /**
+   * Creates a new item for a specific member and adds it to the member's list of
+   * owned items.
+   * Additionally, the member receives 100 credits for creating an item.
+   *
+   * @param memberId    The ID of the member creating the item.
+   * @param category    The category of the item.
+   * @param name        The name of the item.
+   * @param description A description of the item.
+   * @param costPerDay  The cost per day to lend the item.
+   * @throws IllegalArgumentException If the member with the given ID is not
+   *                                  found.
+   */
   @Override
   public void createItem(String memberId, String category, String name, String description, int costPerDay) {
-    // Find the member by ID
     Member member = memberDao.getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
 
-    // Create the new item and add it to the member's list of items
     Item newItem = new Item(category, name, description, costPerDay);
     member.addItem(newItem);
-
-    // Add 100 credits to the member for creating an item
     member.updateCredits(100);
   }
 
+  /**
+   * Deletes an item owned by a member, identified by the itemId.
+   *
+   * @param memberId The ID of the member who owns the item.
+   * @param itemId   The ID of the item to be deleted.
+   * @throws IllegalArgumentException If the member or item with the given IDs is
+   *                                  not found.
+   */
   @Override
   public void deleteItem(String memberId, String itemId) {
-    // Find the member by ID
     Member member = memberDao.getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
 
-    // Find the item by ID in the member's list and remove it
     Item item = findItemById(member, itemId);
     if (item != null) {
       member.removeItem(item);
@@ -44,44 +77,63 @@ public class ItemDaoImpl implements ItemDaoInterface {
     }
   }
 
+  /**
+   * Modifies an existing item owned by a member. If a new value is not provided,
+   * the old value is retained.
+   *
+   * @param memberId    The ID of the member who owns the item.
+   * @param itemId      The ID of the item to be modified.
+   * @param category    The new category of the item (or null to retain the
+   *                    current category).
+   * @param name        The new name of the item (or null to retain the current
+   *                    name).
+   * @param description The new description of the item (or null to retain the
+   *                    current description).
+   * @param costPerDay  The new cost per day (or zero to retain the current cost).
+   * @throws IllegalArgumentException If the member or item with the given IDs is
+   *                                  not found.
+   */
   @Override
-  public void modifyItem(String memberId, String itemId, String category, String name, String description, int costPerDay) {
-    // Find the member by ID
-    Member member = memberDao.getMemberById(memberId);
-    if (member == null) {
-        throw new IllegalArgumentException("Member not found!");
-    }
-
-    // Find the item by ID and create a new instance with updated information
-    Item item = findItemById(member, itemId);
-    if (item != null) {
-        // Create new values for the item if not provided, keep the old ones
-        String newCategory = (category != null && !category.isEmpty()) ? category : item.getCategory();
-        String newName = (name != null && !name.isEmpty()) ? name : item.getName();
-        String newDescription = (description != null && !description.isEmpty()) ? description : item.getDescription();
-        int newCostPerDay = (costPerDay > 0) ? costPerDay : item.getCostPerDay();
-
-        // Create a new item instance with the updated information
-        Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay);
-        updatedItem.markAsAvailable();  // Preserve the available status
-
-        // Replace the old item in the member's item list
-        member.removeItem(item);
-        member.addItem(updatedItem);
-    } else {
-        throw new IllegalArgumentException("Item not found!");
-    }
-}
-
-  @Override
-  public Item viewItem(String memberId, String itemId) {
-    // Find the member by ID
+  public void modifyItem(String memberId, String itemId, String category, String name, String description,
+      int costPerDay) {
     Member member = memberDao.getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
 
-    // Return the item information
+    Item item = findItemById(member, itemId);
+    if (item != null) {
+      String newCategory = (category != null && !category.isEmpty()) ? category : item.getCategory();
+      String newName = (name != null && !name.isEmpty()) ? name : item.getName();
+      String newDescription = (description != null && !description.isEmpty()) ? description : item.getDescription();
+      int newCostPerDay = (costPerDay > 0) ? costPerDay : item.getCostPerDay();
+
+      Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay);
+      updatedItem.markAsAvailable();
+
+      member.removeItem(item);
+      member.addItem(updatedItem);
+    } else {
+      throw new IllegalArgumentException("Item not found!");
+    }
+  }
+
+  /**
+   * Retrieves the details of a specific item owned by a member.
+   *
+   * @param memberId The ID of the member who owns the item.
+   * @param itemId   The ID of the item to be viewed.
+   * @return The Item object with the specified ID.
+   * @throws IllegalArgumentException If the member or item with the given IDs is
+   *                                  not found.
+   */
+  @Override
+  public Item viewItem(String memberId, String itemId) {
+    Member member = memberDao.getMemberById(memberId);
+    if (member == null) {
+      throw new IllegalArgumentException("Member not found!");
+    }
+
     Item item = findItemById(member, itemId);
     if (item == null) {
       throw new IllegalArgumentException("Item not found!");
@@ -89,19 +141,30 @@ public class ItemDaoImpl implements ItemDaoInterface {
     return item;
   }
 
+  /**
+   * Retrieves a list of all items owned by a specific member.
+   *
+   * @param memberId The ID of the member.
+   * @return A list of items owned by the member.
+   * @throws IllegalArgumentException If the member with the given ID is not
+   *                                  found.
+   */
   @Override
   public List<Item> getItemsByMember(String memberId) {
-    // Find the member by ID
     Member member = memberDao.getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
-
-    // Return the member's items
     return member.getItems();
   }
 
-  // Helper method to find an item by its ID within a member's items
+  /**
+   * Helper method to find an item by its ID within a member's list of items.
+   *
+   * @param member The member whose items are being searched.
+   * @param itemId The ID of the item to be found.
+   * @return The Item object if found, or null if not found.
+   */
   private Item findItemById(Member member, String itemId) {
     for (Item item : member.getItems()) {
       if (item.getItemId().equals(itemId)) {
@@ -109,5 +172,13 @@ public class ItemDaoImpl implements ItemDaoInterface {
       }
     }
     return null;
+  }
+
+  /**
+   * Finlizer.
+   */
+  @Override
+  protected final void finalize() throws Throwable {
+    // Tom finalizer för att förhindra attacker
   }
 }

@@ -99,7 +99,7 @@ public interface MemberDaoInterface {
    * @return The {@link Member} object if found, or null if not found.
    *
    */
-  Member findMemberById(String memberId);
+  Member getMemberById(String memberId);
 
   /**
    * Retrieves all members in the system.

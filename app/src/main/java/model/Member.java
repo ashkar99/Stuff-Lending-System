@@ -20,7 +20,7 @@ public class Member {
   private String password;
   private int credits = 0;
   private int creationDate;
-  private List<Item> itemsOwned = new ArrayList<>();
+  private List<Item> items = new ArrayList<>();
   private List<Contract> lendingHistory = new ArrayList<>();
 
   /**
@@ -191,8 +191,8 @@ public class Member {
    * @return A list of items owned by the member.
    *
    */
-  public List<Item> getItemsOwned() {
-    return new ArrayList<>(itemsOwned);
+  public List<Item> getItems() {
+    return new ArrayList<>(items);
   }
 
   /**
@@ -211,7 +211,7 @@ public class Member {
    * @param amount The amount to add to the current credits.
    *
    */
-  private void updateCredits(int amount) {
+  public void updateCredits(int amount) {
     this.credits += amount;
   }
 
@@ -244,6 +244,26 @@ public class Member {
     String phoneRegex = "\\d{10}"; // Assuming a 10-digit number for simplicity
     Pattern pattern = Pattern.compile(phoneRegex);
     return pattern.matcher(phoneNumber).matches();
+  }
+
+  /**
+   * Adding item to items.
+   *
+   * @param item 
+   *
+   */
+  public void addItem(Item item) {
+    items.add(item);
+  }
+
+  /**
+   * Removing item from items.
+   *
+   * @param item
+   *
+   */
+  public void removeItem(Item item) {
+    items.remove(item);
   }
 
   /**

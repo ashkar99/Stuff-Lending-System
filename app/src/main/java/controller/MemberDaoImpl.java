@@ -14,11 +14,9 @@ public class MemberDaoImpl implements MemberDaoInterface {
   private List<Member> members = new ArrayList<>();
 
   /**
-   * Constructor for the MemberDaoImpl class. Initializes an empty list of
-   * members.
+   * Constructor for the MemberDaoImpl class. 
    */
   public MemberDaoImpl() {
-    // Constructor
   }
 
   /**
@@ -37,15 +35,10 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * If a field is null or blank, the current value will be kept.
    *
    * @param memberId    The ID of the member to be modified.
-   *
    * @param name        The new name for the member.
-   *
    * @param email       The new email for the member.
-   *
    * @param phoneNumber The new phone number for the member.
-   *
    * @param password    The new password for the member.
-   *
    * @throws IllegalArgumentException if the member is not found.
    *
    */
@@ -73,9 +66,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * member.
    *
    * @param email       The email to check.
-   *
    * @param phoneNumber The phone number to check.
-   *
    * @throws IllegalArgumentException if the email or phone number is already in
    *                                  use.
    */

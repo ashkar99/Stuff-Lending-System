@@ -1,6 +1,5 @@
 package controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import model.Item;
 import model.Member;
@@ -12,21 +11,13 @@ import model.Member;
  * This class uses the MemberDaoInterface to interact with member data.
  */
 public class ItemDaoImpl implements ItemDaoInterface {
-  private MemberDaoInterface memberDao;
+  private MemberDaoInterface memberDao = new MemberDaoImpl();
 
   /**
-   * Constructs an ItemDaoImpl instance with a MemberDaoInterface
-   * that allows it to interact with member data.
+   * Constructor for the ItemDaoImpl class. 
    *
-   * @param memberDao The MemberDaoInterface instance to use for member
-   *                  operations.
    */
-  @SuppressFBWarnings
-  public ItemDaoImpl(MemberDaoInterface memberDao) {
-    if (memberDao == null) {
-      this.memberDao = new MemberDaoImpl();
-    }
-    this.memberDao = memberDao;
+  public ItemDaoImpl() {
   }
 
   /**
@@ -175,7 +166,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
   }
 
   /**
-   * Finlizer.
+   * Finalizer.
    */
   @Override
   protected final void finalize() throws Throwable {

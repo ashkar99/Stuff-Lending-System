@@ -108,7 +108,7 @@ public class Contract {
    */
   public Item getItem() {
     return new Item(item.getItemId(), item.getCategory(), item.getName(), item.getDescription(),
-        item.getCreationDate(), item.getCostPerDay(), item.getOwner());
+        item.getCostPerDay(), item.getOwner());
   }
 
   /**

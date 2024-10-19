@@ -1,7 +1,8 @@
-import controller.Basic;
+
 import java.util.List;
 import model.Member;
 import model.Time;
+import view.Viewer;
 
 /**
  * Responsible for staring the application.
@@ -20,19 +21,16 @@ public class App {
    *
    */
   public static void main(String[] args) {
-    app.generated();
+    Viewer viewer = new Viewer();
+    viewer.startScreen();
+    
   }
 
   /**
    * Hard-coding some members, items and contracts.
    */
   private void generated() {
-    Time t = new Time();
 
-    Basic.getMemberInstance().addMember("Alice", "alice@example.com", "1234567890", "password");
-    t.advanceDays(5);
-    Basic.getMemberInstance().addMember("Bob", "bob@example.com", "0987654321", "password");
-    Basic.getMemberInstance().addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
     // // Retrieve members for easy reference
     // Member alice = Basic.getInstance().findMemberById("alice@example.com");
@@ -61,10 +59,9 @@ public class App {
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
-    for (Member m : Basic.getMemberInstance().getMembers()) {
-      System.out.println(m.getCreationDate());
+    
     }
 
   }
 
-}
+

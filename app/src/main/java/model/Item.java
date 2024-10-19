@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Item {
   private String category;
   private String name;
   private String description;
-  private int creationDate;
+  private LocalDate creationDate;
   private int costPerDay;
   private Member owner;
   private List<Contract> lendingHistory = new ArrayList<>();
@@ -35,8 +36,7 @@ public class Item {
    * @param owner        The owner of the item.
    *
    */
-  public Item(String itemId, String category, String name, String description, int creationDate, int costPerDay,
-      Member owner) {
+  public Item(String itemId, String category, String name, String description, int costPerDay, Member owner) {
     setItemId(itemId);
     setCategory(category);
     setName(name);
@@ -142,7 +142,7 @@ public class Item {
    * @return The creation date as an integer representing the day.
    *
    */
-  public int getCreationDate() {
+  public LocalDate getCreationDate() {
     return creationDate;
   }
 
@@ -150,8 +150,9 @@ public class Item {
    * Sets the creation date to the current day.
    */
   private void setCreationDate() {
-    Time t = new Time(); // Assuming the Time class provides current day
-    this.creationDate = t.getCurrentDay();
+    if (this.creationDate == null) {
+      this.creationDate = LocalDate.now();
+    }
   }
 
   /**

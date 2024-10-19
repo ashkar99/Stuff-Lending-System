@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +20,7 @@ public class Member {
   private String phoneNumber;
   private String password;
   private int credits = 0;
-  private int creationDate;
+  private LocalDate creationDate;
   private List<Item> items = new ArrayList<>();
   private List<Contract> lendingHistory = new ArrayList<>();
 
@@ -171,8 +172,9 @@ public class Member {
    * Sets the member's creation date to the current day.
    */
   private void setCreationDate() {
-    Time time = new Time(); // Assuming Time class provides current day
-    this.creationDate = time.getCurrentDay();
+    if (this.creationDate == null) {
+      this.creationDate = LocalDate.now();
+    }
   }
 
   /**
@@ -181,7 +183,7 @@ public class Member {
    * @return The creation date as an integer representing the day.
    *
    */
-  public int getCreationDate() {
+  public LocalDate getCreationDate() {
     return creationDate;
   }
 

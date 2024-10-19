@@ -6,6 +6,8 @@ import controller.MemberDaoInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
+
+import model.Item;
 import model.Member;
 
 /**
@@ -70,7 +72,16 @@ public class MemberViewer {
     showSimpleAllMembers();
     System.out.println("Enter the memberId of the selected member");
     String memberId = input.nextLine();
-    memberDaoImpl.showSpecificMemberInfo(memberId);
+    Member member= memberDaoImpl.showSpecificMemberInfo(memberId);
+    System.out.println("----------------------------------------");
+    System.out.println("Name: " + member.getName());
+    System.out.println("Email: " + member.getEmail());
+    System.err.println("Phone number: " + member.getPhoneNumber());
+    System.out.println("Member ID: " + member.getMemberId());
+    System.err.println("Current credits: " + member.getCredits());
+    System.out.println("Number of owned items: " + member.getItems().size());
+    System.out.println("----------------------------------------");
+    
   }
 
   /**
@@ -109,11 +120,11 @@ public class MemberViewer {
     List<Member> simplList = memberDaoImpl.listSimpleMembersInfo();
     for (Member member : simplList) {
       System.out.println("----------------------------------------");
-      System.out.println(member.getName());
-      System.out.println(member.getEmail());
-      System.out.println(member.getPhoneNumber());
-      System.out.println(member.getPassword());
-      System.out.println(member.getCreationDate());
+      System.out.println("Name: " + member.getName());
+      System.out.println("Email: " + member.getEmail());
+      System.out.println("Member ID: " + member.getMemberId());
+      System.err.println("Current credits: " + member.getCredits());
+      System.out.println("Number of owned items: " + member.getItems().size());
       System.out.println("----------------------------------------");
     }
   }
@@ -126,11 +137,18 @@ public class MemberViewer {
     List<Member> verboseList = memberDaoImpl.listSimpleMembersInfo();
     for (Member member : verboseList) {
       System.out.println("----------------------------------------");
-      System.out.println(member.getName());
-      System.out.println(member.getEmail());
-      System.out.println(member.getPhoneNumber());
-      System.out.println(member.getPassword());
-      System.out.println(member.getCreationDate());
+      System.out.println("Name: " + member.getName());
+      System.out.println("Email: " + member.getEmail());
+      List<Item> items = member.getItems();
+      for (Item item : items){
+      System.out.println(item.getName());
+      item.getDescription();
+      item.getCategory();
+      item.getCostPerDay();
+      
+      
+      }
+      System.out.println("");
       System.out.println("----------------------------------------");
     }
   }

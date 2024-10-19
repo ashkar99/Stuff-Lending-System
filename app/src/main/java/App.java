@@ -23,14 +23,13 @@ public class App {
   public static void main(String[] args) {
     Viewer viewer = new Viewer();
     viewer.startScreen();
-    
+
   }
 
   /**
    * Hard-coding some members, items and contracts.
    */
   private void generated() {
-
 
     // // Retrieve members for easy reference
     // Member alice = Basic.getInstance().findMemberById("alice@example.com");
@@ -59,9 +58,6 @@ public class App {
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
-    
-    }
-
   }
 
-
+}

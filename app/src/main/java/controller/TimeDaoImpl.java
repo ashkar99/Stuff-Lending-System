@@ -2,6 +2,9 @@ package controller;
 
 import model.Time;
 
+/**
+ * TimeDaoImpl class.
+ */
 public class TimeDaoImpl implements TimeDaoInterface {
 
   private Time time = new Time(0);
@@ -42,6 +45,6 @@ public class TimeDaoImpl implements TimeDaoInterface {
   @Override
   public int getCurrentDay() {
     int dayCounter = time.getCurrentDay();
-   return dayCounter;
+    return dayCounter;
   }
 }

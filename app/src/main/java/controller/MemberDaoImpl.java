@@ -14,7 +14,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   private List<Member> members = new ArrayList<>();
 
   /**
-   * Constructor for the MemberDaoImpl class. 
+   * Constructor for the MemberDaoImpl class.
    */
   public MemberDaoImpl() {
     generated();
@@ -61,12 +61,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
     String newEmail = (email != null && !email.isBlank()) ? email : member.getEmail();
     String newPhoneNumber = (phoneNumber != null && !phoneNumber.isBlank()) ? phoneNumber : member.getPhoneNumber();
     String newPassword = (password != null && !password.isBlank()) ? password : member.getPassword();
-
-    Member updatedMember = new Member(newName, newEmail, newPhoneNumber, newPassword);
-
-    // Replace the old member with the updated one
-    members.remove(member);
-    members.add(updatedMember);
+    member.updateMember(newName, newEmail, newPhoneNumber, newPassword);
   }
 
   /**
@@ -195,5 +190,13 @@ public class MemberDaoImpl implements MemberDaoInterface {
   @Override
   public List<Member> getMembers() {
     return new ArrayList<>(members);
+  }
+
+  /**
+   * Finalizer.
+   */
+  @Override
+  protected final void finalize() throws Throwable {
+    // Tom finalizer för att förhindra attacker
   }
 }

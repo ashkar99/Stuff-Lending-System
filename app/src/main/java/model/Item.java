@@ -26,18 +26,15 @@ public class Item {
    * Constructor to create a new Item with the provided details.
    * The item is marked as available by default.
    *
-   * @param itemId       The unique identifier for the item. If null, it will be
-   *                     auto-generated.
-   * @param category     The category of the item (e.g., TOOL, VEHICLE, etc.).
-   * @param name         The name of the item.
-   * @param description  A description of the item.
-   * @param creationDate The date the item was created (current day will be used).
-   * @param costPerDay   The cost of renting the item per day.
-   * @param owner        The owner of the item.
+   * @param category    The category of the item (e.g., TOOL, VEHICLE, etc.).
+   * @param name        The name of the item.
+   * @param description A description of the item.
+   * @param costPerDay  The cost of renting the item per day.
+   * @param owner       The owner of the item.
    *
    */
-  public Item(String itemId, String category, String name, String description, int costPerDay, Member owner) {
-    setItemId(itemId);
+  public Item(String category, String name, String description, int costPerDay, Member owner) {
+    setItemId();
     setCategory(category);
     setName(name);
     setDescription(description);
@@ -47,8 +44,20 @@ public class Item {
     markAsAvailable();
   }
 
-  public Item(String category, String name, String description, int costPerDay) {
-
+  /**
+   * Update item informations.
+   *
+   * @param category    Update category.
+   * @param name        Update name.
+   * @param description Update description.
+   * @param costPerDay  Update coset per day.
+   *
+   */
+  public void updateItem(String category, String name, String description, int costPerDay) {
+    setCategory(category);
+    setName(name);
+    setDescription(description);
+    setCostPerDay(costPerDay);
   }
 
   /**
@@ -68,11 +77,9 @@ public class Item {
    * @param itemId The item ID to set.
    *
    */
-  private void setItemId(String itemId) {
-    if (itemId == null) {
+  private void setItemId() {
+    if (this.itemId == null) {
       this.itemId = "ITEM" + System.nanoTime() % 1000000; // Generate a unique ID using current nano time
-    } else {
-      this.itemId = itemId;
     }
   }
 

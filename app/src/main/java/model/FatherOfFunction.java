@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Abstract class to avoid duplicated method.
  */
-public abstract class FunctionFather {
+public abstract class FatherOfFunction {
   protected LocalDate creationDate;
   protected String id;
 

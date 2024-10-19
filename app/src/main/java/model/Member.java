@@ -26,21 +26,35 @@ public class Member {
 
   /**
    * Constructor to create a new Member with the provided details.
-   * The email is used as the unique identifier (member ID).
    *
    * @param name        The name of the member.
-   * @param email       The email address of the member (also used as the member
-   *                    ID).
+   * @param email       The email address of the member 
    * @param phoneNumber The phone number of the member.
    * @param password    The password for the member account.
    */
   public Member(String name, String email, String phoneNumber, String password) {
-    setMemberId(email); // Use email as unique member id
+    setMemberId();
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);
     setPassword(password);
     setCreationDate();
+  }
+
+  /**
+   * Update member informations.
+   *
+   * @param name
+   * @param email
+   * @param phoneNumber
+   * @param password
+   *
+   */
+  public void updateMember(String name, String email, String phoneNumber, String password){
+    setName(name);
+    setEmail(email);
+    setPhoneNumber(phoneNumber);
+    setPassword(password);
   }
 
   /**
@@ -59,11 +73,9 @@ public class Member {
    * @param memberId The member ID to set.
    *
    */
-  private void setMemberId(String memberId) {
-    if (memberId == null) {
+  private void setMemberId() {
+    if (this.memberId == null) {
       this.memberId = generateUniqueMemberId();
-    } else {
-      this.memberId = memberId;
     }
   }
 
@@ -251,7 +263,7 @@ public class Member {
   /**
    * Adding item to items.
    *
-   * @param item 
+   * @param item
    *
    */
   public void addItem(Item item) {
@@ -280,11 +292,11 @@ public class Member {
   }
 
   /**
-   *Finlizer.
+   * Finlizer.
    */
   @Override
   protected final void finalize() throws Throwable {
-      // Tom finalizer för att förhindra attacker
+    // Tom finalizer för att förhindra attacker
   }
 
 }

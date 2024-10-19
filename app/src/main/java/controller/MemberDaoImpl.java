@@ -17,6 +17,14 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * Constructor for the MemberDaoImpl class. 
    */
   public MemberDaoImpl() {
+    generated();
+    // Constructor
+  }
+
+  private void generated() {
+    addMember("Alice", "alice@example.com", "1234567890", "password");
+    addMember("Bob", "bob@example.com", "0987654321", "password");
+    addMember("Charlie", "charlie@example.com", "1122334455", "password");
   }
 
   /**

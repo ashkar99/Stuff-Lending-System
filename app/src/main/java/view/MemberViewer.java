@@ -30,14 +30,8 @@ public class MemberViewer {
    * The method displays a menu with options to list all members, delete a member,
    * and view detailed information about specific members.
    */
-  public void login() {
-    /*
-     * System.out.println("ENTER YOUR EMAIL:");
-     * String email = input.nextLine();
-     * System.out.println("ENTER YOUR PASSWORD:");
-     * String password = input.nextLine();
-     */
-    // Basic.getMemberInstance().logIn(email, password);
+  public void menu() {
+ 
     String choice = "";
     while (choice != "9") {
 
@@ -95,7 +89,7 @@ public class MemberViewer {
    * email, password, and phone number.
    * The method adds the new member to the system.
    */
-  public void signIn() {
+  public void createMember() {
     System.out.println("ENTER YOUR NAME:");
     final String name = input.nextLine();
     System.out.println("ENTER YOUR EMAIL:");

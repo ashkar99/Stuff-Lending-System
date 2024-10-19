@@ -20,16 +20,15 @@ public class Viewer {
    */
   public void startScreen() {
     System.out.println("Welcome to Stuff Lending System App");
-    System.out.println("Press L to Login");
-    System.out.println("Press S to Sign in");
+    System.out.println("Press L to open the menu");
+    System.out.println("Press S to create a new member");
     String choice = input.nextLine().toLowerCase();
 
     switch (choice) {
       case "l":
-        viewer.login();
-        break;
+        viewer.menu();
       case "s":
-        viewer.signIn();
+        viewer.createMember();
         break;
       default:
         break;

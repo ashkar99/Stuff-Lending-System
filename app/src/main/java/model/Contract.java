@@ -107,7 +107,7 @@ public class Contract {
    * @return The borrowed item as an {@link Item}.
    */
   public Item getItem() {
-    return new Item(item.getItemId(), item.getCategory(), item.getName(), item.getDescription(),
+    return new Item(item.getCategory(), item.getName(), item.getDescription(),
         item.getCostPerDay(), item.getOwner());
   }
 

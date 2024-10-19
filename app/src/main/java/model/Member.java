@@ -28,7 +28,7 @@ public class Member {
    * Constructor to create a new Member with the provided details.
    *
    * @param name        The name of the member.
-   * @param email       The email address of the member 
+   * @param email       The email address of the member
    * @param phoneNumber The phone number of the member.
    * @param password    The password for the member account.
    */
@@ -44,13 +44,13 @@ public class Member {
   /**
    * Update member informations.
    *
-   * @param name
-   * @param email
-   * @param phoneNumber
-   * @param password
+   * @param name        Update name.
+   * @param email       Update email.
+   * @param phoneNumber Update phone number.
+   * @param password    Update password.
    *
    */
-  public void updateMember(String name, String email, String phoneNumber, String password){
+  public void updateMember(String name, String email, String phoneNumber, String password) {
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);
@@ -292,7 +292,7 @@ public class Member {
   }
 
   /**
-   * Finlizer.
+   * Finalizer.
    */
   @Override
   protected final void finalize() throws Throwable {

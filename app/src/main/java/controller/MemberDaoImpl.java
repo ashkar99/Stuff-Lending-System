@@ -14,7 +14,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   private List<Member> members = new ArrayList<>();
 
   /**
-   * Constructor for the MemberDaoImpl class. 
+   * Constructor for the MemberDaoImpl class.
    */
   public MemberDaoImpl() {
     generated();
@@ -190,5 +190,13 @@ public class MemberDaoImpl implements MemberDaoInterface {
   @Override
   public List<Member> getMembers() {
     return new ArrayList<>(members);
+  }
+
+  /**
+   * Finalizer.
+   */
+  @Override
+  protected final void finalize() throws Throwable {
+    // Tom finalizer för att förhindra attacker
   }
 }

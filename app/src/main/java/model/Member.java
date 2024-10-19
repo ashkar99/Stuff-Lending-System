@@ -12,17 +12,15 @@ import java.util.regex.Pattern;
  * It contains details such as name, email, phone number, password, credits, and
  * lists of owned items and lending history.
  */
-public class Member {
+public class Member extends FunctionFather {
 
-  private String memberId;
   private String name;
   private String email;
   private String phoneNumber;
   private String password;
   private int credits = 0;
-  private LocalDate creationDate;
   private List<Item> items = new ArrayList<>();
-  private List<Contract> lendingHistory = new ArrayList<>();
+  private List<ImmutableContract> lendingHistory = new ArrayList<>();
 
   /**
    * Constructor to create a new Member with the provided details.
@@ -33,7 +31,7 @@ public class Member {
    * @param password    The password for the member account.
    */
   public Member(String name, String email, String phoneNumber, String password) {
-    setMemberId();
+    setId();
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);
@@ -55,28 +53,6 @@ public class Member {
     setEmail(email);
     setPhoneNumber(phoneNumber);
     setPassword(password);
-  }
-
-  /**
-   * Gets the unique member ID, which is based on the email.
-   *
-   * @return The member ID.
-   *
-   */
-  public String getMemberId() {
-    return memberId;
-  }
-
-  /**
-   * Sets the member ID. If the provided ID is null, a unique ID is generated.
-   *
-   * @param memberId The member ID to set.
-   *
-   */
-  private void setMemberId() {
-    if (this.memberId == null) {
-      this.memberId = generateUniqueMemberId();
-    }
   }
 
   /**
@@ -180,24 +156,7 @@ public class Member {
     return credits;
   }
 
-  /**
-   * Sets the member's creation date to the current day.
-   */
-  private void setCreationDate() {
-    if (this.creationDate == null) {
-      this.creationDate = LocalDate.now();
-    }
-  }
-
-  /**
-   * Gets the member's creation date.
-   *
-   * @return The creation date as an integer representing the day.
-   *
-   */
-  public LocalDate getCreationDate() {
-    return creationDate;
-  }
+ 
 
   /**
    * Gets the list of items owned by the member.
@@ -215,7 +174,7 @@ public class Member {
    * @return A list of lending contracts.
    *
    */
-  public List<Contract> getLendingHistory() {
+  public List<ImmutableContract> getLendingHistory() {
     return new ArrayList<>(lendingHistory);
   }
 
@@ -279,36 +238,4 @@ public class Member {
   public void removeItem(Item item) {
     items.remove(item);
   }
-
-  /**
-   * Generates a unique member ID using a UUID and returns the first 5 characters.
-   *
-   * @return A unique member ID.
-   *
-   */
-  private String generateUniqueMemberId() {
-    String uuid = UUID.randomUUID().toString();
-    return uuid.substring(0, 5); // Take the first 5 characters
-  }
-
-  /**
-   * Finalizer.
-   */
-  @Override
-  protected final void finalize() throws Throwable {
-    // Tom finalizer för att förhindra attacker
-  }
-
 }
-
-// @Override
-// public String toString() {
-// return "Member ID: " + memberId + "\n" +
-// "Name: " + name + "\n" +
-// "Email: " + email + "\n" +
-// "Phone: " + phoneNumber + "\n" +
-// "Credits: " + credits + "\n" +
-// "Creation Date: " + creationDate + "\n" +
-// "Owned Items: " + itemsOwned.size() + "\n" +
-// "Lending History: " + lendingHistory.size();
-// }

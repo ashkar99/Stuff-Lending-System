@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The Item class represents an item that can be rented out by a member.
@@ -10,16 +11,14 @@ import java.util.List;
  * day, and its availability status.
  * The item also maintains a lending history of contracts it has been a part of.
  */
-public class Item {
+public class Item extends FunctionFather {
 
-  private String itemId;
   private String category;
   private String name;
   private String description;
-  private LocalDate creationDate;
   private int costPerDay;
   private Member owner;
-  private List<Contract> lendingHistory = new ArrayList<>();
+  private List<ImmutableContract> lendingHistory = new ArrayList<>();
   private boolean isAvailable;
 
   /**
@@ -34,7 +33,7 @@ public class Item {
    *
    */
   public Item(String category, String name, String description, int costPerDay, Member owner) {
-    setItemId();
+    setId();
     setCategory(category);
     setName(name);
     setDescription(description);
@@ -58,29 +57,6 @@ public class Item {
     setName(name);
     setDescription(description);
     setCostPerDay(costPerDay);
-  }
-
-  /**
-   * Gets the item's unique identifier.
-   *
-   * @return The item ID.
-   *
-   */
-  public String getItemId() {
-    return itemId;
-  }
-
-  /**
-   * Sets the item ID. If the provided ID is null, an ID is auto-generated
-   * using the current time in nanoseconds.
-   *
-   * @param itemId The item ID to set.
-   *
-   */
-  private void setItemId() {
-    if (this.itemId == null) {
-      this.itemId = "ITEM" + System.nanoTime() % 1000000; // Generate a unique ID using current nano time
-    }
   }
 
   /**
@@ -143,24 +119,6 @@ public class Item {
     this.description = description;
   }
 
-  /**
-   * Gets the creation date of the item.
-   *
-   * @return The creation date as an integer representing the day.
-   *
-   */
-  public LocalDate getCreationDate() {
-    return creationDate;
-  }
-
-  /**
-   * Sets the creation date to the current day.
-   */
-  private void setCreationDate() {
-    if (this.creationDate == null) {
-      this.creationDate = LocalDate.now();
-    }
-  }
 
   /**
    * Gets the cost per day for renting the item.
@@ -219,7 +177,7 @@ public class Item {
    * @param contract The contract to add to the lending history.
    *
    */
-  public void addContract(Contract contract) {
+  public void addContract(ImmutableContract contract) {
     lendingHistory.add(contract);
     this.isAvailable = false;
   }

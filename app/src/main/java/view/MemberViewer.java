@@ -2,11 +2,9 @@ package view;
 
 import controller.MemberDaoImpl;
 import controller.MemberDaoInterface;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
-
 import model.Item;
 import model.Member;
 
@@ -33,7 +31,7 @@ public class MemberViewer {
    * and view detailed information about specific members.
    */
   public void menu() {
- 
+
     String choice = "";
     while (choice != "9") {
 
@@ -57,10 +55,18 @@ public class MemberViewer {
         case "v":
           showVerboseAllMembers();
           break;
+        case "e":
+          editMemberInfo();
+          break;
         default:
           break;
       }
     }
+  }
+
+  private void editMemberInfo() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'editMemberInfo'");
   }
 
   /**
@@ -72,16 +78,16 @@ public class MemberViewer {
     showSimpleAllMembers();
     System.out.println("Enter the memberId of the selected member");
     String memberId = input.nextLine();
-    Member member= memberDaoImpl.showSpecificMemberInfo(memberId);
+    Member member = memberDaoImpl.showSpecificMemberInfo(memberId);
     System.out.println("----------------------------------------");
     System.out.println("Name: " + member.getName());
     System.out.println("Email: " + member.getEmail());
     System.err.println("Phone number: " + member.getPhoneNumber());
-    System.out.println("Member ID: " + member.getMemberId());
+    System.out.println("Member ID: " + member.getId());
     System.err.println("Current credits: " + member.getCredits());
     System.out.println("Number of owned items: " + member.getItems().size());
     System.out.println("----------------------------------------");
-    
+
   }
 
   /**
@@ -122,7 +128,7 @@ public class MemberViewer {
       System.out.println("----------------------------------------");
       System.out.println("Name: " + member.getName());
       System.out.println("Email: " + member.getEmail());
-      System.out.println("Member ID: " + member.getMemberId());
+      System.out.println("Member ID: " + member.getId());
       System.err.println("Current credits: " + member.getCredits());
       System.out.println("Number of owned items: " + member.getItems().size());
       System.out.println("----------------------------------------");
@@ -140,13 +146,12 @@ public class MemberViewer {
       System.out.println("Name: " + member.getName());
       System.out.println("Email: " + member.getEmail());
       List<Item> items = member.getItems();
-      for (Item item : items){
-      System.out.println(item.getName());
-      item.getDescription();
-      item.getCategory();
-      item.getCostPerDay();
-      
-      
+      for (Item item : items) {
+        System.out.println(item.getName());
+        System.out.println(item.getDescription());
+        System.out.println(item.getCategory());
+        System.out.println(item.getCostPerDay());
+
       }
       System.out.println("");
       System.out.println("----------------------------------------");

@@ -14,7 +14,7 @@ public class Member {
   private String password;
   private int credits = 0;
   private int creationDate;
-  private List<Item> itemsOwned = new ArrayList<>();
+  private List<Item> items = new ArrayList<>();
   private List<Contract> lendingHistory = new ArrayList<>();
 
   public Member(String name, String email, String phoneNumber, String password) {

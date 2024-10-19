@@ -46,8 +46,9 @@ public class Item {
     setOwner(owner);
     markAsAvailable();
   }
+
   public Item(String category, String name, String description, int costPerDay) {
-    
+
   }
 
   /**

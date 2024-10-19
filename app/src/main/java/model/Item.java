@@ -26,14 +26,11 @@ public class Item {
    * Constructor to create a new Item with the provided details.
    * The item is marked as available by default.
    *
-   * @param itemId       The unique identifier for the item. If null, it will be
-   *                     auto-generated.
-   * @param category     The category of the item (e.g., TOOL, VEHICLE, etc.).
-   * @param name         The name of the item.
-   * @param description  A description of the item.
-   * @param creationDate The date the item was created (current day will be used).
-   * @param costPerDay   The cost of renting the item per day.
-   * @param owner        The owner of the item.
+   * @param category    The category of the item (e.g., TOOL, VEHICLE, etc.).
+   * @param name        The name of the item.
+   * @param description A description of the item.
+   * @param costPerDay  The cost of renting the item per day.
+   * @param owner       The owner of the item.
    *
    */
   public Item(String category, String name, String description, int costPerDay, Member owner) {
@@ -47,8 +44,20 @@ public class Item {
     markAsAvailable();
   }
 
+  /**
+   * Update item informations.
+   *
+   * @param category    Update category.
+   * @param name        Update name.
+   * @param description Update description.
+   * @param costPerDay  Update coset per day.
+   *
+   */
   public void updateItem(String category, String name, String description, int costPerDay) {
-
+    setCategory(category);
+    setName(name);
+    setDescription(description);
+    setCostPerDay(costPerDay);
   }
 
   /**

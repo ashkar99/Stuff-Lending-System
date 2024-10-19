@@ -6,7 +6,6 @@ import model.Time;
  * TimeDaoImpl class.
  */
 public class TimeDaoImpl implements TimeDaoInterface {
-
   private Time time = new Time(0);
 
   /**

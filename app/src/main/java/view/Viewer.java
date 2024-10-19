@@ -27,6 +27,7 @@ public class Viewer {
     switch (choice) {
       case "l":
         viewer.menu();
+        break;
       case "s":
         viewer.createMember();
         break;

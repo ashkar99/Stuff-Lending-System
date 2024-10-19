@@ -174,7 +174,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   @Override
   public Member getMemberById(String memberId) {
     for (Member member : members) {
-      if (member.getMemberId().equals(memberId)) {
+      if (member.getId().equals(memberId)) {
         return member;
       }
     }

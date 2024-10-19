@@ -155,7 +155,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
    */
   private Item getItemById(Member member, String itemId) {
     for (Item item : member.getItems()) {
-      if (item.getItemId().equals(itemId)) {
+      if (item.getId().equals(itemId)) {
         return item;
       }
     }

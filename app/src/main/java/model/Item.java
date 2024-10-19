@@ -36,8 +36,8 @@ public class Item {
    * @param owner        The owner of the item.
    *
    */
-  public Item(String itemId, String category, String name, String description, int costPerDay, Member owner) {
-    setItemId(itemId);
+  public Item(String category, String name, String description, int costPerDay, Member owner) {
+    setItemId();
     setCategory(category);
     setName(name);
     setDescription(description);
@@ -47,7 +47,7 @@ public class Item {
     markAsAvailable();
   }
 
-  public Item(String category, String name, String description, int costPerDay) {
+  public void updateItem(String category, String name, String description, int costPerDay) {
 
   }
 
@@ -68,11 +68,9 @@ public class Item {
    * @param itemId The item ID to set.
    *
    */
-  private void setItemId(String itemId) {
-    if (itemId == null) {
+  private void setItemId() {
+    if (this.itemId == null) {
       this.itemId = "ITEM" + System.nanoTime() % 1000000; // Generate a unique ID using current nano time
-    } else {
-      this.itemId = itemId;
     }
   }
 

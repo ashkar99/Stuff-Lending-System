@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import controller.ContractDaoImpl;
 import model.CategoryEnum;
 import model.Item;
 import model.Member;

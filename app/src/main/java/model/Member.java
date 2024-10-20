@@ -38,6 +38,21 @@ public class Member extends FatherOfFunction {
   }
 
   /**
+   * Copy constructor to create a deep copy.
+   *
+   * @param member to return a copy of it.
+   */
+  public Member(Member member) {
+    this.id = member.id;
+    this.name = member.name;
+    this.email = member.email;
+    this.phoneNumber = member.phoneNumber;
+    this.password = member.password;
+    this.credits = member.credits;
+    this.items = new ArrayList<>(member.items); // Deep copy of items
+  }
+
+  /**
    * Update member informations.
    *
    * @param name        Update name.
@@ -238,7 +253,7 @@ public class Member extends FatherOfFunction {
   /**
    * Adding the contract to lendingHistory.
    *
-   * @param contract  Add contract.
+   * @param contract Add contract.
    */
   public void addContract(ImmutableContract contract) {
     lendingHistory.add(contract);

@@ -117,7 +117,6 @@ public class Item extends FatherOfFunction {
     this.description = description;
   }
 
-
   /**
    * Gets the cost per day for renting the item.
    *
@@ -156,6 +155,14 @@ public class Item extends FatherOfFunction {
    */
   private void setOwner(Member owner) {
     this.owner = owner;
+  }
+
+  /**
+   * 
+   * Get contracts.
+   */
+  public List<ImmutableContract> getContracts() {
+    return new ArrayList<>(lendingHistory);
   }
 
   /**

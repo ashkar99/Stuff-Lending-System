@@ -10,7 +10,6 @@ package model;
  */
 public final class ImmutableContract extends FatherOfFunction {
 
-  private final String contractId;
   private final Member lender;
   private final Member borrower;
   private final Item item;
@@ -29,9 +28,9 @@ public final class ImmutableContract extends FatherOfFunction {
    * @param startDay   The start day of the contract period.
    * @param endDay     The end day of the contract period.
    */
-  public ImmutableContract(String contractId, Member lender, Member borrower, Item item, int startDay, int endDay) {
+  public ImmutableContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
 
-    this.contractId = generateUniqueId();
+    this.id = generateUniqueId(); // generate id in super calss only once.
     this.lender = new Member(lender.getName(), lender.getEmail(), lender.getPhoneNumber(), lender.getPassword()); // Defensive
                                                                                                                   // copy
     this.borrower = new Member(borrower.getName(), borrower.getEmail(), borrower.getPhoneNumber(),

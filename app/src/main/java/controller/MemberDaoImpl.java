@@ -2,7 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import controller.ContractDaoImpl;
 import model.CategoryEnum;
 import model.Item;
 import model.Member;
@@ -27,28 +27,23 @@ public class MemberDaoImpl implements MemberDaoInterface {
   private void generated() {
     Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
     members.add(bob);
-    addMember("Alice", "alice@example.com", "1234567890", "password");
+    Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
+    members.add(alice);
+    alice.updateCredits(40);
     addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
-        // // Add Items to members
-    bob.addItem(new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob));
+    // // Add Items to members
+    Item item = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
+    bob.addItem(item);
 
-    bob.addItem(new Item(CategoryEnum.GAME,"Monopoly game", "Board Game", 2,bob));
-
+    bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
 
     bob.addItem(new Item(CategoryEnum.TOY, "Toy car", "Red remote control car", 20, bob));
 
     bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
-      
-    
 
-
- 
-
-   
-
-    // controller.createContract(alice.getMemberId(), bob.getMemberId(),
-    // 'alice.getItemID()', 1, 3); // Bob borrows Alice's Hammer
+    ContractDaoInterface contract = new ContractDaoImpl();
+    contract.createContract(bob, alice, item, 1, 3); // Bob borrows Alice's Hammer
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
@@ -75,7 +70,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * @param phoneNumber The new phone number for the member.
    * @param password    The new password for the member.
    * @throws IllegalArgumentException if the member is not found.
-   *
    */
   @Override
   public void modifyMember(String memberId, String name, String email, String phoneNumber, String password) {
@@ -118,7 +112,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * @param password The password of the member.
    * @throws IllegalArgumentException if the member is not found or the password
    *                                  is incorrect.
-   *
    */
   @Override
   public void deleteMember(String memberId, String password) {
@@ -136,7 +129,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * @param memberId The ID of the member to retrieve.
    * @return A {@link Member} object containing the member's details.
    * @throws IllegalArgumentException if the member is not found.
-   *
    */
   @Override
   public Member showSpecificMemberInfo(String memberId) {
@@ -158,7 +150,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * @param memberId The ID of the member to search for.
    *
    * @return The {@link Member} object if found, or null if not found.
-   *
    */
   @Override
   public Member getMemberById(String memberId) {
@@ -174,7 +165,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * Retrieves the full list of members.
    *
    * @return A list of {@link Member} objects representing all members.
-   *
    */
   @Override
   public List<Member> getMembers() {

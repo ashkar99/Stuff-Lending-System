@@ -1,9 +1,7 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -156,8 +154,6 @@ public class Member extends FatherOfFunction {
     return credits;
   }
 
- 
-
   /**
    * Gets the list of items owned by the member.
    *
@@ -239,7 +235,12 @@ public class Member extends FatherOfFunction {
     items.remove(item);
   }
 
-  public void addContract(ImmutableContract contract){
+  /**
+   * Adding the contract to lendingHistory.
+   *
+   * @param contract  Add contract.
+   */
+  public void addContract(ImmutableContract contract) {
     lendingHistory.add(contract);
   }
 }

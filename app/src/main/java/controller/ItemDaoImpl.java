@@ -16,7 +16,6 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
   /**
    * Constructor for the ItemDaoImpl class.
-   *
    */
   public ItemDaoImpl() {
   }

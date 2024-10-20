@@ -22,17 +22,16 @@ public final class ImmutableContract extends FatherOfFunction {
    * Constructor to initialize a new Contract with the provided details.
    * By default, the contract's status is set to "Active".
    *
-   * @param lender     The member who is lending the item.
-   * @param borrower   The member who is borrowing the item.
-   * @param item       The item being borrowed.
-   * @param startDay   The start day of the contract period.
-   * @param endDay     The end day of the contract period.
+   * @param lender   The member who is lending the item.
+   * @param borrower The member who is borrowing the item.
+   * @param item     The item being borrowed.
+   * @param startDay The start day of the contract period.
+   * @param endDay   The end day of the contract period.
    */
   public ImmutableContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
 
     this.id = generateUniqueId(); // generate id in super calss only once.
-    this.lender = new Member(lender.getName(), lender.getEmail(), lender.getPhoneNumber(), lender.getPassword()); // Defensive
-                                                                                                                  // copy
+    this.lender = new Member(lender.getName(), lender.getEmail(), lender.getPhoneNumber(), lender.getPassword());
     this.borrower = new Member(borrower.getName(), borrower.getEmail(), borrower.getPhoneNumber(),
         borrower.getPassword()); // Defensive copy
     this.item = new Item(item.getCategory(), item.getName(), item.getDescription(), item.getCostPerDay(),

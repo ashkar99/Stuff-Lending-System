@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import controller.ContractDaoImpl;
 import model.CategoryEnum;
 import model.Item;
 import model.Member;
@@ -26,11 +27,14 @@ public class MemberDaoImpl implements MemberDaoInterface {
   private void generated() {
     Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
     members.add(bob);
-    addMember("Alice", "alice@example.com", "1234567890", "password");
+    Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
+    members.add(alice);
+    alice.updateCredits(40);
     addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
     // // Add Items to members
-    bob.addItem(new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob));
+    Item item = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
+    bob.addItem(item);
 
     bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
 
@@ -38,8 +42,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
     bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
 
-    // controller.createContract(alice.getMemberId(), bob.getMemberId(),
-    // 'alice.getItemID()', 1, 3); // Bob borrows Alice's Hammer
+    ContractDaoInterface contract = new ContractDaoImpl();
+    contract.createContract(bob, alice, item, 1, 3); // Bob borrows Alice's Hammer
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 

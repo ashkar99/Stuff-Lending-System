@@ -238,4 +238,8 @@ public class Member extends FatherOfFunction {
   public void removeItem(Item item) {
     items.remove(item);
   }
+
+  public void addContract(ImmutableContract contract){
+    lendingHistory.add(contract);
+  }
 }

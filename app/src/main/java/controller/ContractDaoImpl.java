@@ -1,26 +1,39 @@
 package controller;
 
+import model.ImmutableContract;
 import model.Item;
 import model.Member;
 
+/**
+ * Implementation of ContractDaoInterface to manage the creation and validation of contracts.
+ */
 public class ContractDaoImpl implements ContractDaoInterface {
 
   @Override
   public void createContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'createContract'");
-  }
+    // Validate if the item can be lent and the borrower has enough funds
+    isItemAvailableToLend(item);
+    isEnoughFundsToBorrow(borrower.getCredits(), item.getCostPerDay() * (endDay - startDay));
 
-  @Override
-  public boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'isEnoughFundsToBorrow'");
+    // Create a new immutable contract and add it to the item and lender's records
+    ImmutableContract newContract = new ImmutableContract(lender, borrower, item, startDay, endDay);
+    item.addContract(newContract);
+    lender.addContract(newContract);
   }
 
   @Override
   public boolean isItemAvailableToLend(Item item) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'isItemAvailable'");
+    if (!item.isAvailable()) {
+      throw new IllegalArgumentException("The item is not available for lending.");
+    }
+    return true;
   }
-  
+
+  @Override
+  public boolean isEnoughFundsToBorrow(int borrowerFunds, int itemTotalCost) {
+    if (borrowerFunds < itemTotalCost) {
+      throw new IllegalArgumentException("Insufficient funds to borrow the item for the given days.");
+    }
+    return true;
+  }
 }

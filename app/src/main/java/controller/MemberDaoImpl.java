@@ -30,12 +30,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
     addMember("Alice", "alice@example.com", "1234567890", "password");
     addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
-        // // Retrieve members for easy reference
-    Member alice = getMemberById("alice@example.com");
-  
-    Member charlie = getMemberById("charlie@example.com");
-
-
         // // Add Items to members
     bob.addItem(new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob));
 

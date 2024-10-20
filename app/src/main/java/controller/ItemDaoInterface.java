@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.List;
+
+import model.CategoryEnum;
 import model.Item;
 
 /**
@@ -18,7 +20,7 @@ public interface ItemDaoInterface {
    * @param costPerDay The cost per day to lend the item.
    *
    */
-  void createItem(String memberId, String category, String name, String description, int costPerDay);
+  void createItem(String memberId, CategoryEnum category, String name, String description, int costPerDay);
 
   /**
    * Modifies the details of an existing item.
@@ -31,7 +33,7 @@ public interface ItemDaoInterface {
    * @param costPerDay The new cost per day to lend the item.
    *
    */
-  void modifyItem(String memberId, String itemId, String category, String name, String description, int costPerDay);
+  void modifyItem(String memberId, String itemId, CategoryEnum category, String name, String description, int costPerDay);
 
   /**
    * Deletes an item owned by a member.

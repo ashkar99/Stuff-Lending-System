@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class Item extends FunctionFather {
 
-  private String category;
+  private CategoryEnum category;
   private String name;
   private String description;
   private int costPerDay;
@@ -32,7 +32,7 @@ public class Item extends FunctionFather {
    * @param owner       The owner of the item.
    *
    */
-  public Item(String category, String name, String description, int costPerDay, Member owner) {
+  public Item(CategoryEnum category, String name, String description, int costPerDay, Member owner) {
     setId();
     setCategory(category);
     setName(name);
@@ -52,7 +52,7 @@ public class Item extends FunctionFather {
    * @param costPerDay  Update coset per day.
    *
    */
-  public void updateItem(String category, String name, String description, int costPerDay) {
+  public void updateItem(CategoryEnum category, String name, String description, int costPerDay) {
     setCategory(category);
     setName(name);
     setDescription(description);
@@ -65,7 +65,7 @@ public class Item extends FunctionFather {
    * @return The item's category.
    *
    */
-  public String getCategory() {
+  public CategoryEnum getCategory() {
     return category;
   }
 
@@ -75,7 +75,7 @@ public class Item extends FunctionFather {
    * @param category The category to set.
    *
    */
-  private void setCategory(String category) {
+  private void setCategory(CategoryEnum category) {
     this.category = category;
   }
 

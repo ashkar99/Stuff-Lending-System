@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import model.CategoryEnum;
 import model.Item;
 import model.Member;
 
@@ -34,7 +35,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
    *                                  found.
    */
   @Override
-  public void createItem(String memberId, String category, String name, String description, int costPerDay) {
+  public void createItem(String memberId, CategoryEnum category, String name, String description, int costPerDay) {
     Member member = memberDao.getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
@@ -62,7 +63,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
    *                                  not found.
    */
   @Override
-  public void modifyItem(String memberId, String itemId, String category, String name, String description,
+  public void modifyItem(String memberId, String itemId, CategoryEnum category, String name, String description,
       int costPerDay) {
     Member member = memberDao.getMemberById(memberId);
     if (member == null) {
@@ -71,7 +72,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
     Item item = getItemById(member, itemId);
     if (item != null) {
-      String newCategory = (category != null && !category.isEmpty()) ? category : item.getCategory();
+      CategoryEnum newCategory = (category != null && !category.name().isBlank()) ? category : item.getCategory();
       String newName = (name != null && !name.isEmpty()) ? name : item.getName();
       String newDescription = (description != null && !description.isEmpty()) ? description : item.getDescription();
       int newCostPerDay = (costPerDay > 0) ? costPerDay : item.getCostPerDay();

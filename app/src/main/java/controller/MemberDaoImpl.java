@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import model.CategoryEnum;
 import model.Item;
 import model.Member;
@@ -30,22 +29,14 @@ public class MemberDaoImpl implements MemberDaoInterface {
     addMember("Alice", "alice@example.com", "1234567890", "password");
     addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
-        // // Add Items to members
+    // // Add Items to members
     bob.addItem(new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob));
 
-    bob.addItem(new Item(CategoryEnum.GAME,"Monopoly game", "Board Game", 2,bob));
-
+    bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
 
     bob.addItem(new Item(CategoryEnum.TOY, "Toy car", "Red remote control car", 20, bob));
 
     bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
-      
-    
-
-
- 
-
-   
 
     // controller.createContract(alice.getMemberId(), bob.getMemberId(),
     // 'alice.getItemID()', 1, 3); // Bob borrows Alice's Hammer

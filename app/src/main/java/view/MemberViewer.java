@@ -5,7 +5,6 @@ import controller.MemberDaoInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
-import model.Item;
 import model.Member;
 
 /**
@@ -17,6 +16,7 @@ import model.Member;
 public class MemberViewer {
   private Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private MemberDaoInterface memberDaoImpl = new MemberDaoImpl();
+  private ItemViewer itemViewer = new ItemViewer();
 
   /**
    * Default constructor for the MemberViewer class.
@@ -32,30 +32,32 @@ public class MemberViewer {
    */
   public void menu() {
 
-    String choice = "";
+    String choice = "9";
     while (choice != "9") {
 
-      System.out.println("Welcome to Stuff Lending System App");
-      System.out.println("Press S to list all member");
-      System.out.println("Press d to delete a member");
-      System.out.println("Press d to delete a member");
-      System.out.println("enter 9 to quit");
+      System.out.println("Welcome to Stuff Lending System App!");
+      System.out.println("Press 1 to list all members.");
+      System.out.println("Press 2 to verbose show all members.");
+      System.err.println("Press 3 to member full info.");
+      System.out.println("Press 5 to delete a member.");
+      System.out.println("Press 4 to delete a member.");
+      System.out.println("enter 9 to quit.");
       choice = input.nextLine().toLowerCase();
 
       switch (choice) {
-        case "s":
+        case "1":
           showSimpleAllMembers();
           break;
-        case "d":
-          deleteMember();
-          break;
-        case "l":
-          specificFullInfo();
-          break;
-        case "v":
+        case "2":
           showVerboseAllMembers();
           break;
-        case "e":
+        case "3":
+          specificFullInfo();
+          break;
+        case "4":
+          deleteMember();
+          break;
+        case "5":
           editMemberInfo();
           break;
         default:
@@ -65,8 +67,18 @@ public class MemberViewer {
   }
 
   private void editMemberInfo() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'editMemberInfo'");
+    System.out.println("ENTER MEMBER ID");
+    final String memberId = input.nextLine();
+    System.out.println("ENTER YOUR NAME:");
+    final String name = input.nextLine();
+    System.out.println("ENTER YOUR EMAIL:");
+    final String email = input.nextLine();
+    System.out.println("ENTER YOUR PASSWORD:");
+    final String password = input.nextLine();
+    System.out.println("ENTER YOUR PHONE NUMBER:");
+    final String phonNum = input.nextLine();
+    memberDaoImpl.modifyMember(memberId, name, email, phonNum, password);
+
   }
 
   /**
@@ -94,11 +106,11 @@ public class MemberViewer {
    * Allows the user to delete a member based on the provided email and password.
    */
   private void deleteMember() {
-    System.out.println("ENTER YOUR EMAIL:");
-    String email = input.nextLine();
+    System.out.println("ENTER YOUR MEMBER ID:");
+    String memberId = input.nextLine();
     System.out.println("ENTER YOUR PASSWORD:");
     String password = input.nextLine();
-    memberDaoImpl.deleteMember(email, password);
+    memberDaoImpl.deleteMember(memberId, password);
   }
 
   /**
@@ -145,16 +157,12 @@ public class MemberViewer {
       System.out.println("----------------------------------------");
       System.out.println("Name: " + member.getName());
       System.out.println("Email: " + member.getEmail());
-      List<Item> items = member.getItems();
-      for (Item item : items) {
-        System.out.println("Item name: " + item.getName());
-        System.out.println("Item Description: " + item.getDescription());
-        System.out.println("Category: " + item.getCategory());
-        System.out.println("Item cost per day: " + item.getCostPerDay());
+      itemViewer.viewItems(member);
 
-      }
-      System.out.println("");
-      System.out.println("----------------------------------------");
     }
+  }
+
+  public void viewBorrower(Member borrower) {
+    System.out.println("Name of borrower. " + borrower.getName());
   }
 }

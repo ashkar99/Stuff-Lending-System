@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * It contains details such as name, email, phone number, password, credits, and
  * lists of owned items and lending history.
  */
-public class Member extends FunctionFather {
+public class Member extends FatherOfFunction {
 
   private String name;
   private String email;

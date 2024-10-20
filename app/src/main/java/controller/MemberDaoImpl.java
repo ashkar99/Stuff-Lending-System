@@ -159,44 +159,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   /**
-   * Lists basic information (name, email, phone number) of all members.
-   *
-   * @return A list of {@link Member} objects containing basic member information.
-   *
-   */
-  @Override
-  public List<Member> listSimpleMembersInfo() {
-    List<Member> simpleMembersList = new ArrayList<>();
-    for (Member member : members) {
-      simpleMembersList.add(new Member(
-          member.getName(),
-          member.getEmail(),
-          member.getPhoneNumber(),
-          member.getPassword()));
-    }
-    return simpleMembersList;
-  }
-
-  /**
-   * Lists all available information of every member.
-   *
-   * @return A list of {@link Member} objects containing full member information.
-   *
-   */
-  @Override
-  public List<Member> listAllMembersInfo() {
-    List<Member> verboseMembersList = new ArrayList<>();
-    for (Member member : members) {
-      verboseMembersList.add(new Member(
-          member.getName(),
-          member.getEmail(),
-          member.getPhoneNumber(),
-          member.getPassword()));
-    }
-    return verboseMembersList;
-  }
-
-  /**
    * Finds a member by their ID.
    *
    * @param memberId The ID of the member to search for.

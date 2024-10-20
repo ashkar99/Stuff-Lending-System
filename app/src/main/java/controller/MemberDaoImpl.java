@@ -85,6 +85,24 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   /**
+   * Deletes a member from the list based on their ID and password.
+   *
+   * @param memberId The ID of the member to be deleted.
+   * @param password The password of the member.
+   * @throws IllegalArgumentException if the member is not found or the password
+   *                                  is incorrect.
+   */
+  @Override
+  public void deleteMember(String memberId, String password) {
+    Member member = getMemberById(memberId);
+    if (member != null && !member.getPassword().equals(password)) {
+      members.remove(member);
+    } else {
+      throw new IllegalArgumentException("Member not found or password is incorrect!");
+    }
+  }
+
+  /**
    * Checks if the provided email or phone number is already in use by another
    * member.
    *
@@ -105,25 +123,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   /**
-   * Deletes a member from the list based on their ID and password.
-   *
-   * @param memberId The ID of the member to be deleted.
-   * @param password The password of the member.
-   * @throws IllegalArgumentException if the member is not found or the password
-   *                                  is incorrect.
-   */
-  @Override
-  public void deleteMember(String memberId, String password) {
-    Member member = getMemberById(memberId);
-    if (member != null && !member.getPassword().equals(password)) {
-      members.remove(member);
-    } else {
-      throw new IllegalArgumentException("Member not found or password is incorrect!");
-    }
-  }
-
-  /**
-   * Returns detailed information of a specific member based on their ID.
+   * Returns a deep copy of the member's information based on their ID.
    *
    * @param memberId The ID of the member to retrieve.
    * @return A {@link Member} object containing the member's details.
@@ -135,12 +135,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
     if (member == null) {
       throw new IllegalArgumentException("Member not found!");
     }
-    // Return a copy of the member data
-    return new Member(
-        member.getName(),
-        member.getEmail(),
-        member.getPhoneNumber(),
-        member.getPassword());
+    // Return a deep copy of the member object to avoid exposing the original object
+    return new Member(member);
   }
 
   /**

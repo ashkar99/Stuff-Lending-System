@@ -75,23 +75,6 @@ public interface MemberDaoInterface {
   Member showSpecificMemberInfo(String memberId);
 
   /**
-   * Returns a list of basic information (name, email, phone number) for all
-   * members.
-   *
-   * @return A list of {@link Member} objects with basic member details.
-   *
-   */
-  List<Member> listSimpleMembersInfo();
-
-  /**
-   * Returns a list of full information for all members.
-   *
-   * @return A list of {@link Member} objects with all member details.
-   *
-   */
-  List<Member> listAllMembersInfo();
-
-  /**
    * Finds a member by their unique ID.
    *
    * @param memberId The ID of the member to search for.

@@ -80,10 +80,10 @@ public class MemberViewer {
     String memberId = input.nextLine();
     Member member = memberDaoImpl.showSpecificMemberInfo(memberId);
     System.out.println("----------------------------------------");
+    System.out.println("Member ID: " + member.getId());
     System.out.println("Name: " + member.getName());
     System.out.println("Email: " + member.getEmail());
     System.err.println("Phone number: " + member.getPhoneNumber());
-    System.out.println("Member ID: " + member.getId());
     System.err.println("Current credits: " + member.getCredits());
     System.out.println("Number of owned items: " + member.getItems().size());
     System.out.println("----------------------------------------");
@@ -123,12 +123,12 @@ public class MemberViewer {
    * name, email, and phone number.
    */
   private void showSimpleAllMembers() {
-    List<Member> simplList = memberDaoImpl.listSimpleMembersInfo();
+    List<Member> simplList = memberDaoImpl.getMembers();
     for (Member member : simplList) {
       System.out.println("----------------------------------------");
+      System.out.println("Member ID: " + member.getId());
       System.out.println("Name: " + member.getName());
       System.out.println("Email: " + member.getEmail());
-      System.out.println("Member ID: " + member.getId());
       System.err.println("Current credits: " + member.getCredits());
       System.out.println("Number of owned items: " + member.getItems().size());
       System.out.println("----------------------------------------");
@@ -140,17 +140,17 @@ public class MemberViewer {
    * each member.
    */
   private void showVerboseAllMembers() {
-    List<Member> verboseList = memberDaoImpl.listSimpleMembersInfo();
+    List<Member> verboseList = memberDaoImpl.getMembers();
     for (Member member : verboseList) {
       System.out.println("----------------------------------------");
       System.out.println("Name: " + member.getName());
       System.out.println("Email: " + member.getEmail());
       List<Item> items = member.getItems();
       for (Item item : items) {
-        System.out.println(item.getName());
-        System.out.println(item.getDescription());
-        System.out.println(item.getCategory());
-        System.out.println(item.getCostPerDay());
+        System.out.println("Item name: " + item.getName());
+        System.out.println("Item Description: " + item.getDescription());
+        System.out.println("Category: " + item.getCategory());
+        System.out.println("Item cost per day: " + item.getCostPerDay());
 
       }
       System.out.println("");

@@ -1,6 +1,4 @@
-
-
-import view.Viewer;
+import view.MemberViewer;
 
 /**
  * Responsible for staring the application.
@@ -9,7 +7,6 @@ public class App {
   static App app = new App();
 
   public App() {
-
   }
 
   /**
@@ -19,8 +16,8 @@ public class App {
    *
    */
   public static void main(String[] args) {
-    Viewer viewer = new Viewer();
-    viewer.startScreen();
+    MemberViewer viewer = new MemberViewer();
+    viewer.menu();
 
   }
 

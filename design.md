@@ -191,11 +191,13 @@ classDiagram
    FatherOfFunction <|-- Item
    FatherOfFunction <|-- ImmutableContract
 
-
-
-
-
 ```
+
+
+
+
+
+
 # Class diagram package controller
 ```mermaid
 classDiagram
@@ -279,11 +281,11 @@ classDiagram
         +boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost)
     }
     ContractDaoInterface <|.. ContractDaoImpl
-
-
-
   
 ````
+
+
+
 # Class diagram package view.
 ```mermaid
 classDiagram

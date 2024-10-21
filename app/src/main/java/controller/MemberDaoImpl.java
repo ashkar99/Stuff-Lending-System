@@ -95,7 +95,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   @Override
   public void deleteMember(String memberId, String password) {
     Member member = getMemberById(memberId);
-    if (member != null && !member.getPassword().equals(password)) {
+    if (member != null && member.getPassword().equals(password)) {
       members.remove(member);
     } else {
       throw new IllegalArgumentException("Member not found or password is incorrect!");

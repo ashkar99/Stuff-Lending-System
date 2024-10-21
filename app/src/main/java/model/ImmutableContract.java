@@ -39,7 +39,6 @@ public final class ImmutableContract extends FatherOfFunction {
     this.startDay = startDay;
     this.endDay = endDay;
     this.totalCost = calculateTotalCost();
-    this.status = "Active";
     this.creationDate = setCreationDate();
   }
 

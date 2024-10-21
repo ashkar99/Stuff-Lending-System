@@ -6,7 +6,8 @@ import model.Time;
  * TimeDaoImpl class.
  */
 public class TimeDaoImpl implements TimeDaoInterface {
-  private Time time = new Time(0);
+  private int dayCounter;
+  public final Time time = new Time( dayCounter);
 
   /**
    * Advances the day by one. This simulates moving to the next day in the system.
@@ -14,9 +15,7 @@ public class TimeDaoImpl implements TimeDaoInterface {
    */
   public void advanceDay() {
 
-    int dayCounter = time.getCurrentDay();
-    Time newtime = new Time(dayCounter++);
-    this.time = newtime;
+    time.setCurrentDay(dayCounter++);
   }
 
   /**
@@ -33,8 +32,7 @@ public class TimeDaoImpl implements TimeDaoInterface {
     if (numberOfDays > 0) {
       int dayCounter = time.getCurrentDay();
       dayCounter += numberOfDays;
-      Time newtime = new Time(dayCounter);
-      this.time = newtime;
+      time.setCurrentDay(dayCounter++);
       System.out.println("Dagen har avancerats till: " + dayCounter);
     } else {
       System.out.println("Antalet dagar måste vara positivt.");

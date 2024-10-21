@@ -33,10 +33,6 @@ graph RL
     end
 
     controller6 --> controller3
-    controller1 --> controller2
-    controller4 -->controller3
-    controller6 -->  controller5
-    controller8 --> controller7 
     controller8 --> controller1
 
 
@@ -52,7 +48,7 @@ graph RL
     model5 --"Inheritance"--> model6
     
     view1 --> view2
-    view1 --> view3
+    view2 --> view3
 
     controller6 --"implent"--> controller5  
     controller4 --"implent"--> controller3 
@@ -66,6 +62,10 @@ graph RL
     view2 --> controller6
     view1 --> controller4
 ```
+
+
+
+
 # Class diagram packages model.
 ```mermaid 
 classDiagram
@@ -281,6 +281,7 @@ classDiagram
         +boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost)
     }
     ContractDaoInterface <|.. ContractDaoImpl
+    TimeDaoInterface <-- ContractDaoImpl
 
 ````
 

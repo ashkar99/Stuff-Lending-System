@@ -12,6 +12,8 @@ import model.Member;
  */
 public interface MemberDaoInterface {
 
+  void generated();
+
   /**
    * Adds a new member to the system.
    *

@@ -12,12 +12,13 @@ import model.Member;
  * This class uses the MemberDaoInterface to interact with member data.
  */
 public class ItemDaoImpl implements ItemDaoInterface {
-  private MemberDaoInterface memberDao = new MemberDaoImpl();
+  private MemberDaoInterface memberDao;
 
   /**
    * Constructor for the ItemDaoImpl class.
    */
-  public ItemDaoImpl() {
+  public ItemDaoImpl(MemberDaoInterface memberDaoImpl) {
+    memberDao = memberDaoImpl;
   }
 
   @Override
@@ -140,7 +141,14 @@ public class ItemDaoImpl implements ItemDaoInterface {
     }
   }
 
-  private Item getItemById(Member member, String itemId) {
+  /**
+   * Get item by id.
+   *
+   * @param member to get member's item.
+   * @param itemId to get the item.
+   * @return
+   */
+  public Item getItemById(Member member, String itemId) {
     for (Item item : member.getItems()) {
       if (item.getId().equals(itemId)) {
         return item;

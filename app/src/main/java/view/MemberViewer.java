@@ -16,12 +16,14 @@ import model.Member;
 public class MemberViewer {
   private Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private MemberDaoInterface memberDaoImpl = new MemberDaoImpl();
-  private ItemViewer itemViewer = new ItemViewer();
+  private ItemViewer itemViewer;
 
   /**
    * Default constructor for the MemberViewer class.
    */
   public MemberViewer() {
+    memberDaoImpl.generated();
+    itemViewer = new ItemViewer(memberDaoImpl);
   }
 
   /**

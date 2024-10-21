@@ -2,6 +2,7 @@ package view;
 
 import controller.ItemDaoImpl;
 import controller.ItemDaoInterface;
+import controller.MemberDaoInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,11 @@ import model.Member;
 public class ItemViewer {
   private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private final ContractViewer contractViewer = new ContractViewer();
-  private final ItemDaoInterface itemDaoImp = new ItemDaoImpl();
+  private final ItemDaoInterface itemDaoImp;
+
+  public ItemViewer(MemberDaoInterface memberDaoImpl) {
+    itemDaoImp = new ItemDaoImpl(memberDaoImpl);
+  }
 
   /**
    * Displays all items owned by a member, including their contracts.

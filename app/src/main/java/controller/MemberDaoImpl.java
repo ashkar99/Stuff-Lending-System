@@ -18,23 +18,26 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * Constructor for the MemberDaoImpl class.
    */
   public MemberDaoImpl() {
-    generated();
   }
 
   /**
    * Generates initial data for testing purposes.
    */
-  private void generated() {
+  public void generated() {
     try {
       Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
       members.add(bob);
-      Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
+      Member alice = new Member("Alice", "alice@example.com", "2234567890", "password");
       members.add(alice);
       alice.updateCredits(40);
       addMember("Charlie", "charlie@example.com", "1122334455", "password");
     } catch (Exception e) {
       throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
+  }
+
+  public void addMembers(Member member) {
+    members.add(member);
   }
 
   @Override
@@ -49,7 +52,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
     } catch (IllegalArgumentException e) {
       if (e.getMessage().contains("email")) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage(), e);
-      } else if (e.getMessage().contains("phone number")) {
+      } 
+      if (e.getMessage().contains("phone number")) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage(), e);
       }
       throw new IllegalArgumentException("Error adding member: " + e.getMessage(), e);

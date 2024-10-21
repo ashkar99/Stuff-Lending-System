@@ -20,14 +20,6 @@ public interface ContractDaoInterface {
   void createContract(Member lender, Member borrower, Item item, int startDay, int endDay);
 
   /**
-   * Checks if an item is available to be lent.
-   *
-   * @param item The item to check availability.
-   * @return True if the item is available, false otherwise.
-   */
-  boolean isItemAvailableToLent(Item item);
-
-  /**
    * Checks if the borrower has enough funds to borrow the item.
    *
    * @param borrowerFunds The funds available to the borrower.

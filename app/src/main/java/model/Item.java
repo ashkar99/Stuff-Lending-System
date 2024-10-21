@@ -171,7 +171,6 @@ public class Item extends FatherOfFunction {
    */
   public void addContract(ImmutableContract contract) {
     lendingHistory.add(contract);
-    markAsUnavailable(); // Mark the item as unavailable when a contract is added
   }
 
   /**
@@ -198,11 +197,13 @@ public class Item extends FatherOfFunction {
   public boolean isAvailableForPeriod(int startDay, int endDay) {
     for (ImmutableContract contract : lendingHistory) {
       // Check if the desired period overlaps with any existing contracts
-      if ((startDay >= contract.getStartDay() && startDay <= contract.getEndDay())
-          || (endDay >= contract.getStartDay() && endDay <= contract.getEndDay())) {
-        return false; // The item is unavailable during this period
+      if ((startDay <= contract.getEndDay() && endDay >= contract.getStartDay())) {
+        markAsUnavailable();
+        return false;
       }
+
     }
+    markAsAvailable();
     return true; // The item is available if no contract overlaps
   }
 }

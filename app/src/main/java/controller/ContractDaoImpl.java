@@ -57,8 +57,8 @@ public class ContractDaoImpl implements ContractDaoInterface {
     try {
       for (ImmutableContract contract : item.getContracts()) {
         // Check if the contract overlaps with the desired period
-        if ((startDay >= contract.getStartDay() && startDay <= contract.getEndDay()) ||
-            (endDay >= contract.getStartDay() && endDay <= contract.getEndDay())) {
+        if ((startDay >= contract.getStartDay() && startDay <= contract.getEndDay())
+            || (endDay >= contract.getStartDay() && endDay <= contract.getEndDay())) {
           return false;
         }
       }

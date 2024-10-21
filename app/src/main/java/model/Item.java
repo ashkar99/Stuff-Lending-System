@@ -198,8 +198,8 @@ public class Item extends FatherOfFunction {
   public boolean isAvailableForPeriod(int startDay, int endDay) {
     for (ImmutableContract contract : lendingHistory) {
       // Check if the desired period overlaps with any existing contracts
-      if ((startDay >= contract.getStartDay() && startDay <= contract.getEndDay()) ||
-          (endDay >= contract.getStartDay() && endDay <= contract.getEndDay())) {
+      if ((startDay >= contract.getStartDay() && startDay <= contract.getEndDay())
+          || (endDay >= contract.getStartDay() && endDay <= contract.getEndDay())) {
         return false; // The item is unavailable during this period
       }
     }

@@ -40,7 +40,7 @@ public class MemberViewer {
       System.out.println("6. Display members information and their items.");
       System.out.println("7. Exit.");
 
-      System.out.print("\nSelect an option: "); // Changed to print as this is where the user will type
+      System.out.print("\nSelect an option: ");
       int choice = readInt();
       switch (choice) {
         case 1:
@@ -77,13 +77,13 @@ public class MemberViewer {
    * system.
    */
   private void createMember() {
-    System.out.print("ENTER YOUR NAME: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR NAME: ");
     final String name = input.nextLine();
-    System.out.print("ENTER YOUR EMAIL: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR EMAIL: ");
     final String email = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR PASSWORD: ");
     final String password = input.nextLine();
-    System.out.print("ENTER YOUR PHONE NUMBER: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR PHONE NUMBER: ");
     final String phonNum = input.nextLine();
     memberDaoImpl.addMember(name, email, phonNum, password);
     waitForUserInput();
@@ -93,15 +93,15 @@ public class MemberViewer {
    * Edits member information such as name, email, phone number, or password.
    */
   private void editMemberInfo() {
-    System.out.print("ENTER MEMBER ID: "); // Changed to print as user input is expected
+    System.out.print("ENTER MEMBER ID: "); 
     final String memberId = input.nextLine();
-    System.out.print("ENTER YOUR NAME: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR NAME: "); 
     final String name = input.nextLine();
-    System.out.print("ENTER YOUR EMAIL: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR EMAIL: "); 
     final String email = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR PASSWORD: "); 
     final String password = input.nextLine();
-    System.out.print("ENTER YOUR PHONE NUMBER: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR PHONE NUMBER: "); 
     final String phonNum = input.nextLine();
     memberDaoImpl.modifyMember(memberId, name, email, phonNum, password);
     waitForUserInput();
@@ -111,9 +111,9 @@ public class MemberViewer {
    * Allows the user to delete a member based on the provided email and password.
    */
   private void deleteMember() {
-    System.out.print("ENTER YOUR MEMBER ID: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR MEMBER ID: "); 
     String memberId = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: "); // Changed to print as user input is expected
+    System.out.print("ENTER YOUR PASSWORD: "); 
     String password = input.nextLine();
     memberDaoImpl.deleteMember(memberId, password);
     waitForUserInput();
@@ -126,7 +126,7 @@ public class MemberViewer {
    */
   private void specificMemberFullInfo() {
     displayMembersOverview();
-    System.out.print("Enter the memberId of the selected member to display its information: "); // Changed to print
+    System.out.print("Enter the memberId of the selected member to display its information: ");
     String memberId = input.nextLine();
     Member member = memberDaoImpl.showSpecificMemberInfo(memberId);
     System.out.println("----------------------------------------");
@@ -190,7 +190,7 @@ public class MemberViewer {
    */
   private int readInt() {
     while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: "); // Changed to print
+      System.out.print("That's not a valid number. Please enter a number: "); 
       input.next();
     }
     int result = input.nextInt();

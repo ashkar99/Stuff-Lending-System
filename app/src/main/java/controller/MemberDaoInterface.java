@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.List;
+
+import model.Item;
 import model.Member;
 
 /**
@@ -22,14 +24,6 @@ public interface MemberDaoInterface {
   void addMember(String name, String email, String phoneNumber, String password);
 
   /**
-   * Deletes a member from the system based on their member ID and password.
-   *
-   * @param memberId The ID of the member to be deleted.
-   * @param password The password of the member, used for verification.
-   */
-  void deleteMember(String memberId, String password);
-
-  /**
    * Modifies the details of an existing member.
    *
    * @param memberId    The ID of the member to be modified.
@@ -39,6 +33,14 @@ public interface MemberDaoInterface {
    * @param password    The new password for the member (if applicable).
    */
   void modifyMember(String memberId, String name, String email, String phoneNumber, String password);
+
+  /**
+   * Deletes a member from the system based on their member ID and password.
+   *
+   * @param memberId The ID of the member to be deleted.
+   * @param password The password of the member, used for verification.
+   */
+  void deleteMember(String memberId, String password);
 
   /**
    * Checks if the provided email or phone number is unique in the system.
@@ -73,4 +75,9 @@ public interface MemberDaoInterface {
    * @return A list of {@link Member} objects representing all members.
    */
   List<Member> getMembers();
+
+  /**
+   * Get avilebale item.
+   */
+  List<Item> getAvilbaleItems();
 }

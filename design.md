@@ -281,7 +281,7 @@ classDiagram
         +boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost)
     }
     ContractDaoInterface <|.. ContractDaoImpl
-  
+
 ````
 
 
@@ -316,4 +316,27 @@ classDiagram
 
    
     ```
+
+
+# SequenceDiagram
+
+```mermaid
+sequenceDiagram
+    participant MV as MemberViewer
+    participant MC as MemberDaoImpl
+    participant M as Member
+
+    %% Scenario: Add a new third member with user input and database interaction
+    MV->>MV: prompt for name, email, password, phoneNumber
+    MV->>MC: createMember(name, email, phoneNumber, password)  %% Send data to controller
+
+    MC->>M: addMember(name, email, phoneNumber, password)   %% Controller calls Model to add new member
+    M-->>MC: return new Member object with memberId, name, email, creationDate, password.  %% Member is created and returned to Controller
+
+    MC->>MC: store member data in list of members  %% Controller handles saving the new member
+    
+    MC-->>MV: return a copy of Member object to view
+    MV->>MV: display member details to user
+````
+
     

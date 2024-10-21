@@ -12,31 +12,47 @@ public class ContractDaoImpl implements ContractDaoInterface {
 
   @Override
   public void createContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
-    // Validate if the item can be lent and the borrower has enough funds
-    isItemAvailableToLend(item);
-    isEnoughFundsToBorrow(borrower.getCredits(), item.getCostPerDay() * (endDay - startDay));
+    try {
+      if (!isItemAvailableToLent(item)) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_UNAVAILABLE.getMessage());
+      }
+      if (!isEnoughFundsToBorrow(borrower.getCredits(), item.getCostPerDay() * (endDay - startDay))) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
+      }
 
-    // Create a new immutable contract and add it to the item and lender's records
-    ImmutableContract newContract = new ImmutableContract(lender, borrower, item, startDay, endDay);
-    item.addContract(newContract);
-    lender.addContract(newContract);
+      ImmutableContract newContract = new ImmutableContract(lender, borrower, item, startDay, endDay);
+      item.addContract(newContract);
+      lender.addContract(newContract);
 
-    
+      // Contract successfully created, message can be handled in the view.
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error creating contract: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
   }
 
   @Override
-  public boolean isItemAvailableToLend(Item item) {
-    if (!item.isAvailable()) {
-      throw new IllegalArgumentException("The item is not available for lending.");
+  public boolean isItemAvailableToLent(Item item) {
+    try {
+      if (!item.isAvailable()) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_UNAVAILABLE.getMessage());
+      }
+      return true;
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error checking item availability: " + e.getMessage(), e);
     }
-    return true;
   }
 
   @Override
   public boolean isEnoughFundsToBorrow(int borrowerFunds, int itemTotalCost) {
-    if (borrowerFunds < itemTotalCost) {
-      throw new IllegalArgumentException("Insufficient funds to borrow the item for the given days.");
+    try {
+      if (borrowerFunds < itemTotalCost) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
+      }
+      return true;
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error checking borrower's funds: " + e.getMessage(), e);
     }
-    return true;
   }
 }

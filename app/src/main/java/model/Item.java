@@ -158,8 +158,8 @@ public class Item extends FatherOfFunction {
   }
 
   /**
-   * 
    * Get contracts.
+   *
    */
   public List<ImmutableContract> getContracts() {
     return new ArrayList<>(lendingHistory);

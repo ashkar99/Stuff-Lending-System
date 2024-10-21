@@ -3,45 +3,51 @@ package controller;
 import model.Time;
 
 /**
- * TimeDaoImpl class.
+ * TimeDaoImpl class for handling time-related operations.
  */
 public class TimeDaoImpl implements TimeDaoInterface {
   private int dayCounter;
   public final Time time = new Time( dayCounter);
 
-  /**
-   * Advances the day by one. This simulates moving to the next day in the system.
-   * The current day will be incremented by 1.
-   */
+  @Override
   public void advanceDay() {
+    try {
+      int dayCounter = time.getCurrentDay();
+      Time newTime = new Time(++dayCounter);  // Increment day counter
+      this.time = newTime;
 
-    time.setCurrentDay(dayCounter++);
+      // Time successfully advanced, this message can be handled in the view.
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
   }
 
-  /**
-   * Advances the day by a specified number of days. This allows for skipping
-   * multiple days.
-   *
-   * @param numberOfDays The number of days to advance. Must be a positive
-   *                     integer.
-   * @throws IllegalArgumentException if the number of days is less than or equal
-   *                                  to 0.
-   *
-   */
+  @Override
   public void advanceDays(int numberOfDays) {
-    if (numberOfDays > 0) {
+    try {
+      if (numberOfDays <= 0) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_NEGATIVE_VALUE.getMessage());
+      }
+
       int dayCounter = time.getCurrentDay();
       dayCounter += numberOfDays;
-      time.setCurrentDay(dayCounter++);
-      System.out.println("Dagen har avancerats till: " + dayCounter);
-    } else {
-      System.out.println("Antalet dagar måste vara positivt.");
+      Time newTime = new Time(dayCounter);
+      this.time = newTime;
+
+      // Time successfully advanced, this message can be handled in the view.
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NEGATIVE_VALUE.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
   }
 
   @Override
   public int getCurrentDay() {
-    int dayCounter = time.getCurrentDay();
-    return dayCounter;
+    try {
+      return time.getCurrentDay();
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
   }
 }

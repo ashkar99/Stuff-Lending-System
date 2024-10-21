@@ -2,13 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.CategoryEnum;
-import model.ImmutableContract;
 import model.Item;
 import model.Member;
 
 /**
- * Implementation of the {link MemberDaoInterface}, responsible for managing
+ * Implementation of the {@link MemberDaoInterface}, responsible for managing
  * member-related operations such as adding, modifying, deleting, and retrieving
  * member information from an internal list.
  */
@@ -21,86 +19,136 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   public MemberDaoImpl() {
     generated();
-    // Constructor
-  }
-
-  private void generated() {
-    Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
-    members.add(bob);
-    Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
-    members.add(alice);
-    alice.updateCredits(40);
-    addMember("Charlie", "charlie@example.com", "1122334455", "password");
-
-    // // Add Items to members
-    Item hammer = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
-    bob.addItem(hammer);
-
-    bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
-
-    bob.addItem(new Item(CategoryEnum.TOY, "Toy car", "Red remote control car", 20, bob));
-
-    bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
-
-     ImmutableContract contract = new ImmutableContract(alice, bob, hammer, 2, 3);
-     hammer.addContract(contract); // Bob borrows Alice's Hammer
-    // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
-    // Car", 2, 5); // Alice borrows Bob's Toy Car
-
   }
 
   /**
-   * Adds a new member to the list after checking for unique email and phone
-   * number.
+   * Generates initial data for testing purposes.
    */
+  private void generated() {
+    try {
+      Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
+      members.add(bob);
+      Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
+      members.add(alice);
+      alice.updateCredits(40);
+      addMember("Charlie", "charlie@example.com", "1122334455", "password");
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
+  }
+
   @Override
   public void addMember(String name, String email, String phoneNumber, String password) {
-    checkUnique(email, phoneNumber);
-    Member newMember = new Member(name, email, phoneNumber, password);
-    members.add(newMember);
+    try {
+      checkUnique(email, phoneNumber);
+      if (name.isBlank() || email.isBlank() || phoneNumber.isBlank() || password.isBlank()) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+      }
+      Member newMember = new Member(name, email, phoneNumber, password);
+      members.add(newMember);
+    } catch (IllegalArgumentException e) {
+      if (e.getMessage().contains("email")) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage(), e);
+      } else if (e.getMessage().contains("phone number")) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage(), e);
+      }
+      throw new IllegalArgumentException("Error adding member: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
   }
 
-  /**
-   * Modifies the details of an existing member, based on their ID.
-   * If a field is null or blank, the current value will be kept.
-   *
-   * @param memberId    The ID of the member to be modified.
-   * @param name        The new name for the member.
-   * @param email       The new email for the member.
-   * @param phoneNumber The new phone number for the member.
-   * @param password    The new password for the member.
-   * @throws IllegalArgumentException if the member is not found.
-   */
   @Override
   public void modifyMember(String memberId, String name, String email, String phoneNumber, String password) {
-    Member member = getMemberById(memberId);
-    if (member == null) {
-      throw new IllegalArgumentException("Member not found!");
+    try {
+      Member member = getMemberById(memberId);
+      if (member == null) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+      }
+
+      // Validate fields (removed null checks since the values are expected to be
+      // non-null)
+      if (name.isBlank() || email.isBlank() || phoneNumber.isBlank() || password.isBlank()) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+      }
+
+      String newName = !name.isBlank() ? name : member.getName();
+      String newEmail = !email.isBlank() ? email : member.getEmail();
+      String newPhoneNumber = !phoneNumber.isBlank() ? phoneNumber : member.getPhoneNumber();
+      String newPassword = !password.isBlank() ? password : member.getPassword();
+
+      member.updateMember(newName, newEmail, newPhoneNumber, newPassword);
+
+      // Member successfully updated, message can be handled in the view.
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error modifying member: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
-    // Update member details
-    String newName = (name != null && !name.isBlank()) ? name : member.getName();
-    String newEmail = (email != null && !email.isBlank()) ? email : member.getEmail();
-    String newPhoneNumber = (phoneNumber != null && !phoneNumber.isBlank()) ? phoneNumber : member.getPhoneNumber();
-    String newPassword = (password != null && !password.isBlank()) ? password : member.getPassword();
-    member.updateMember(newName, newEmail, newPhoneNumber, newPassword);
+  }
+
+  @Override
+  public void deleteMember(String memberId, String password) {
+    try {
+      Member member = getMemberById(memberId);
+      if (member != null && member.getPassword().equals(password)) {
+        members.remove(member);
+        // Member successfully deleted, message can be handled in the view.
+      } else {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+      }
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error deleting member: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
+  }
+
+  @Override
+  public Member showSpecificMemberInfo(String memberId) {
+    try {
+      Member member = getMemberById(memberId);
+      if (member == null) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+      }
+      return new Member(member); // Return a copy of the member
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
+  }
+
+  @Override
+  public Member getMemberById(String memberId) {
+    for (Member member : members) {
+      if (member.getId().equals(memberId)) {
+        return member;
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public List<Member> getMembers() {
+    return new ArrayList<>(members);
   }
 
   /**
-   * Deletes a member from the list based on their ID and password.
-   *
-   * @param memberId The ID of the member to be deleted.
-   * @param password The password of the member.
-   * @throws IllegalArgumentException if the member is not found or the password
-   *                                  is incorrect.
+   * Return a list of available items.
    */
   @Override
-  public void deleteMember(String memberId, String password) {
-    Member member = getMemberById(memberId);
-    if (member != null && member.getPassword().equals(password)) {
-      members.remove(member);
-    } else {
-      throw new IllegalArgumentException("Member not found or password is incorrect!");
+  public List<Item> getAvilbaleItems() {
+    List<Item> avItems = new ArrayList<>();
+    for (Member member : members) {
+      for (Item item : member.getItems()) {
+        if (item.isAvailable()) {
+          avItems.add(item);
+        }
+
+      }
     }
+    return new ArrayList<>(avItems);
   }
 
   /**
@@ -115,86 +163,16 @@ public class MemberDaoImpl implements MemberDaoInterface {
   public void checkUnique(String email, String phoneNumber) {
     for (Member member : members) {
       if (member.getEmail().equals(email)) {
-        throw new IllegalArgumentException("The email is already in use");
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage());
       }
       if (member.getPhoneNumber().equals(phoneNumber)) {
-        throw new IllegalArgumentException("The phone number is already in use");
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage());
       }
     }
   }
 
-  /**
-   * Returns a deep copy of the member's information based on their ID.
-   *
-   * @param memberId The ID of the member to retrieve.
-   * @return A {@link Member} object containing the member's details.
-   * @throws IllegalArgumentException if the member is not found.
-   */
-  @Override
-  public Member showSpecificMemberInfo(String memberId) {
-    Member member = getMemberById(memberId);
-    if (member == null) {
-      throw new IllegalArgumentException("Member not found!");
-    }
-    // Return a deep copy of the member object to avoid exposing the original object
-    return new Member(member);
-  }
-
-  /**
-   * Finds a member by their ID.
-   *
-   * @param memberId The ID of the member to search for.
-   *
-   * @return The {@link Member} object if found, or null if not found.
-   */
-  @Override
-  public Member getMemberById(String memberId) {
-    for (Member member : members) {
-      if (member.getId().equals(memberId)) {
-        return member;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Retrieves the full list of members.
-   *
-   * @return A list of {@link Member} objects representing all members.
-   */
-  @Override
-  public List<Member> getMembers() {
-    return new ArrayList<>(members);
-  }
-
-  /**
-   * 
-   */
-  @Override
-  public List<Item> getAvilbaleItems() {
-    List<Item> avItems = new ArrayList<>();
-    for (Member member : members) {
-      for (Item item : member.getItems()) {
-        // for (ImmutableContract contract : item.getContracts()) {
-        //   String status = "Active";
-        //   if (!status.equals((contract.getStatus()))) {
-        //     avItems.add(item);
-            
-        //   }
-        if (item.isAvailable()){
-          avItems.add(item);
-        }
-        
-      }
-    }
-    return new ArrayList<>(avItems);
-  }
-
-  /**
-   * Finalizer.
-   */
   @Override
   protected final void finalize() throws Throwable {
-    // Tom finalizer för att förhindra attacker
+    // Empty finalizer to prevent attacks
   }
 }

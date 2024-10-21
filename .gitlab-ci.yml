@@ -1,35 +1,12 @@
-image: gradle:8.3-jdk20-alpine
-
 before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle  # Use a project-specific Gradle directory
-
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+image: gradle:8.3-jdk20-alpine
 stages:
   - test
   - build
-
-# Test Stage: Runs the tests
-test:
-  stage: test
-  script:
-    - ./gradlew test  # Run unit tests
-  artifacts:
-    paths:
-      - build/reports/tests/test/  # Save test reports
-  allow_failure: false  # Fail pipeline if tests fail
-  expire_in: 1 week
-
-# Build Stage: Builds the project
 build:
   stage: build
-  script:
-    - ./gradlew build  # Build the project
-  artifacts:
-    paths:
-      - build/libs/  # Save the build artifacts (JAR files)
-  expire_in: 1 week
-
-cache:
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - .gradle/wrapper/
-    - .gradle/caches/
+  script: ./gradlew build
+test:
+  stage: test
+  script: ./gradlew test

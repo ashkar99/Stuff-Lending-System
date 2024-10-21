@@ -3,7 +3,7 @@ package controller;
 import model.Time;
 
 /**
- * TimeDaoImpl class.
+ * TimeDaoImpl class for handling time-related operations.
  */
 public class TimeDaoImpl implements TimeDaoInterface {
   private Time time = new Time(0);
@@ -12,11 +12,16 @@ public class TimeDaoImpl implements TimeDaoInterface {
    * Advances the day by one. This simulates moving to the next day in the system.
    * The current day will be incremented by 1.
    */
+  @Override
   public void advanceDay() {
-
-    int dayCounter = time.getCurrentDay();
-    Time newtime = new Time(dayCounter++);
-    this.time = newtime;
+    try {
+      int dayCounter = time.getCurrentDay();
+      Time newTime = new Time(++dayCounter); // Increment day counter
+      this.time = newTime;
+      System.out.println("The day has advanced to: " + dayCounter);
+    } catch (Exception e) {
+      throw new RuntimeException("Error advancing the day.", e);
+    }
   }
 
   /**
@@ -27,23 +32,38 @@ public class TimeDaoImpl implements TimeDaoInterface {
    *                     integer.
    * @throws IllegalArgumentException if the number of days is less than or equal
    *                                  to 0.
-   *
    */
+  @Override
   public void advanceDays(int numberOfDays) {
-    if (numberOfDays > 0) {
+    try {
+      if (numberOfDays <= 0) {
+        throw new IllegalArgumentException("Number of days must be positive.");
+      }
+
       int dayCounter = time.getCurrentDay();
       dayCounter += numberOfDays;
-      Time newtime = new Time(dayCounter);
-      this.time = newtime;
-      System.out.println("Dagen har avancerats till: " + dayCounter);
-    } else {
-      System.out.println("Antalet dagar måste vara positivt.");
+      Time newTime = new Time(dayCounter);
+      this.time = newTime;
+      System.out.println("The day has advanced to: " + dayCounter);
+
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error advancing days: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException("An unexpected error occurred while advancing days.", e);
     }
   }
 
+  /**
+   * Returns the current day in the system.
+   *
+   * @return The current day as an integer.
+   */
   @Override
   public int getCurrentDay() {
-    int dayCounter = time.getCurrentDay();
-    return dayCounter;
+    try {
+      return time.getCurrentDay();
+    } catch (Exception e) {
+      throw new RuntimeException("Error retrieving the current day.", e);
+    }
   }
 }

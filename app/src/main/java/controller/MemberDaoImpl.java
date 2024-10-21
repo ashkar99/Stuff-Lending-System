@@ -7,7 +7,7 @@ import model.Item;
 import model.Member;
 
 /**
- * Implementation of the {link MemberDaoInterface}, responsible for managing
+ * Implementation of the {@link MemberDaoInterface}, responsible for managing
  * member-related operations such as adding, modifying, deleting, and retrieving
  * member information from an internal list.
  */
@@ -20,32 +20,34 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   public MemberDaoImpl() {
     generated();
-    // Constructor
   }
 
+  /**
+   * Generates initial data for testing purposes.
+   */
   private void generated() {
-    Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
-    members.add(bob);
-    Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
-    members.add(alice);
-    alice.updateCredits(40);
-    addMember("Charlie", "charlie@example.com", "1122334455", "password");
+    try {
+      Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
+      members.add(bob);
+      Member alice = new Member("Alice", "alice@example.com", "1234567890", "password");
+      members.add(alice);
+      alice.updateCredits(40);
+      addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
-    // // Add Items to members
-    Item item = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
-    bob.addItem(item);
+      // Add Items to members
+      Item item = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
+      bob.addItem(item);
+      bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
+      bob.addItem(new Item(CategoryEnum.TOY, "Toy car", "Red remote control car", 20, bob));
+      bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
 
-    bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
+      // Create a contract
+      ContractDaoInterface contract = new ContractDaoImpl();
+      contract.createContract(bob, alice, item, 1, 3);
 
-    bob.addItem(new Item(CategoryEnum.TOY, "Toy car", "Red remote control car", 20, bob));
-
-    bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
-
-    ContractDaoInterface contract = new ContractDaoImpl();
-    contract.createContract(bob, alice, item, 1, 3); // Bob borrows Alice's Hammer
-    // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
-    // Car", 2, 5); // Alice borrows Bob's Toy Car
-
+    } catch (Exception e) {
+      throw new RuntimeException("Error generating initial data: " + e.getMessage(), e);
+    }
   }
 
   /**
@@ -54,9 +56,15 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   @Override
   public void addMember(String name, String email, String phoneNumber, String password) {
-    checkUnique(email, phoneNumber);
-    Member newMember = new Member(name, email, phoneNumber, password);
-    members.add(newMember);
+    try {
+      checkUnique(email, phoneNumber);
+      Member newMember = new Member(name, email, phoneNumber, password);
+      members.add(newMember);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error adding member: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException("An unexpected error occurred while adding the member.", e);
+    }
   }
 
   /**
@@ -72,16 +80,24 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   @Override
   public void modifyMember(String memberId, String name, String email, String phoneNumber, String password) {
-    Member member = getMemberById(memberId);
-    if (member == null) {
-      throw new IllegalArgumentException("Member not found!");
+    try {
+      Member member = getMemberById(memberId);
+      if (member == null) {
+        throw new IllegalArgumentException("Member not found!");
+      }
+
+      // Update member details
+      String newName = (name != null && !name.isBlank()) ? name : member.getName();
+      String newEmail = (email != null && !email.isBlank()) ? email : member.getEmail();
+      String newPhoneNumber = (phoneNumber != null && !phoneNumber.isBlank()) ? phoneNumber : member.getPhoneNumber();
+      String newPassword = (password != null && !password.isBlank()) ? password : member.getPassword();
+
+      member.updateMember(newName, newEmail, newPhoneNumber, newPassword);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error modifying member: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException("An unexpected error occurred while modifying the member.", e);
     }
-    // Update member details
-    String newName = (name != null && !name.isBlank()) ? name : member.getName();
-    String newEmail = (email != null && !email.isBlank()) ? email : member.getEmail();
-    String newPhoneNumber = (phoneNumber != null && !phoneNumber.isBlank()) ? phoneNumber : member.getPhoneNumber();
-    String newPassword = (password != null && !password.isBlank()) ? password : member.getPassword();
-    member.updateMember(newName, newEmail, newPhoneNumber, newPassword);
   }
 
   /**
@@ -94,11 +110,17 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   @Override
   public void deleteMember(String memberId, String password) {
-    Member member = getMemberById(memberId);
-    if (member != null && member.getPassword().equals(password)) {
-      members.remove(member);
-    } else {
-      throw new IllegalArgumentException("Member not found or password is incorrect!");
+    try {
+      Member member = getMemberById(memberId);
+      if (member != null && member.getPassword().equals(password)) {
+        members.remove(member);
+      } else {
+        throw new IllegalArgumentException("Member not found or password is incorrect!");
+      }
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error deleting member: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException("An unexpected error occurred while deleting the member.", e);
     }
   }
 
@@ -114,10 +136,10 @@ public class MemberDaoImpl implements MemberDaoInterface {
   public void checkUnique(String email, String phoneNumber) {
     for (Member member : members) {
       if (member.getEmail().equals(email)) {
-        throw new IllegalArgumentException("The email is already in use");
+        throw new IllegalArgumentException("The email is already in use.");
       }
       if (member.getPhoneNumber().equals(phoneNumber)) {
-        throw new IllegalArgumentException("The phone number is already in use");
+        throw new IllegalArgumentException("The phone number is already in use.");
       }
     }
   }
@@ -131,19 +153,24 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   @Override
   public Member showSpecificMemberInfo(String memberId) {
-    Member member = getMemberById(memberId);
-    if (member == null) {
-      throw new IllegalArgumentException("Member not found!");
+    try {
+      Member member = getMemberById(memberId);
+      if (member == null) {
+        throw new IllegalArgumentException("Member not found!");
+      }
+      // Return a deep copy of the member object to avoid exposing the original object
+      return new Member(member);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error retrieving member information: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException("An unexpected error occurred while retrieving the member information.", e);
     }
-    // Return a deep copy of the member object to avoid exposing the original object
-    return new Member(member);
   }
 
   /**
    * Finds a member by their ID.
    *
    * @param memberId The ID of the member to search for.
-   *
    * @return The {@link Member} object if found, or null if not found.
    */
   @Override
@@ -171,6 +198,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   @Override
   protected final void finalize() throws Throwable {
-    // Tom finalizer för att förhindra attacker
+    // Empty finalizer to prevent attacks
   }
 }

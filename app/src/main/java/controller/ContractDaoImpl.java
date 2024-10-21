@@ -12,19 +12,22 @@ public class ContractDaoImpl implements ContractDaoInterface {
   @Override
   public void createContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
     try {
-      // Validate if the item can be lent and the borrower has enough funds
-      isItemAvailableToLent(item);
-      isEnoughFundsToBorrow(borrower.getCredits(), item.getCostPerDay() * (endDay - startDay));
+      if (!isItemAvailableToLent(item)) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_UNAVAILABLE.getMessage());
+      }
+      if (!isEnoughFundsToBorrow(borrower.getCredits(), item.getCostPerDay() * (endDay - startDay))) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
+      }
 
-      // Create a new immutable contract and add it to the item and lender's records
       ImmutableContract newContract = new ImmutableContract(lender, borrower, item, startDay, endDay);
       item.addContract(newContract);
       lender.addContract(newContract);
 
+      // Contract successfully created, message can be handled in the view.
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error while creating contract: " + e.getMessage(), e);
+      throw new IllegalArgumentException("Error creating contract: " + e.getMessage(), e);
     } catch (Exception e) {
-      throw new RuntimeException("An unexpected error occurred while creating the contract.", e);
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
   }
 
@@ -32,7 +35,7 @@ public class ContractDaoImpl implements ContractDaoInterface {
   public boolean isItemAvailableToLent(Item item) {
     try {
       if (!item.isAvailable()) {
-        throw new IllegalArgumentException("The item is not available");
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_UNAVAILABLE.getMessage());
       }
       return true;
     } catch (IllegalArgumentException e) {
@@ -44,7 +47,7 @@ public class ContractDaoImpl implements ContractDaoInterface {
   public boolean isEnoughFundsToBorrow(int borrowerFunds, int itemTotalCost) {
     try {
       if (borrowerFunds < itemTotalCost) {
-        throw new IllegalArgumentException("Not enough funds to borrow the item for the given days");
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
       }
       return true;
     } catch (IllegalArgumentException e) {

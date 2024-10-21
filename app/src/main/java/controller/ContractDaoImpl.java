@@ -8,6 +8,7 @@ import model.Member;
  * Implementation of ContractDaoInterface to manage the creation and validation of contracts.
  */
 public class ContractDaoImpl implements ContractDaoInterface {
+  private TimeDaoInterface timeDao = new TimeDaoImpl();
 
   @Override
   public void createContract(Member lender, Member borrower, Item item, int startDay, int endDay) {

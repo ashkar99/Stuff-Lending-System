@@ -184,7 +184,6 @@ public class Item extends FatherOfFunction {
    */
   public void addContract(ImmutableContract contract) {
     lendingHistory.add(contract);
-    this.isAvailable = false;
   }
 
   /**

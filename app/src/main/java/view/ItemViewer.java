@@ -1,29 +1,120 @@
 package view;
 
+import controller.ItemDaoImpl;
+import controller.ItemDaoInterface;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-
+import java.util.Scanner;
+import model.CategoryEnum;
 import model.Item;
 import model.Member;
-
 
 /**
  * Item viewer.
  */
 public class ItemViewer {
-  private ContractViewer contractViewer = new ContractViewer();
+  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
+  private final ContractViewer contractViewer = new ContractViewer();
+  private final ItemDaoInterface itemDaoImp = new ItemDaoImpl();
 
+  /**
+   * Displays all items owned by a member, including their contracts.
+   *
+   * @param member The member whose items are being displayed.
+   */
   public void viewItems(Member member) {
     List<Item> items = member.getItems();
     for (Item item : items) {
-
       System.out.println("  Item name: " + item.getName());
       System.out.println("  Item Description: " + item.getDescription());
       System.out.println("  Category: " + item.getCategory());
       System.out.println("  Item cost per day: " + item.getCostPerDay());
       System.err.println("-----------");
       contractViewer.viewContract(item);
-
     }
   }
 
+  /**
+   * Displays available items from the given list.
+   *
+   * @param items The list of items to display.
+   */
+  public void viewAvailableItems(List<Item> items) {
+    for (Item item : items) {
+      System.out.println("  Item name: " + item.getName());
+      System.out.println("  Item Description: " + item.getDescription());
+      System.out.println("  Category: " + item.getCategory());
+      System.out.println("  Item cost per day: " + item.getCostPerDay());
+      System.err.println("-----------");
+    }
+  }
+
+  /**
+   * Allows editing of an existing item's information, such as name, description,
+   * category, and cost.
+   */
+  public void editIteminfo() {
+    final String memberId = promptForInput("Enter member id: ");
+    final String itemId = promptForInput("Enter item id: ");
+    final CategoryEnum category = promptForCategory();
+    final String name = promptForInput("Enter name: ");
+    final String description = promptForInput("Enter description: ");
+    final int cost = promptForInt("Enter cost: ");
+    itemDaoImp.modifyItem(memberId, itemId, category, name, description, cost);
+  }
+
+  /**
+   * Adds a new item for a member by prompting the user for details such as
+   * name, description, category, and cost.
+   */
+  public void addNewItem() {
+    final String memberId = promptForInput("Enter member id: ");
+    final CategoryEnum category = promptForCategory();
+    final String name = promptForInput("Enter name: ");
+    final String description = promptForInput("Enter description: ");
+    final int cost = promptForInt("Enter cost: ");
+    itemDaoImp.createItem(memberId, category, name, description, cost);
+  }
+
+  /**
+   * Deletes an item by prompting the user for the member ID and item ID.
+   */
+  public void deleteItem() {
+    final String memberId = promptForInput("Enter member id: ");
+    final String itemId = promptForInput("Enter item id: ");
+    itemDaoImp.deleteItem(memberId, itemId);
+  }
+
+  /**
+   * Prompts the user to enter a category.
+   *
+   * @return The category entered by the user.
+   */
+  private CategoryEnum promptForCategory() {
+    System.out.print("Category options: TOOL, VEHICLE, GAME, TOY, SPORT, OTHER. Enter one category: ");
+    final String categoryString = input.nextLine().toUpperCase();
+    return CategoryEnum.valueOf(categoryString);
+  }
+
+  /**
+   * Prompts the user for input.
+   *
+   * @param message The prompt message.
+   * @return The user's input as a string.
+   */
+  private String promptForInput(String message) {
+    System.out.print(message);
+    return input.nextLine();
+  }
+
+  /**
+   * Prompts the user for an integer input.
+   *
+   * @param message The prompt message.
+   * @return The user's input as an integer.
+   */
+  private int promptForInt(String message) {
+    System.out.print(message);
+    return input.nextInt();
+  }
 }

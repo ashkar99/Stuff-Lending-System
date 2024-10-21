@@ -6,7 +6,8 @@ import model.Time;
  * TimeDaoImpl class for handling time-related operations.
  */
 public class TimeDaoImpl implements TimeDaoInterface {
-  private Time time = new Time(0);
+  private int dayCounter;
+  public final Time time = new Time( dayCounter);
 
   @Override
   public void advanceDay() {

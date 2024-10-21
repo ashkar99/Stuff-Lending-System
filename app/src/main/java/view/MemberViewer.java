@@ -5,6 +5,7 @@ import controller.MemberDaoInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
+import model.Item;
 import model.Member;
 
 /**
@@ -28,16 +29,16 @@ public class MemberViewer {
    * The method displays a menu with options to list all members, delete a member,
    * and view detailed information about specific members.
    */
-  public void menu() {
+  public void mainMenu() {
     boolean running = true;
     while (running) {
       System.out.println("\nWelcome to Stuff Lending System App!");
       System.out.println("1. Create a member.");
-      System.out.println("2. Edit member info.");
-      System.out.println("3. Delete a member.");
-      System.out.println("4. Show specific member full information.");
-      System.out.println("5. Display members overview.");
-      System.out.println("6. Display members information and their items.");
+      System.out.println("2. Edit menu to member info.");
+      System.out.println("3. Show specific member full information.");
+      System.out.println("4. Display members overview.");
+      System.out.println("5. Display members information and their items.");
+      System.out.println("6. View avilible items.");
       System.out.println("7. Exit.");
 
       System.out.print("\nSelect an option: ");
@@ -47,16 +48,64 @@ public class MemberViewer {
           createMember();
           break;
         case 2:
-          editMemberInfo();
+          editMemberInfoMenu();
           break;
         case 3:
-          deleteMember();
-          break;
-        case 4:
           specificMemberFullInfo();
           break;
-        case 5:
+        case 4:
           displayMembersOverview();
+          break;
+        case 5:
+          displayMembersWithDetailedItems();
+          break;
+        case 6:
+          getAvilbaleItems();
+          break;
+        case 7:
+          running = false;
+          break;
+        default:
+          System.out.println("Invalid option. Please try again.");
+          break;
+      }
+    }
+  }
+
+  private void getAvilbaleItems() {
+    List<Item> avItems = memberDaoImpl.getAvilbaleItems();
+    itemViewer.viewAvailableItems(avItems);
+
+  }
+
+  private void editMemberInfoMenu() {
+    boolean running = true;
+    while (running) {
+      System.out.println("\nWelcome to Stuff Lending System App!");
+      System.out.println("1. Edit member info.");
+      System.out.println("2. Delete a member.");
+      System.out.println("3. Edit item info.");
+      System.out.println("4. Add a new item.");
+      System.out.println("5. Delete a item");
+      System.out.println("7. Exit.");
+
+      System.out.print("\nSelect an option: "); // Changed to print as this is where the user will type
+      int choice = readInt();
+      switch (choice) {
+        case 1:
+          editMemberInfo();
+          break;
+        case 2:
+          deleteMember();
+          break;
+        case 3:
+          itemViewer.editIteminfo();
+          break;
+        case 4:
+          itemViewer.addNewItem();
+          break;
+        case 5:
+          itemViewer.deleteItem();
           break;
         case 6:
           displayMembersWithDetailedItems();
@@ -93,15 +142,15 @@ public class MemberViewer {
    * Edits member information such as name, email, phone number, or password.
    */
   private void editMemberInfo() {
-    System.out.print("ENTER MEMBER ID: "); 
+    System.out.print("ENTER MEMBER ID: ");
     final String memberId = input.nextLine();
-    System.out.print("ENTER YOUR NAME: "); 
+    System.out.print("ENTER YOUR NAME: ");
     final String name = input.nextLine();
-    System.out.print("ENTER YOUR EMAIL: "); 
+    System.out.print("ENTER YOUR EMAIL: ");
     final String email = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: "); 
+    System.out.print("ENTER YOUR PASSWORD: ");
     final String password = input.nextLine();
-    System.out.print("ENTER YOUR PHONE NUMBER: "); 
+    System.out.print("ENTER YOUR PHONE NUMBER: ");
     final String phonNum = input.nextLine();
     memberDaoImpl.modifyMember(memberId, name, email, phonNum, password);
     waitForUserInput();
@@ -111,9 +160,9 @@ public class MemberViewer {
    * Allows the user to delete a member based on the provided email and password.
    */
   private void deleteMember() {
-    System.out.print("ENTER YOUR MEMBER ID: "); 
+    System.out.print("ENTER YOUR MEMBER ID: ");
     String memberId = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: "); 
+    System.out.print("ENTER YOUR PASSWORD: ");
     String password = input.nextLine();
     memberDaoImpl.deleteMember(memberId, password);
     waitForUserInput();
@@ -190,7 +239,7 @@ public class MemberViewer {
    */
   private int readInt() {
     while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: "); 
+      System.out.print("That's not a valid number. Please enter a number: ");
       input.next();
     }
     int result = input.nextInt();

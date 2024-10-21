@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.Item;
 import model.Member;
 
 /**
@@ -133,9 +134,21 @@ public class MemberDaoImpl implements MemberDaoInterface {
     return new ArrayList<>(members);
   }
 
+  /**
+   * Return a list of available items.
+   */
   @Override
-  protected final void finalize() throws Throwable {
-    // Empty finalizer to prevent attacks
+  public List<Item> getAvilbaleItems() {
+    List<Item> avItems = new ArrayList<>();
+    for (Member member : members) {
+      for (Item item : member.getItems()) {
+        if (item.isAvailable()) {
+          avItems.add(item);
+        }
+
+      }
+    }
+    return new ArrayList<>(avItems);
   }
 
   /**
@@ -156,5 +169,10 @@ public class MemberDaoImpl implements MemberDaoInterface {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage());
       }
     }
+  }
+
+  @Override
+  protected final void finalize() throws Throwable {
+    // Empty finalizer to prevent attacks
   }
 }

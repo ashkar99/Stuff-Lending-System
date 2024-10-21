@@ -26,7 +26,7 @@ public class Time {
     return dayCounter;
   }
 
-  private void setCurrentDay(int dayCounter) {
+  public void setCurrentDay(int dayCounter) {
     this.dayCounter = dayCounter;
   }
 }

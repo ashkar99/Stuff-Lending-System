@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import model.Item;
 import model.Member;
 
 /**
@@ -73,4 +74,9 @@ public interface MemberDaoInterface {
    * @return A list of {@link Member} objects representing all members.
    */
   List<Member> getMembers();
+
+  /**
+   * Get avilebale item.
+   */
+  List<Item> getAvilbaleItems();
 }

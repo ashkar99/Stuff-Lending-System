@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
 import model.Member;
+import model.Item;
 
 /**
  * The MemberViewer class handles the user interface for interacting with
@@ -28,16 +29,16 @@ public class MemberViewer {
    * The method displays a menu with options to list all members, delete a member,
    * and view detailed information about specific members.
    */
-  public void menu() {
+  public void mainMenu() {
     boolean running = true;
     while (running) {
       System.out.println("\nWelcome to Stuff Lending System App!");
       System.out.println("1. Create a member.");
-      System.out.println("2. Edit member info.");
-      System.out.println("3. Delete a member.");
-      System.out.println("4. Show specific member full information.");
-      System.out.println("5. Display members overview.");
-      System.out.println("6. Display members information and their items.");
+      System.out.println("2. Edit menu to member info.");
+      System.out.println("3. Show specific member full information.");
+      System.out.println("4. Display members overview.");
+      System.out.println("5. Display members information and their items.");
+      System.out.println("6. View avilible items.");
       System.out.println("7. Exit.");
 
       System.out.print("\nSelect an option: "); // Changed to print as this is where the user will type
@@ -47,16 +48,66 @@ public class MemberViewer {
           createMember();
           break;
         case 2:
-          editMemberInfo();
+          editMemberInfoMenu();
           break;
         case 3:
-          deleteMember();
-          break;
-        case 4:
           specificMemberFullInfo();
           break;
-        case 5:
+        case 4:
           displayMembersOverview();
+          break;
+        case 5:
+          displayMembersWithDetailedItems();
+          break;
+        case 6:
+          getAvilbaleItems();
+          break;
+        case 7:
+          running = false;
+          break;
+        default:
+          System.out.println("Invalid option. Please try again.");
+          break;
+      }
+    }
+  }
+
+ 
+
+  private void getAvilbaleItems() {
+    List<Item> avItems = memberDaoImpl.getAvilbaleItems();
+    itemViewer.ViewAvilbaleItems(avItems);
+    
+  }
+
+  private void editMemberInfoMenu() {
+    boolean running = true;
+    while (running) {
+      System.out.println("\nWelcome to Stuff Lending System App!");
+      System.out.println("1. Edit member info.");
+      System.out.println("2. Delete a member.");
+      System.out.println("3. Edit item info.");
+      System.out.println("4. Add a new item.");
+      System.out.println("5. Delete a item");
+      System.out.println("7. Exit.");
+
+      System.out.print("\nSelect an option: "); // Changed to print as this is where the user will type
+      int choice = readInt();
+      switch (choice) {
+        case 1:
+          editMemberInfo();
+          break;
+        case 2:
+          deleteMember();
+          break;
+        case 3:
+        itemViewer.editIteminfo();
+          break;
+        case 4:
+          itemViewer.addNewItem();
+          break;
+        case 5:
+          itemViewer.deleteItem();
           break;
         case 6:
           displayMembersWithDetailedItems();

@@ -17,7 +17,7 @@ public class App {
    */
   public static void main(String[] args) {
     MemberViewer viewer = new MemberViewer();
-    viewer.menu();
+    viewer.mainMenu();
 
   }
 

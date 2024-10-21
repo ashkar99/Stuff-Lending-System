@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import model.CategoryEnum;
+import model.ImmutableContract;
 import model.Item;
 import model.Member;
 
@@ -32,8 +33,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
     addMember("Charlie", "charlie@example.com", "1122334455", "password");
 
     // // Add Items to members
-    Item item = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
-    bob.addItem(item);
+    Item hammer = new Item(CategoryEnum.TOOL, "Hammer", "Steel hammer", 10, bob);
+    bob.addItem(hammer);
 
     bob.addItem(new Item(CategoryEnum.GAME, "Monopoly game", "Board Game", 2, bob));
 
@@ -41,8 +42,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
     bob.addItem(new Item(CategoryEnum.SPORT, "Tennis Racket", "Wilson Pro racket", 0, bob));
 
-    ContractDaoInterface contract = new ContractDaoImpl();
-    contract.createContract(bob, alice, item, 1, 3); // Bob borrows Alice's Hammer
+     ImmutableContract contract = new ImmutableContract(alice, bob, hammer, 2, 3);
+     hammer.addContract(contract); // Bob borrows Alice's Hammer
     // controller.createContract(charlie.getMemberId(), alice.getMemberId(), "Toy
     // Car", 2, 5); // Alice borrows Bob's Toy Car
 
@@ -164,6 +165,29 @@ public class MemberDaoImpl implements MemberDaoInterface {
   @Override
   public List<Member> getMembers() {
     return new ArrayList<>(members);
+  }
+
+  /**
+   * 
+   */
+  @Override
+  public List<Item> getAvilbaleItems() {
+    List<Item> avItems = new ArrayList<>();
+    for (Member member : members) {
+      for (Item item : member.getItems()) {
+        // for (ImmutableContract contract : item.getContracts()) {
+        //   String status = "Active";
+        //   if (!status.equals((contract.getStatus()))) {
+        //     avItems.add(item);
+            
+        //   }
+        if (item.isAvailable()){
+          avItems.add(item);
+        }
+        
+      }
+    }
+    return new ArrayList<>(avItems);
   }
 
   /**

@@ -340,4 +340,10 @@ sequenceDiagram
     MV->>MV: display member details to user
 ````
 
+
+
+# ObjectDiagram
+[object_diagram](/Users/ziadooo/Desktop/UML_OOAD/a2/img/object_diagram.png)
+
+
     

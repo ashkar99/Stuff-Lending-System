@@ -21,31 +21,6 @@ public class ItemDaoImpl implements ItemDaoInterface {
   }
 
   @Override
-  public void createItem(String memberId, CategoryEnum category, String name, String description, int costPerDay) {
-    try {
-      Member member = memberDao.getMemberById(memberId);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
-
-      // Check if any field is empty or invalid
-      if (category == null || name == null || name.isBlank() || description == null || costPerDay < 0) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-      }
-
-      Item newItem = new Item(category, name, description, costPerDay, member);
-      member.addItem(newItem);
-      member.updateCredits(100);
-
-      // Item successfully created, you may log or handle this message in the view.
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error creating item: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
-    }
-  }
-
-  @Override
   public void modifyItem(String memberId, String itemId, CategoryEnum category, String name, String description,
       int costPerDay) {
     try {
@@ -59,13 +34,13 @@ public class ItemDaoImpl implements ItemDaoInterface {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
       }
 
-      // Check for empty or invalid fields when modifying
-      if (name == null || name.isBlank() || description == null || description.isBlank() || costPerDay < 0) {
+      // No need for redundant null checks if name and description are always non-null
+      if (name.isBlank() || description.isBlank() || costPerDay < 0) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
       }
 
-      String newName = (name != null && !name.isBlank()) ? name : item.getName();
-      String newDescription = (description != null && !description.isBlank()) ? description : item.getDescription();
+      String newName = !name.isBlank() ? name : item.getName();
+      String newDescription = !description.isBlank() ? description : item.getDescription();
       CategoryEnum newCategory = (category != null) ? category : item.getCategory();
       int newCostPerDay = (costPerDay > 0) ? costPerDay : item.getCostPerDay();
 
@@ -73,9 +48,34 @@ public class ItemDaoImpl implements ItemDaoInterface {
       member.removeItem(item);
       member.addItem(updatedItem);
 
-      // Item successfully updated, you may log or handle this message in the view.
+      // Item successfully updated, message can be handled in view.
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Error modifying item: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    }
+  }
+
+  @Override
+  public void createItem(String memberId, CategoryEnum category, String name, String description, int costPerDay) {
+    try {
+      Member member = memberDao.getMemberById(memberId);
+      if (member == null) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+      }
+
+      // Check if any field is empty or invalid
+      if (category == null || name.isBlank() || description.isBlank() || costPerDay < 0) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+      }
+
+      Item newItem = new Item(category, name, description, costPerDay, member);
+      member.addItem(newItem);
+      member.updateCredits(100);
+
+      // Item successfully created, message can be handled in view.
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Error creating item: " + e.getMessage(), e);
     } catch (Exception e) {
       throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
@@ -96,7 +96,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
       member.removeItem(item);
 
-      // Item successfully deleted, you may log or handle this message in the view.
+      // Item successfully deleted, message can be handled in view.
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Error deleting item: " + e.getMessage(), e);
     } catch (Exception e) {

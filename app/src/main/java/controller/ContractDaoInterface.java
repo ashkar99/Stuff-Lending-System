@@ -25,7 +25,7 @@ public interface ContractDaoInterface {
    * @param item The item to check availability.
    * @return True if the item is available, false otherwise.
    */
-  boolean isItemAvailableToLend(Item item);
+  boolean isItemAvailableToLent(Item item);
 
   /**
    * Checks if the borrower has enough funds to borrow the item.

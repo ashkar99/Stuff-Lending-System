@@ -185,16 +185,20 @@ public class MemberViewer {
     System.out.print("Enter the memberId of the selected member to display its information: ");
     String memberId = input.nextLine();
     Member member = memberDaoImpl.showSpecificMemberInfo(memberId);
-    System.out.println("----------------------------------------");
-    System.out.println("Member ID: " + member.getId());
-    System.out.println("Name: " + member.getName());
-    System.out.println("Email: " + member.getEmail());
-    System.out.println("Phone number: " + member.getPhoneNumber());
-    System.out.println("Current credits: " + member.getCredits());
-    System.out.println("Number of owned items: " + member.getItems().size());
-    System.out.println("----------------------------------------");
-    waitForUserInput();
 
+    if (member != null) {
+      System.out.println("----------------------------------------");
+      System.out.println("Member ID: " + member.getId());
+      System.out.println("Name: " + member.getName());
+      System.out.println("Email: " + member.getEmail());
+      System.out.println("Phone number: " + member.getPhoneNumber());
+      System.out.println("Current credits: " + member.getCredits());
+      System.out.println("Number of owned items: " + member.getItems().size());
+      System.out.println("----------------------------------------");
+    } else {
+      System.out.println(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+    }
+    waitForUserInput();
   }
 
   /**

@@ -6,7 +6,7 @@ package controller;
  */
 public enum FeedbackMessage {
 
-  // Member-related messages
+  // Member related messages
   SUCCESS_MEMBER_CREATION("Member created successfully!"),
   SUCCESS_MEMBER_DELETION("Member deleted successfully!"),
   SUCCESS_MEMBER_UPDATE("Member information updated successfully!"),
@@ -16,6 +16,7 @@ public enum FeedbackMessage {
   ERROR_DUPLICATE_EMAIL("Error: This email is already in use."),
   ERROR_DUPLICATE_PHONE_NUMBER("Error: This phone number is already in use."),
   ERROR_MEMBER_NOT_FOUND("Error: Member not found."),
+  ERROR_NO_MEMBERS_TO_DISPLAY("Error: There are no members to display."),
 
   // Item-related messages
   SUCCESS_ITEM_CREATION("Item created successfully! Member credited with 100 points."),

@@ -146,7 +146,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
    *
    * @param member to get member's item.
    * @param itemId to get the item.
-   * @return
+   * @return item by the id.
    */
   public Item getItemById(Member member, String itemId) {
     for (Item item : member.getItems()) {

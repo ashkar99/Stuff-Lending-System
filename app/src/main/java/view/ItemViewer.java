@@ -99,7 +99,7 @@ public class ItemViewer {
    * Deletes an item by prompting the user for the member ID and item ID.
    */
   public void deleteItem() {
-   String memberId = promptForInput("Enter member id: ");
+    String memberId = promptForInput("Enter member id: ");
     String itemId = promptForInput("Enter item id: ");
 
     itemDaoImp.deleteItem(memberId, itemId);

@@ -99,9 +99,11 @@ public class ItemViewer {
    * Deletes an item by prompting the user for the member ID and item ID.
    */
   public void deleteItem() {
-    final String memberId = promptForInput("Enter member id: ");
-    final String itemId = promptForInput("Enter item id: ");
+   String memberId = promptForInput("Enter member id: ");
+    String itemId = promptForInput("Enter item id: ");
+
     itemDaoImp.deleteItem(memberId, itemId);
+    System.out.println(FeedbackMessage.SUCCESS_ITEM_DELETION.getMessage());
   }
 
   /**

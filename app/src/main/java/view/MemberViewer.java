@@ -229,6 +229,10 @@ public class MemberViewer {
    */
   private void displayMembersWithDetailedItems() {
     List<Member> detailedList = memberDaoImpl.getMembers();
+
+    if (detailedList.isEmpty()) {
+      System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
+    }
     for (Member member : detailedList) {
       System.out.println("----------------------------------------");
       System.out.println("Name: " + member.getName());

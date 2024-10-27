@@ -26,6 +26,7 @@ public enum FeedbackMessage {
   ERROR_ITEM_UPDATE("Error: Failed to update the item."),
   ERROR_ITEM_DELETION("Error: Failed to delete the item."),
   ERROR_ITEM_NOT_FOUND("Error: Item not found."),
+  ERROR_NO_ITEMS_TO_DISPLAY("Error: There are no items to display."),
 
   // Contract-related messages
   SUCCESS_CONTRACT_CREATION("Contract established successfully!"),

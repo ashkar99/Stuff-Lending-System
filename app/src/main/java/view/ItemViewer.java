@@ -75,7 +75,9 @@ public class ItemViewer {
     final String name = promptForInput("Enter name: ");
     final String description = promptForInput("Enter description: ");
     final int cost = promptForInt("Enter cost: ");
+
     itemDaoImp.modifyItem(memberId, itemId, category, name, description, cost);
+    System.out.println(FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage());
   }
 
   /**

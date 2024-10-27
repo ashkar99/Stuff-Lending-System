@@ -58,7 +58,7 @@ public class ItemViewer {
    * Allows editing of an existing item's information, such as name, description,
    * category, and cost.
    */
-  public void editIteminfo() {
+  public void editItemInfo() {
     final String memberId = promptForInput("Enter member id: ");
     final String itemId = promptForInput("Enter item id: ");
     final CategoryEnum category = promptForCategory();

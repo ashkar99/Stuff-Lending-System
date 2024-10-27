@@ -1,5 +1,6 @@
 package view;
 
+import controller.FeedbackMessage;
 import controller.ItemDaoImpl;
 import controller.ItemDaoInterface;
 import controller.MemberDaoInterface;
@@ -29,13 +30,18 @@ public class ItemViewer {
    */
   public void viewItems(Member member) {
     List<Item> items = member.getItems();
-    for (Item item : items) {
-      System.out.println("  Item name: " + item.getName());
-      System.out.println("  Item Description: " + item.getDescription());
-      System.out.println("  Category: " + item.getCategory());
-      System.out.println("  Item cost per day: " + item.getCostPerDay());
-      System.err.println("-----------");
-      contractViewer.viewContract(item);
+
+    if (items.isEmpty()) {
+      System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
+    } else {
+      for (Item item : items) {
+        System.out.println("  Item name: " + item.getName());
+        System.out.println("  Item Description: " + item.getDescription());
+        System.out.println("  Category: " + item.getCategory());
+        System.out.println("  Item cost per day: " + item.getCostPerDay());
+        System.out.println("-----------");
+        contractViewer.viewContract(item);
+      }
     }
   }
 

@@ -137,7 +137,9 @@ public class MemberViewer {
     final String password = input.nextLine();
     System.out.print("ENTER YOUR PHONE NUMBER: ");
     final String phonNum = input.nextLine();
+
     memberDaoImpl.addMember(name, email, phonNum, password);
+    System.out.println(FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage());
     waitForUserInput();
   }
 
@@ -156,6 +158,7 @@ public class MemberViewer {
     System.out.print("ENTER YOUR PHONE NUMBER: ");
     final String phonNum = input.nextLine();
     memberDaoImpl.modifyMember(memberId, name, email, phonNum, password);
+    System.out.println(FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage());
     waitForUserInput();
   }
 

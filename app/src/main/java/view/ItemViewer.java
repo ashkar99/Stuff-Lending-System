@@ -90,7 +90,9 @@ public class ItemViewer {
     final String name = promptForInput("Enter name: ");
     final String description = promptForInput("Enter description: ");
     final int cost = promptForInt("Enter cost: ");
+
     itemDaoImp.createItem(memberId, category, name, description, cost);
+    System.out.println(FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage());
   }
 
   /**

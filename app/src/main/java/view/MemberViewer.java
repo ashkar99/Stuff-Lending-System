@@ -244,15 +244,6 @@ public class MemberViewer {
   }
 
   /**
-   * Displays the information about the borrower member.
-   *
-   * @param borrower The member borrowing an item.
-   */
-  public void viewBorrower(Member borrower) {
-    System.out.println("Name of borrower: " + borrower.getName());
-  }
-
-  /**
    * Safely reads an integer from the user, prompting again if the input is not a
    * valid integer.
    *

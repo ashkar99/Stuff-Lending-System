@@ -232,13 +232,14 @@ public class MemberViewer {
 
     if (detailedList.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
-    }
-    for (Member member : detailedList) {
-      System.out.println("----------------------------------------");
-      System.out.println("Name: " + member.getName());
-      System.out.println("Email: " + member.getEmail());
-      itemViewer.viewItems(member);
-      System.out.println("----------------------------------------");
+    } else {
+      for (Member member : detailedList) {
+        System.out.println("----------------------------------------");
+        System.out.println("Name: " + member.getName());
+        System.out.println("Email: " + member.getEmail());
+        itemViewer.viewItems(member);
+        System.out.println("----------------------------------------");
+      }
     }
   }
 

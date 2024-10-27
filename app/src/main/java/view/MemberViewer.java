@@ -207,14 +207,19 @@ public class MemberViewer {
    */
   private void displayMembersOverview() {
     List<Member> simplList = memberDaoImpl.getMembers();
-    for (Member member : simplList) {
-      System.out.println("----------------------------------------");
-      System.out.println("Member ID: " + member.getId());
-      System.out.println("Name: " + member.getName());
-      System.out.println("Email: " + member.getEmail());
-      System.out.println("Current credits: " + member.getCredits());
-      System.out.println("Number of owned items: " + member.getItems().size());
-      System.out.println("----------------------------------------");
+
+    if (simplList.isEmpty()) {
+      System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
+    } else {
+      for (Member member : simplList) {
+        System.out.println("----------------------------------------");
+        System.out.println("Member ID: " + member.getId());
+        System.out.println("Name: " + member.getName());
+        System.out.println("Email: " + member.getEmail());
+        System.out.println("Current credits: " + member.getCredits());
+        System.out.println("Number of owned items: " + member.getItems().size());
+        System.out.println("----------------------------------------");
+      }
     }
   }
 

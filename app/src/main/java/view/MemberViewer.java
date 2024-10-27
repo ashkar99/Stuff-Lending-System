@@ -171,6 +171,7 @@ public class MemberViewer {
     System.out.print("ENTER YOUR PASSWORD: ");
     String password = input.nextLine();
     memberDaoImpl.deleteMember(memberId, password);
+    System.out.println(FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage());
     waitForUserInput();
   }
 

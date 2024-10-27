@@ -51,12 +51,16 @@ public class ItemViewer {
    * @param items The list of items to display.
    */
   public void viewAvailableItems(List<Item> items) {
-    for (Item item : items) {
-      System.out.println("  Item name: " + item.getName());
-      System.out.println("  Item Description: " + item.getDescription());
-      System.out.println("  Category: " + item.getCategory());
-      System.out.println("  Item cost per day: " + item.getCostPerDay());
-      System.err.println("-----------");
+    if (items.isEmpty()) {
+      System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
+    } else {
+      for (Item item : items) {
+        System.out.println("  Item name: " + item.getName());
+        System.out.println("  Item Description: " + item.getDescription());
+        System.out.println("  Category: " + item.getCategory());
+        System.out.println("  Item cost per day: " + item.getCostPerDay());
+        System.out.println("-----------");
+      }
     }
   }
 

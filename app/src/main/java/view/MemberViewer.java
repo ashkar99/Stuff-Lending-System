@@ -89,10 +89,10 @@ public class MemberViewer {
       System.out.println("2. Delete a member.");
       System.out.println("3. Edit item info.");
       System.out.println("4. Add a new item.");
-      System.out.println("5. Delete a item");
+      System.out.println("5. Delete an item.");
       System.out.println("7. Exit.");
 
-      System.out.print("\nSelect an option: "); // Changed to print as this is where the user will type
+      System.out.print("\nSelect an option: ");
       int choice = readInt();
       switch (choice) {
         case 1:
@@ -102,7 +102,7 @@ public class MemberViewer {
           deleteMember();
           break;
         case 3:
-          itemViewer.editIteminfo();
+          itemViewer.editItemInfo();
           break;
         case 4:
           itemViewer.addNewItem();
@@ -117,7 +117,7 @@ public class MemberViewer {
           running = false;
           break;
         default:
-          System.out.println("Invalid option. Please try again.");
+          System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
           break;
       }
     }

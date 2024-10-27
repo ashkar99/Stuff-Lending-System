@@ -52,7 +52,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
     } catch (IllegalArgumentException e) {
       if (e.getMessage().contains("email")) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage(), e);
-      } 
+      }
       if (e.getMessage().contains("phone number")) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage(), e);
       }
@@ -142,7 +142,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
    * Return a list of available items.
    */
   @Override
-  public List<Item> getAvilbaleItems() {
+  public List<Item> getAvailableItems() {
     List<Item> avItems = new ArrayList<>();
     for (Member member : members) {
       for (Item item : member.getItems()) {

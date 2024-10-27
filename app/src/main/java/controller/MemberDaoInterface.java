@@ -80,5 +80,5 @@ public interface MemberDaoInterface {
   /**
    * Get avilebale item.
    */
-  List<Item> getAvilbaleItems();
+  List<Item> getAvailableItems();
 }

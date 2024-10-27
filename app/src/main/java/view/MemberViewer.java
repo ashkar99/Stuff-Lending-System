@@ -1,5 +1,6 @@
 package view;
 
+import controller.FeedbackMessage;
 import controller.MemberDaoImpl;
 import controller.MemberDaoInterface;
 import java.nio.charset.StandardCharsets;
@@ -40,7 +41,7 @@ public class MemberViewer {
       System.out.println("3. Show specific member full information.");
       System.out.println("4. Display members overview.");
       System.out.println("5. Display members information and their items.");
-      System.out.println("6. View avilible items.");
+      System.out.println("6. View available items.");
       System.out.println("7. Exit.");
 
       System.out.print("\nSelect an option: ");
@@ -62,20 +63,20 @@ public class MemberViewer {
           displayMembersWithDetailedItems();
           break;
         case 6:
-          getAvilbaleItems();
+          getAvailableItems();
           break;
         case 7:
           running = false;
           break;
         default:
-          System.out.println("Invalid option. Please try again.");
+          System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
           break;
       }
     }
   }
 
-  private void getAvilbaleItems() {
-    List<Item> avItems = memberDaoImpl.getAvilbaleItems();
+  private void getAvailableItems() {
+    List<Item> avItems = memberDaoImpl.getAvailableItems();
     itemViewer.viewAvailableItems(avItems);
 
   }

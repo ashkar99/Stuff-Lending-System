@@ -1,4 +1,4 @@
-import view.MemberViewer;
+import view.Viewer;
 
 /**
  * Responsible for staring the application.
@@ -16,7 +16,7 @@ public class App {
    *
    */
   public static void main(String[] args) {
-    MemberViewer viewer = new MemberViewer();
+    Viewer viewer = new Viewer();
     viewer.mainMenu();
 
   }

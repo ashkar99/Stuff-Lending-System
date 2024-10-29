@@ -1,0 +1,131 @@
+package view;
+
+import controller.FeedbackMessage;
+import controller.MemberDaoImpl;
+import controller.MemberDaoInterface;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+
+/**
+ * Centralized Viewer class for displaying various system menus.
+ */
+public class Viewer {
+  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
+  private final MemberDaoInterface memberDao = new MemberDaoImpl();
+  private final MemberViewer memberViewer = new MemberViewer(memberDao);
+  private final ContractViewer contractViewer = new ContractViewer(memberDao);
+  private final ItemViewer itemViewer = new ItemViewer(memberDao);
+
+  /**
+   * Main menu, providing access to other menus in the system.
+   */
+  public void mainMenu() {
+    boolean running = true;
+    while (running) {
+      System.out.println("\nWelcome to Stuff Lending System App!");
+      System.out.println("1. Member Menu.");
+      System.out.println("2. Contract Menu.");
+      System.out.println("3. Item Menu.");
+      System.out.println("4. Exit.");
+      System.out.print("Select an option: ");
+      
+      int choice = readInt();
+      switch (choice) {
+        case 1 -> memberMenu();
+        case 2 -> contractMenu();
+        case 3 -> itemMenu();
+        case 4 -> running = false;
+        default -> System.out.println("Invalid option. Please try again.");
+      }
+    }
+  }
+
+  /**
+   * Displays the Member Menu.
+   */
+  private void memberMenu() {
+    boolean running = true;
+    while (running) {
+      System.out.println("\nMember Menu:");
+      System.out.println("1. Create a member.");
+      System.out.println("2. Edit member info.");
+      System.out.println("3. Show specific member full information.");
+      System.out.println("4. Display members overview.");
+      System.out.println("5. Display members and their items.");
+      System.out.println("6. Back to main menu.");
+      System.out.print("Select an option: ");
+      
+      int choice = readInt();
+      switch (choice) {
+        case 1 -> memberViewer.createMember();
+        case 2 -> memberViewer.editMemberInfo();
+        case 3 -> memberViewer.specificMemberFullInfo();
+        case 4 -> memberViewer.displayMembersOverview();
+        case 5 -> memberViewer.displayMembersWithDetailedItems();
+        case 6 -> running = false;
+        default -> System.out.println("Invalid option. Please try again.");
+      }
+    }
+  }
+
+  /**
+   * Displays the Contract Menu.
+   */
+  private void contractMenu() {
+    boolean running = true;
+    while (running) {
+      System.out.println("\nContract Menu:");
+      System.out.println("1. Create a new contract.");
+      System.out.println("2. Back to main menu.");
+
+      System.out.print("\nSelect an option: ");
+      int choice = readInt();
+      switch (choice) {
+        case 1 -> contractViewer.createContract();
+        case 2 -> running = false;
+        default ->System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+      }
+    }
+  }
+
+  /**
+   * Displays the Item Menu.
+   */
+  private void itemMenu() {
+    boolean running = true;
+    while (running) {
+      System.out.println("\nItem Menu:");
+      System.out.println("1. Add a new item.");
+      System.out.println("2. Edit item info.");
+      System.out.println("3. Delete an item.");
+      System.out.println("4. View available items.");
+      System.out.println("5. Back to main menu.");
+      System.out.print("Select an option: ");
+      
+      int choice = readInt();
+      switch (choice) {
+        case 1 -> itemViewer.addNewItem();
+        case 2 -> itemViewer.editItemInfo();
+        case 3 -> itemViewer.deleteItem();
+        case 4 -> itemViewer.viewAvailableItems();
+        case 5 -> running = false;
+        default -> System.out.println("Invalid option. Please try again.");
+      }
+    }
+  }
+
+  /**
+   * Reads an integer input from the user, handling invalid inputs.
+   *
+   * @return The integer value entered by the user.
+   */
+  private int readInt() {
+    while (!input.hasNextInt()) {
+      System.out.print("That's not a valid number. Please enter a number: ");
+      input.next();
+    }
+    int result = input.nextInt();
+    input.nextLine(); // Consume newline
+    return result;
+  }
+}

@@ -1,202 +1,90 @@
 package view;
 
 import controller.FeedbackMessage;
-import controller.MemberDaoImpl;
 import controller.MemberDaoInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
-import model.Item;
 import model.Member;
 
 /**
- * The MemberViewer class handles the user interface for interacting with
- * members. It allows users to log in, sign in, delete members, and view member
- * information in different formats.
+ * Handles member-related actions like creating, editing, deleting members, and displaying member information.
  */
 public class MemberViewer {
-  private Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
-  private MemberDaoInterface memberDaoImpl = new MemberDaoImpl();
-  private ItemViewer itemViewer;
-  private ContractViewer contractViewer;
+  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
+  private final MemberDaoInterface memberDao;
+  private final ItemViewer itemViewer;
 
-  /**
-   * Default constructor for the MemberViewer class.
-   */
-  public MemberViewer() {
-    memberDaoImpl.generated();
-    itemViewer = new ItemViewer(memberDaoImpl);
-    contractViewer = new ContractViewer(memberDaoImpl);
-  }
-
-  /**
-   * Handles the login process, where the user provides email and password.
-   * The method displays a menu with options to list all members, delete a member,
-   * and view detailed information about specific members.
-   */
-  public void mainMenu() {
-    boolean running = true;
-    while (running) {
-      System.out.println("\nWelcome to Stuff Lending System App!");
-      System.out.println("1. Create a member.");
-      System.out.println("2. Edit menu to member info.");
-      System.out.println("3. Show specific member full information.");
-      System.out.println("4. Display members overview.");
-      System.out.println("5. Display members information and their items.");
-      System.out.println("6. View available items.");
-      System.out.println("7. Exit.");
-
-      System.out.print("\nSelect an option: ");
-      int choice = readInt();
-      switch (choice) {
-        case 1:
-          createMember();
-          break;
-        case 2:
-          editMemberInfoMenu();
-          break;
-        case 3:
-          specificMemberFullInfo();
-          break;
-        case 4:
-          displayMembersOverview();
-          break;
-        case 5:
-          displayMembersWithDetailedItems();
-          break;
-        case 6:
-          getAvailableItems();
-          break;
-        case 7:
-          running = false;
-          break;
-        default:
-          System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
-          break;
-      }
-    }
-  }
-
-  private void getAvailableItems() {
-    List<Item> avItems = memberDaoImpl.getAvailableItems();
-    itemViewer.viewAvailableItems(avItems);
-
-  }
-
-  private void editMemberInfoMenu() {
-    boolean running = true;
-    while (running) {
-      System.out.println("\nWelcome to Stuff Lending System App!");
-      System.out.println("1. Edit member info.");
-      System.out.println("2. Delete a member.");
-      System.out.println("3. Edit item info.");
-      System.out.println("4. Add a new item.");
-      System.out.println("5. Delete an item.");
-      System.out.println("7. Exit.");
-
-      System.out.print("\nSelect an option: ");
-      int choice = readInt();
-      switch (choice) {
-        case 1:
-          editMemberInfo();
-          break;
-        case 2:
-          deleteMember();
-          break;
-        case 3:
-          itemViewer.editItemInfo();
-          break;
-        case 4:
-          itemViewer.addNewItem();
-          break;
-        case 5:
-          itemViewer.deleteItem();
-          break;
-        case 6:
-          displayMembersWithDetailedItems();
-          break;
-        case 7:
-          running = false;
-          break;
-        default:
-          System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
-          break;
-      }
-    }
+  public MemberViewer(MemberDaoInterface memberDao) {
+    this.memberDao = memberDao;
+    this.memberDao.generated(); // Generate initial data if needed
+    this.itemViewer = new ItemViewer(memberDao);
   }
 
   /**
    * Allows a new user to sign in by providing their personal details: name,
-   * email, password, and phone number. The method adds the new member to the
-   * system.
+   * email, password, and phone number. The method adds the new member to the system.
    */
-  private void createMember() {
-    System.out.print("ENTER YOUR NAME: ");
-    final String name = input.nextLine();
-    System.out.print("ENTER YOUR EMAIL: ");
-    final String email = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: ");
-    final String password = input.nextLine();
-    System.out.print("ENTER YOUR PHONE NUMBER: ");
-    final String phonNum = input.nextLine();
+  public void createMember() {
+    System.out.print("Enter your name: ");
+    String name = input.nextLine();
+    System.out.print("Enter your email: ");
+    String email = input.nextLine();
+    System.out.print("Enter your password: ");
+    String password = input.nextLine();
+    System.out.print("Enter your phone number: ");
+    String phoneNumber = input.nextLine();
 
-    memberDaoImpl.addMember(name, email, phonNum, password);
+    memberDao.addMember(name, email, phoneNumber, password);
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage());
     waitForUserInput();
   }
 
   /**
-   * Edits member information such as name, email, phone number, or password.
+   * Allows the user to edit member information such as name, email, phone number, or password.
    */
-  private void editMemberInfo() {
-    System.out.print("ENTER MEMBER ID: ");
-    final String memberId = input.nextLine();
-    System.out.print("ENTER YOUR NAME: ");
-    final String name = input.nextLine();
-    System.out.print("ENTER YOUR EMAIL: ");
-    final String email = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: ");
-    final String password = input.nextLine();
-    System.out.print("ENTER YOUR PHONE NUMBER: ");
-    final String phonNum = input.nextLine();
-    memberDaoImpl.modifyMember(memberId, name, email, phonNum, password);
+  public void editMemberInfo() {
+    System.out.print("Enter member ID: ");
+    String memberId = input.nextLine();
+    System.out.print("Enter new name: ");
+    String name = input.nextLine();
+    System.out.print("Enter new email: ");
+    String email = input.nextLine();
+    System.out.print("Enter new password: ");
+    String password = input.nextLine();
+    System.out.print("Enter new phone number: ");
+    String phoneNumber = input.nextLine();
+
+    memberDao.modifyMember(memberId, name, email, phoneNumber, password);
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage());
     waitForUserInput();
   }
 
   /**
-   * Allows the user to delete a member based on the provided email and password.
+   * Allows the user to delete a member based on the provided member ID and password.
    */
-  private void deleteMember() {
-    System.out.print("ENTER YOUR MEMBER ID: ");
+  public void deleteMember() {
+    System.out.print("Enter member ID: ");
     String memberId = input.nextLine();
-    System.out.print("ENTER YOUR PASSWORD: ");
+    System.out.print("Enter password: ");
     String password = input.nextLine();
-    memberDaoImpl.deleteMember(memberId, password);
+
+    memberDao.deleteMember(memberId, password);
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage());
     waitForUserInput();
   }
 
   /**
    * Displays detailed information about a specific member based on the member ID.
-   * It first shows a list of all members, and then the user can select a member
-   * to view.
    */
-  private void specificMemberFullInfo() {
+  public void specificMemberFullInfo() {
     displayMembersOverview();
-    System.out.print("Enter the memberId of the selected member to display its information: ");
+    System.out.print("Enter the member ID to view full information: ");
     String memberId = input.nextLine();
-    Member member = memberDaoImpl.showSpecificMemberInfo(memberId);
+    Member member = memberDao.showSpecificMemberInfo(memberId);
 
     if (member != null) {
-      System.out.println("----------------------------------------");
-      System.out.println("Member ID: " + member.getId());
-      System.out.println("Name: " + member.getName());
-      System.out.println("Email: " + member.getEmail());
-      System.out.println("Phone number: " + member.getPhoneNumber());
-      System.out.println("Current credits: " + member.getCredits());
-      System.out.println("Number of owned items: " + member.getItems().size());
-      System.out.println("----------------------------------------");
+      displayMemberInfo(member);
     } else {
       System.out.println(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
@@ -204,38 +92,36 @@ public class MemberViewer {
   }
 
   /**
-   * Displays a simple list of all members, showing only basic information like
-   * name, email, and phone number.
+   * Displays a simple list of all members, showing only basic information like name, email, and phone number.
    */
-  private void displayMembersOverview() {
-    List<Member> simplList = memberDaoImpl.getMembers();
+  public void displayMembersOverview() {
+    List<Member> members = memberDao.getMembers();
 
-    if (simplList.isEmpty()) {
+    if (members.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
     } else {
-      for (Member member : simplList) {
+      for (Member member : members) {
         System.out.println("----------------------------------------");
         System.out.println("Member ID: " + member.getId());
         System.out.println("Name: " + member.getName());
         System.out.println("Email: " + member.getEmail());
-        System.out.println("Current credits: " + member.getCredits());
-        System.out.println("Number of owned items: " + member.getItems().size());
+        System.out.println("Credits: " + member.getCredits());
+        System.out.println("Owned items: " + member.getItems().size());
         System.out.println("----------------------------------------");
       }
     }
   }
 
   /**
-   * Displays a verbose list of all members, showing detailed information about
-   * each member.
+   * Displays all members along with their detailed items.
    */
-  private void displayMembersWithDetailedItems() {
-    List<Member> detailedList = memberDaoImpl.getMembers();
+  public void displayMembersWithDetailedItems() {
+    List<Member> members = memberDao.getMembers();
 
-    if (detailedList.isEmpty()) {
+    if (members.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
     } else {
-      for (Member member : detailedList) {
+      for (Member member : members) {
         System.out.println("----------------------------------------");
         System.out.println("Name: " + member.getName());
         System.out.println("Email: " + member.getEmail());
@@ -246,27 +132,26 @@ public class MemberViewer {
   }
 
   /**
-   * Safely reads an integer from the user, prompting again if the input is not a
-   * valid integer.
+   * Utility method to display full member information.
    *
-   * @return The integer input by the user.
+   * @param member The member object to display.
    */
-  private int readInt() {
-    while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: ");
-      input.next();
-    }
-    int result = input.nextInt();
-    input.nextLine();
-    return result;
+  private void displayMemberInfo(Member member) {
+    System.out.println("----------------------------------------");
+    System.out.println("Member ID: " + member.getId());
+    System.out.println("Name: " + member.getName());
+    System.out.println("Email: " + member.getEmail());
+    System.out.println("Phone number: " + member.getPhoneNumber());
+    System.out.println("Credits: " + member.getCredits());
+    System.out.println("Owned items: " + member.getItems().size());
+    System.out.println("----------------------------------------");
   }
 
   /**
-   * Leave the user read in piece.
+   * Prompts the user to press ENTER to return to the menu.
    */
   private void waitForUserInput() {
     System.out.print("Press ENTER to go back to the menu: ");
     input.nextLine();
   }
-
 }

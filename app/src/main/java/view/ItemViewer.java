@@ -16,11 +16,12 @@ import model.Member;
  */
 public class ItemViewer {
   private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
-  private final ContractViewer contractViewer = new ContractViewer();
+  private final ContractViewer contractViewer;
   private final ItemDaoInterface itemDaoImp;
 
   public ItemViewer(MemberDaoInterface memberDaoImpl) {
     itemDaoImp = new ItemDaoImpl(memberDaoImpl);
+    contractViewer = new ContractViewer(memberDaoImpl);
   }
 
   /**

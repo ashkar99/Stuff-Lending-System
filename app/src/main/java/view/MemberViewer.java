@@ -18,6 +18,7 @@ public class MemberViewer {
   private Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private MemberDaoInterface memberDaoImpl = new MemberDaoImpl();
   private ItemViewer itemViewer;
+  private ContractViewer contractViewer;
 
   /**
    * Default constructor for the MemberViewer class.
@@ -25,6 +26,7 @@ public class MemberViewer {
   public MemberViewer() {
     memberDaoImpl.generated();
     itemViewer = new ItemViewer(memberDaoImpl);
+    contractViewer = new ContractViewer(memberDaoImpl);
   }
 
   /**

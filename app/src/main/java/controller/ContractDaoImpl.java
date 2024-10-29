@@ -16,6 +16,10 @@ public class ContractDaoImpl implements ContractDaoInterface {
     try {
       int currentDay = timeDao.getCurrentDay(); // Get the current day from the TimeDao
 
+      if (lender == null || borrower == null || item == null) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+      }
+
       // Check if the start day is in the past
       if (startDay < currentDay) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_CONTRACT_INVALID_TIME.getMessage());

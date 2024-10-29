@@ -11,94 +11,62 @@ import model.CategoryEnum;
 import model.Item;
 import model.Member;
 
-/**
- * Item viewer.
- */
 public class ItemViewer {
   private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private final ContractViewer contractViewer;
   private final ItemDaoInterface itemDaoImp;
+  private final MemberDaoInterface memberDao;
 
-  public ItemViewer(MemberDaoInterface memberDaoImpl) {
-    itemDaoImp = new ItemDaoImpl(memberDaoImpl);
-    contractViewer = new ContractViewer(memberDaoImpl);
+  public ItemViewer(MemberDaoInterface memberDao) {
+    this.memberDao = memberDao;
+    this.itemDaoImp = new ItemDaoImpl(memberDao);
+    this.contractViewer = new ContractViewer(memberDao);
   }
 
-  /**
-   * Displays all items owned by a member, including their contracts.
-   *
-   * @param member The member whose items are being displayed.
-   */
   public void viewItems(Member member) {
     List<Item> items = member.getItems();
-
     if (items.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
     } else {
       for (Item item : items) {
-        System.out.println("  Item name: " + item.getName());
-        System.out.println("  Item Description: " + item.getDescription());
-        System.out.println("  Category: " + item.getCategory());
-        System.out.println("  Item cost per day: " + item.getCostPerDay());
-        System.out.println("-----------");
+        displayItemInfo(item);
         contractViewer.viewContract(item);
       }
     }
   }
 
-  /**
-   * Displays available items from the given list.
-   *
-   * @param items The list of items to display.
-   */
-  public void viewAvailableItems(List<Item> items) {
+  public void viewAvailableItems() {
+    List<Item> items = memberDao.getAvailableItems();
     if (items.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
     } else {
-      for (Item item : items) {
-        System.out.println("  Item name: " + item.getName());
-        System.out.println("  Item Description: " + item.getDescription());
-        System.out.println("  Category: " + item.getCategory());
-        System.out.println("  Item cost per day: " + item.getCostPerDay());
-        System.out.println("-----------");
-      }
+      items.forEach(this::displayItemInfo);
     }
   }
 
-  /**
-   * Allows editing of an existing item's information, such as name, description,
-   * category, and cost.
-   */
   public void editItemInfo() {
-    final String memberId = promptForInput("Enter member id: ");
-    final String itemId = promptForInput("Enter item id: ");
-    final CategoryEnum category = promptForCategory();
-    final String name = promptForInput("Enter name: ");
-    final String description = promptForInput("Enter description: ");
-    final int cost = promptForInt("Enter cost: ");
+    String memberId = promptForInput("Enter member id: ");
+    String itemId = promptForInput("Enter item id: ");
+    CategoryEnum category = promptForCategory();
+    String name = promptForInput("Enter name: ");
+    String description = promptForInput("Enter description: ");
+    int cost = promptForInt("Enter cost: ");
 
     itemDaoImp.modifyItem(memberId, itemId, category, name, description, cost);
     System.out.println(FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage());
   }
 
-  /**
-   * Adds a new item for a member by prompting the user for details such as
-   * name, description, category, and cost.
-   */
   public void addNewItem() {
-    final String memberId = promptForInput("Enter member id: ");
-    final CategoryEnum category = promptForCategory();
-    final String name = promptForInput("Enter name: ");
-    final String description = promptForInput("Enter description: ");
-    final int cost = promptForInt("Enter cost: ");
+    String memberId = promptForInput("Enter member id: ");
+    CategoryEnum category = promptForCategory();
+    String name = promptForInput("Enter name: ");
+    String description = promptForInput("Enter description: ");
+    int cost = promptForInt("Enter cost: ");
 
     itemDaoImp.createItem(memberId, category, name, description, cost);
     System.out.println(FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage());
   }
 
-  /**
-   * Deletes an item by prompting the user for the member ID and item ID.
-   */
   public void deleteItem() {
     String memberId = promptForInput("Enter member id: ");
     String itemId = promptForInput("Enter item id: ");
@@ -107,34 +75,24 @@ public class ItemViewer {
     System.out.println(FeedbackMessage.SUCCESS_ITEM_DELETION.getMessage());
   }
 
-  /**
-   * Prompts the user to enter a category.
-   *
-   * @return The category entered by the user.
-   */
-  private CategoryEnum promptForCategory() {
-    System.out.print("Category options: TOOL, VEHICLE, GAME, TOY, SPORT, OTHER. Enter one category: ");
-    final String categoryString = input.nextLine().toUpperCase();
-    return CategoryEnum.valueOf(categoryString);
+  private void displayItemInfo(Item item) {
+    System.out.println("  Item name: " + item.getName());
+    System.out.println("  Description: " + item.getDescription());
+    System.out.println("  Category: " + item.getCategory());
+    System.out.println("  Cost per day: " + item.getCostPerDay());
+    System.out.println("-----------");
   }
 
-  /**
-   * Prompts the user for input.
-   *
-   * @param message The prompt message.
-   * @return The user's input as a string.
-   */
+  private CategoryEnum promptForCategory() {
+    System.out.print("Category options: TOOL, VEHICLE, GAME, TOY, SPORT, OTHER. Enter one category: ");
+    return CategoryEnum.valueOf(input.nextLine().toUpperCase());
+  }
+
   private String promptForInput(String message) {
     System.out.print(message);
     return input.nextLine();
   }
 
-  /**
-   * Prompts the user for an integer input.
-   *
-   * @param message The prompt message.
-   * @return The user's input as an integer.
-   */
   private int promptForInt(String message) {
     System.out.print(message);
     return input.nextInt();

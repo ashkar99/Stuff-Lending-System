@@ -49,20 +49,22 @@ public class Viewer {
       System.out.println("\nMember Menu:");
       System.out.println("1. Create a member.");
       System.out.println("2. Edit member info.");
-      System.out.println("3. Show specific member full information.");
-      System.out.println("4. Display members overview.");
-      System.out.println("5. Display members and their items.");
-      System.out.println("6. Back to main menu.");
+      System.out.println("3. Delete a member.");
+      System.out.println("4. Show specific member full information.");
+      System.out.println("5. Display members overview.");
+      System.out.println("6. Display members and their items.");
+      System.out.println("7. Back to main menu.");
       System.out.print("Select an option: ");
       
       int choice = readInt();
       switch (choice) {
         case 1 -> memberViewer.createMember();
         case 2 -> memberViewer.editMemberInfo();
-        case 3 -> memberViewer.specificMemberFullInfo();
-        case 4 -> memberViewer.displayMembersOverview();
-        case 5 -> memberViewer.displayMembersWithDetailedItems();
-        case 6 -> running = false;
+        case 3 -> memberViewer.deleteMember();
+        case 4 -> memberViewer.specificMemberFullInfo();
+        case 5 -> memberViewer.displayMembersOverview();
+        case 6 -> memberViewer.displayMembersWithDetailedItems();
+        case 7 -> running = false;
         default -> System.out.println("Invalid option. Please try again.");
       }
     }

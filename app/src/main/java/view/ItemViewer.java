@@ -110,6 +110,7 @@ public class ItemViewer extends BaseViewer {
    * @param item The item whose information is to be displayed.
    */
   private void displayItemInfo(Item item) {
+    System.out.println("  Item ID: " + item.getId());
     System.out.println("  Item name: " + item.getName());
     System.out.println("  Description: " + item.getDescription());
     System.out.println("  Category: " + item.getCategory());

@@ -11,18 +11,33 @@ import model.CategoryEnum;
 import model.Item;
 import model.Member;
 
+/**
+ * The ItemViewer class provides methods for displaying and managing items,
+ * including viewing items owned by a member, viewing available items, and
+ * editing, adding, and deleting items.
+ */
 public class ItemViewer {
   private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private final ContractViewer contractViewer;
   private final ItemDaoInterface itemDaoImp;
   private final MemberDaoInterface memberDao;
 
+  /**
+   * Constructs an ItemViewer with the specified MemberDaoInterface.
+   *
+   * @param memberDao An instance of MemberDaoInterface for accessing member-related data.
+   */
   public ItemViewer(MemberDaoInterface memberDao) {
     this.memberDao = memberDao;
     this.itemDaoImp = new ItemDaoImpl(memberDao);
     this.contractViewer = new ContractViewer(memberDao);
   }
 
+  /**
+   * Displays all items owned by the specified member, including their contracts.
+   *
+   * @param member The member whose items are to be displayed.
+   */
   public void viewItems(Member member) {
     List<Item> items = member.getItems();
     if (items.isEmpty()) {
@@ -35,6 +50,9 @@ public class ItemViewer {
     }
   }
 
+  /**
+   * Displays all available items that can be borrowed or viewed.
+   */
   public void viewAvailableItems() {
     List<Item> items = memberDao.getAvailableItems();
     if (items.isEmpty()) {
@@ -44,6 +62,9 @@ public class ItemViewer {
     }
   }
 
+  /**
+   * Prompts the user to edit an existing item's information.
+   */
   public void editItemInfo() {
     String memberId = promptForInput("Enter member id: ");
     String itemId = promptForInput("Enter item id: ");
@@ -56,6 +77,10 @@ public class ItemViewer {
     System.out.println(FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage());
   }
 
+  /**
+   * Prompts the user to add a new item by collecting details such as member ID,
+   * category, name, description, and cost.
+   */
   public void addNewItem() {
     String memberId = promptForInput("Enter member id: ");
     CategoryEnum category = promptForCategory();
@@ -67,6 +92,9 @@ public class ItemViewer {
     System.out.println(FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage());
   }
 
+  /**
+   * Prompts the user to delete an item by entering the member ID and item ID.
+   */
   public void deleteItem() {
     String memberId = promptForInput("Enter member id: ");
     String itemId = promptForInput("Enter item id: ");
@@ -75,6 +103,12 @@ public class ItemViewer {
     System.out.println(FeedbackMessage.SUCCESS_ITEM_DELETION.getMessage());
   }
 
+  /**
+   * Displays the information of an item, including its name, description,
+   * category, and cost per day.
+   *
+   * @param item The item whose information is to be displayed.
+   */
   private void displayItemInfo(Item item) {
     System.out.println("  Item name: " + item.getName());
     System.out.println("  Description: " + item.getDescription());
@@ -83,18 +117,42 @@ public class ItemViewer {
     System.out.println("-----------");
   }
 
+  /**
+   * Prompts the user to enter a category from a predefined set of options.
+   *
+   * @return The CategoryEnum selected by the user.
+   */
   private CategoryEnum promptForCategory() {
     System.out.print("Category options: TOOL, VEHICLE, GAME, TOY, SPORT, OTHER. Enter one category: ");
     return CategoryEnum.valueOf(input.nextLine().toUpperCase());
   }
 
+  /**
+   * Prompts the user for input and returns the entered string.
+   *
+   * @param message The prompt message to display to the user.
+   * @return The user's input as a string.
+   */
   private String promptForInput(String message) {
     System.out.print(message);
     return input.nextLine();
   }
 
+  /**
+   * Prompts the user for an integer input, handling invalid input until a valid
+   * integer is provided.
+   *
+   * @param message The prompt message to display to the user.
+   * @return The user's input as an integer.
+   */
   private int promptForInt(String message) {
     System.out.print(message);
-    return input.nextInt();
+    while (!input.hasNextInt()) {
+      System.out.print("That's not a valid number. Please enter a number: ");
+      input.next();
+    }
+    int result = input.nextInt();
+    input.nextLine(); // Consume newline
+    return result;
   }
 }

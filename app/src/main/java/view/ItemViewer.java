@@ -60,6 +60,7 @@ public class ItemViewer extends BaseViewer {
     } else {
       items.forEach(this::displayItemInfo);
     }
+    waitForUserInput();
   }
 
   /**
@@ -75,6 +76,7 @@ public class ItemViewer extends BaseViewer {
 
     itemDaoImp.modifyItem(memberId, itemId, category, name, description, cost);
     System.out.println(FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage());
+    waitForUserInput();
   }
 
   /**
@@ -90,6 +92,7 @@ public class ItemViewer extends BaseViewer {
 
     itemDaoImp.createItem(memberId, category, name, description, cost);
     System.out.println(FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage());
+    waitForUserInput();
   }
 
   /**
@@ -101,6 +104,7 @@ public class ItemViewer extends BaseViewer {
 
     itemDaoImp.deleteItem(memberId, itemId);
     System.out.println(FeedbackMessage.SUCCESS_ITEM_DELETION.getMessage());
+    waitForUserInput();
   }
 
   /**

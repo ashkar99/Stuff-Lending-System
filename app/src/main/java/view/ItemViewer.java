@@ -16,7 +16,7 @@ import model.Member;
  * including viewing items owned by a member, viewing available items, and
  * editing, adding, and deleting items.
  */
-public class ItemViewer {
+public class ItemViewer extends BaseViewer {
   private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private final ContractViewer contractViewer;
   private final ItemDaoInterface itemDaoImp;
@@ -125,34 +125,5 @@ public class ItemViewer {
   private CategoryEnum promptForCategory() {
     System.out.print("Category options: TOOL, VEHICLE, GAME, TOY, SPORT, OTHER. Enter one category: ");
     return CategoryEnum.valueOf(input.nextLine().toUpperCase());
-  }
-
-  /**
-   * Prompts the user for input and returns the entered string.
-   *
-   * @param message The prompt message to display to the user.
-   * @return The user's input as a string.
-   */
-  private String promptForInput(String message) {
-    System.out.print(message);
-    return input.nextLine();
-  }
-
-  /**
-   * Prompts the user for an integer input, handling invalid input until a valid
-   * integer is provided.
-   *
-   * @param message The prompt message to display to the user.
-   * @return The user's input as an integer.
-   */
-  private int promptForInt(String message) {
-    System.out.print(message);
-    while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: ");
-      input.next();
-    }
-    int result = input.nextInt();
-    input.nextLine(); // Consume newline
-    return result;
   }
 }

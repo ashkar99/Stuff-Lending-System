@@ -3,14 +3,11 @@ package view;
 import controller.FeedbackMessage;
 import controller.MemberDaoImpl;
 import controller.MemberDaoInterface;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
 /**
  * Centralized Viewer class for displaying various system menus.
  */
-public class Viewer {
-  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
+public class Viewer extends BaseViewer {
   private final MemberDaoInterface memberDao = new MemberDaoImpl();
   private final MemberViewer memberViewer = new MemberViewer(memberDao);
   private final ContractViewer contractViewer = new ContractViewer(memberDao);
@@ -29,7 +26,7 @@ public class Viewer {
       System.out.println("4. Exit.");
       System.out.print("Select an option: ");
       
-      int choice = readInt();
+      int choice = promptForInt("");
       switch (choice) {
         case 1 -> memberMenu();
         case 2 -> contractMenu();
@@ -56,7 +53,7 @@ public class Viewer {
       System.out.println("7. Back to main menu.");
       System.out.print("Select an option: ");
       
-      int choice = readInt();
+      int choice = promptForInt("");
       switch (choice) {
         case 1 -> memberViewer.createMember();
         case 2 -> memberViewer.editMemberInfo();
@@ -81,11 +78,11 @@ public class Viewer {
       System.out.println("2. Back to main menu.");
 
       System.out.print("\nSelect an option: ");
-      int choice = readInt();
+      int choice = promptForInt("");
       switch (choice) {
         case 1 -> contractViewer.createContract();
         case 2 -> running = false;
-        default ->System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+        default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
       }
     }
   }
@@ -104,7 +101,7 @@ public class Viewer {
       System.out.println("5. Back to main menu.");
       System.out.print("Select an option: ");
       
-      int choice = readInt();
+      int choice = promptForInt("");
       switch (choice) {
         case 1 -> itemViewer.addNewItem();
         case 2 -> itemViewer.editItemInfo();
@@ -114,20 +111,5 @@ public class Viewer {
         default -> System.out.println("Invalid option. Please try again.");
       }
     }
-  }
-
-  /**
-   * Reads an integer input from the user, handling invalid inputs.
-   *
-   * @return The integer value entered by the user.
-   */
-  private int readInt() {
-    while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: ");
-      input.next();
-    }
-    int result = input.nextInt();
-    input.nextLine(); // Consume newline
-    return result;
   }
 }

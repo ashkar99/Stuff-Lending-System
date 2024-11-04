@@ -131,11 +131,4 @@ public class MemberViewer extends BaseViewer {
     System.out.println("Owned items: " + member.getItems().size());
     System.out.println("----------------------------------------");
   }
-
-  /**
-   * Prompts the user to press ENTER to return to the menu.
-   */
-  private void waitForUserInput() { // Use in other classes too!!!!!!!!!!!!!!!
-    promptForInput("Press ENTER to go back to the menu: ");
-  }
 }

@@ -6,9 +6,7 @@ import controller.FeedbackMessage;
 import controller.ItemDaoImpl;
 import controller.ItemDaoInterface;
 import controller.MemberDaoInterface;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Scanner;
 import model.ImmutableContract;
 import model.Item;
 import model.Member;
@@ -18,8 +16,7 @@ import model.Member;
  * in the user interface, including creating contracts and viewing active
  * contracts associated with an item.
  */
-public class ContractViewer {
-  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
+public class ContractViewer extends BaseViewer {
   private final ContractDaoInterface contractDao = new ContractDaoImpl();
   private final MemberDaoInterface memberDao;
   private final ItemDaoInterface itemDao;
@@ -76,35 +73,5 @@ public class ContractViewer {
       System.out.println("   End day of contract: " + contract.getEndDay());
       System.out.println("------------------------------");
     }
-  }
-
-  /**
-   * Prompts the user to enter a string input with the provided message.
-   *
-   * @param message The prompt message to display to the user.
-   * @return The user's input as a String.
-   */
-  private String promptForInput(String message) {
-    System.out.print(message);
-    return input.nextLine();
-  }
-
-  /**
-   * Prompts the user to enter an integer value with the provided message.
-   * If the input is invalid, the user will be prompted to re-enter a valid
-   * integer.
-   *
-   * @param message The prompt message to display to the user.
-   * @return The user's input as an integer.
-   */
-  private int promptForInt(String message) {
-    System.out.print(message);
-    while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: ");
-      input.next();
-    }
-    int result = input.nextInt();
-    input.nextLine(); // Consume newline
-    return result;
   }
 }

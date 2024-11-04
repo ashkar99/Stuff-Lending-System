@@ -2,16 +2,13 @@ package view;
 
 import controller.FeedbackMessage;
 import controller.MemberDaoInterface;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Scanner;
 import model.Member;
 
 /**
  * Handles member-related actions like creating, editing, deleting members, and displaying member information.
  */
-public class MemberViewer {
-  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
+public class MemberViewer extends BaseViewer {
   private final MemberDaoInterface memberDao;
   private final ItemViewer itemViewer;
 
@@ -26,14 +23,10 @@ public class MemberViewer {
    * email, password, and phone number. The method adds the new member to the system.
    */
   public void createMember() {
-    System.out.print("Enter your name: ");
-    String name = input.nextLine();
-    System.out.print("Enter your email: ");
-    String email = input.nextLine();
-    System.out.print("Enter your password: ");
-    String password = input.nextLine();
-    System.out.print("Enter your phone number: ");
-    String phoneNumber = input.nextLine();
+    String name = promptForInput("Enter your name: ");
+    String email = promptForInput("Enter your email: ");
+    String password = promptForInput("Enter your password: ");
+    String phoneNumber = promptForInput("Enter your phone number: ");
 
     memberDao.addMember(name, email, phoneNumber, password);
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage());
@@ -44,16 +37,11 @@ public class MemberViewer {
    * Allows the user to edit member information such as name, email, phone number, or password.
    */
   public void editMemberInfo() {
-    System.out.print("Enter member ID: ");
-    String memberId = input.nextLine();
-    System.out.print("Enter new name: ");
-    String name = input.nextLine();
-    System.out.print("Enter new email: ");
-    String email = input.nextLine();
-    System.out.print("Enter new password: ");
-    String password = input.nextLine();
-    System.out.print("Enter new phone number: ");
-    String phoneNumber = input.nextLine();
+    String memberId = promptForInput("Enter member ID: ");
+    String name = promptForInput("Enter new name: ");
+    String email = promptForInput("Enter new email: ");
+    String password = promptForInput("Enter new password: ");
+    String phoneNumber = promptForInput("Enter new phone number: ");
 
     memberDao.modifyMember(memberId, name, email, phoneNumber, password);
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage());
@@ -64,10 +52,8 @@ public class MemberViewer {
    * Allows the user to delete a member based on the provided member ID and password.
    */
   public void deleteMember() {
-    System.out.print("Enter member ID: ");
-    String memberId = input.nextLine();
-    System.out.print("Enter password: ");
-    String password = input.nextLine();
+    String memberId = promptForInput("Enter member ID: ");
+    String password = promptForInput("Enter password: ");
 
     memberDao.deleteMember(memberId, password);
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage());
@@ -79,8 +65,7 @@ public class MemberViewer {
    */
   public void specificMemberFullInfo() {
     displayMembersOverview();
-    System.out.print("Enter the member ID to view full information: ");
-    String memberId = input.nextLine();
+    String memberId = promptForInput("Enter the member ID to view full information: ");
     Member member = memberDao.showSpecificMemberInfo(memberId);
 
     if (member != null) {
@@ -150,8 +135,7 @@ public class MemberViewer {
   /**
    * Prompts the user to press ENTER to return to the menu.
    */
-  private void waitForUserInput() {
-    System.out.print("Press ENTER to go back to the menu: ");
-    input.nextLine();
+  private void waitForUserInput() { // Use in other classes too!!!!!!!!!!!!!!!
+    promptForInput("Press ENTER to go back to the menu: ");
   }
 }

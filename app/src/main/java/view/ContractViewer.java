@@ -56,6 +56,7 @@ public class ContractViewer extends BaseViewer {
 
     contractDao.createContract(lender, borrower, item, startDay, endDay);
     System.out.println(FeedbackMessage.SUCCESS_CONTRACT_CREATION.getMessage());
+    waitForUserInput();
   }
 
   /**

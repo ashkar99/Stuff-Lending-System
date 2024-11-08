@@ -12,8 +12,6 @@ import model.Member;
  */
 public class MemberDaoImpl implements MemberDaoInterface {
 
-  private List<Member> members = new ArrayList<>();
-
   /**
    * Constructor for the MemberDaoImpl class.
    */

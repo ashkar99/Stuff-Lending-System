@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Class that store and handle the members.
  */
-public class SystemHandler {
+public class MemberRepository {
     private List<Member> members = new ArrayList<>();
 
-    public SystemHandler() {
+    public MemberRepository() {
 
     }
 }

@@ -37,7 +37,7 @@ public class MemberViewer extends BaseViewer {
    * Allows the user to edit member information such as name, email, phone number,
    * or password.
    */
-  public String [] editMemberInfo() {
+  public String[] editMemberInfo() {
     String memberId = promptForInput("Enter member ID: ");
     String name = promptForInput("Enter new name: ");
     String email = promptForInput("Enter new email: ");
@@ -54,7 +54,7 @@ public class MemberViewer extends BaseViewer {
    * Allows the user to delete a member based on the provided member ID and
    * password.
    */
-  public String [] deleteMember() {
+  public String[] deleteMember() {
     String memberId = promptForInput("Enter member ID: ");
     String password = promptForInput("Enter password: ");
     String [] member = {memberId,password};

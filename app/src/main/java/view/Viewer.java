@@ -5,7 +5,7 @@ import controller.MemberDaoImpl;
 import controller.MemberDaoInterface;
 
 /**
- * Centralized Viewer class for displaying various system menus.
+ * Centralized Viewer class for displaying various system menuss.
  */
 public class Viewer extends BaseViewer {
   private final ContractViewer contractViewer = new ContractViewer();

@@ -64,25 +64,26 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public void modifyMember(String memberId, String name, String email, String phoneNumber, String password) {
+  public void modifyMember() {
+    String[] memberInfo = memberViewer.editMemberInfo();
     try {
-      Member member = getMemberById(memberId);
+      Member member = getMemberById(memberInfo[0]);
       if (member == null) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
       }
 
       // Validate fields (removed null checks since the values are expected to be
       // non-null)
-      if (name.isBlank() || email.isBlank() || phoneNumber.isBlank() || password.isBlank()) {
+      if (memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank() || memberInfo[4].isBlank()) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
       }
 
-      String newName = !name.isBlank() ? name : member.getName();
-      String newEmail = !email.isBlank() ? email : member.getEmail();
-      String newPhoneNumber = !phoneNumber.isBlank() ? phoneNumber : member.getPhoneNumber();
-      String newPassword = !password.isBlank() ? password : member.getPassword();
+      String newName = !memberInfo[1].isBlank() ? memberInfo[1] : member.getName();
+      String newEmail = !memberInfo[2].isBlank() ? memberInfo[2] : member.getEmail();
+      String newPassword = !memberInfo[3].isBlank() ? memberInfo[3] : member.getPassword();
+      String newPhoneNumber = !memberInfo[4].isBlank() ? memberInfo[4] : member.getPhoneNumber();
 
-      member.updateMember(newName, newEmail, newPhoneNumber, newPassword);
+      member.updateMember(newName, newEmail, newPassword, newPhoneNumber);
 
       // Member successfully updated, message can be handled in the view.
     } catch (IllegalArgumentException e) {

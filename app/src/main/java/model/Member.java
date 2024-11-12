@@ -61,7 +61,7 @@ public class Member extends FatherOfFunction {
    * @param password    Update password.
    *
    */
-  public void updateMember(String name, String email, String phoneNumber, String password) {
+  public void updateMember(String name, String email, String password, String phoneNumber) {
     setName(name);
     setEmail(email);
     setPhoneNumber(phoneNumber);

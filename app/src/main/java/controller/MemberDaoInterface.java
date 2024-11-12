@@ -71,13 +71,6 @@ public interface MemberDaoInterface {
   Member getMemberById(String memberId);
 
   /**
-   * Retrieves all members in the system.
-   *
-   * @return A list of {@link Member} objects representing all members.
-   */
-  List<Member> getMembers();
-
-  /**
    * Get avilebale item.
    */
   List<Item> getAvailableItems();

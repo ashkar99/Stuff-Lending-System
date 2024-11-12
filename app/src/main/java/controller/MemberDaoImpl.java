@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Item;
 import model.Member;
+import model.MemberRepository;
 
 /**
  * Implementation of the {@link MemberDaoInterface}, responsible for managing
@@ -11,6 +12,7 @@ import model.Member;
  * member information from an internal list.
  */
 public class MemberDaoImpl implements MemberDaoInterface {
+  private MemberRepository memberRepository = new MemberRepository();
 
   /**
    * Constructor for the MemberDaoImpl class.
@@ -24,9 +26,9 @@ public class MemberDaoImpl implements MemberDaoInterface {
   public void generated() {
     try {
       Member bob = new Member("Bob", "bob@example.com", "0987654321", "password");
-      members.add(bob);
+      memberRepository.addMembers(bob);
       Member alice = new Member("Alice", "alice@example.com", "2234567890", "password");
-      members.add(alice);
+      memberRepository.addMembers(alice);
       alice.updateCredits(40);
       addMember("Charlie", "charlie@example.com", "1122334455", "password");
     } catch (Exception e) {
@@ -34,9 +36,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
     }
   }
 
-  public void addMembers(Member member) {
-    members.add(member);
-  }
+  
 
   @Override
   public void addMember(String name, String email, String phoneNumber, String password) {
@@ -46,7 +46,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
       }
       Member newMember = new Member(name, email, phoneNumber, password);
-      members.add(newMember);
+      memberRepository.addMembers(newMember);
+
     } catch (IllegalArgumentException e) {
       if (e.getMessage().contains("email")) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage(), e);
@@ -94,7 +95,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
     try {
       Member member = getMemberById(memberId);
       if (member != null && member.getPassword().equals(password)) {
-        members.remove(member);
+        memberRepository.removeMember(member);
         // Member successfully deleted, message can be handled in the view.
       } else {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
@@ -123,26 +124,20 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public Member getMemberById(String memberId) {
-    for (Member member : members) {
+    for (Member member : memberRepository.getMembers()) {
       if (member.getId().equals(memberId)) {
         return member;
       }
     }
     return null;
   }
-
-  @Override
-  public List<Member> getMembers() {
-    return new ArrayList<>(members);
-  }
-
   /**
    * Return a list of available items.
    */
   @Override
   public List<Item> getAvailableItems() {
     List<Item> avItems = new ArrayList<>();
-    for (Member member : members) {
+    for (Member member : memberRepository.getMembers()) {
       for (Item item : member.getItems()) {
         if (item.isAvailable()) {
           avItems.add(item);
@@ -163,7 +158,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
    *                                  use.
    */
   public void checkUnique(String email, String phoneNumber) {
-    for (Member member : members) {
+    for (Member member : memberRepository.getMembers()) {
       if (member.getEmail().equals(email)) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage());
       }

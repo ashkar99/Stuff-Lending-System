@@ -4,33 +4,36 @@ import controller.FeedbackMessage;
 import controller.MemberDaoInterface;
 import java.util.List;
 import model.Member;
+import model.MemberRepository;
 
 /**
  * Handles member-related actions like creating, editing, deleting members, and displaying member information.
  */
 public class MemberViewer extends BaseViewer {
+  private MemberRepository memberRepository = new MemberRepository();
   private final MemberDaoInterface memberDao;
   private final ItemViewer itemViewer;
 
   public MemberViewer(MemberDaoInterface memberDao) {
     this.memberDao = memberDao;
     this.memberDao.generated(); // Generate initial data if needed
-    this.itemViewer = new ItemViewer(memberDao);
+    this.itemViewer = new ItemViewer();
   }
 
   /**
    * Allows a new user to sign in by providing their personal details: name,
    * email, password, and phone number. The method adds the new member to the system.
    */
-  public void createMember() {
+  public String[] createMember() {
     String name = promptForInput("Enter your name: ");
     String email = promptForInput("Enter your email: ");
     String password = promptForInput("Enter your password: ");
     String phoneNumber = promptForInput("Enter your phone number: ");
 
-    memberDao.addMember(name, email, phoneNumber, password);
+    String[] memberInfo = {name, email, password, phoneNumber};
     System.out.println(FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage());
     waitForUserInput();
+    return memberInfo;
   }
 
   /**
@@ -80,7 +83,7 @@ public class MemberViewer extends BaseViewer {
    * Displays a simple list of all members, showing only basic information like name, email, and phone number.
    */
   public void displayMembersOverview() {
-    List<Member> members = memberDao.getMembers();
+    List<Member> members = memberRepository.getMembers();
 
     if (members.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
@@ -101,7 +104,7 @@ public class MemberViewer extends BaseViewer {
    * Displays all members along with their detailed items.
    */
   public void displayMembersWithDetailedItems() {
-    List<Member> members = memberDao.getMembers();
+    List<Member> members = memberRepository.getMembers();
 
     if (members.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());

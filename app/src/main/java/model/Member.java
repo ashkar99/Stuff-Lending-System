@@ -28,7 +28,7 @@ public class Member extends FatherOfFunction {
    * @param phoneNumber The phone number of the member.
    * @param password    The password for the member account.
    */
-  public Member(String name, String email, String phoneNumber, String password) {
+  public Member(String name, String email, String password, String phoneNumber) {
     setId();
     setName(name);
     setEmail(email);

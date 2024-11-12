@@ -1,7 +1,6 @@
 package view;
 
 import controller.FeedbackMessage;
-import controller.MemberDaoInterface;
 import java.util.List;
 import model.Member;
 import model.MemberRepository;
@@ -67,8 +66,8 @@ public class MemberViewer extends BaseViewer {
   /**
    * Displays detailed information about a specific member based on the member ID.
    */
-  public String specificMemberFullInfo() {
-    displayMembersOverview();
+  public String specificMemberFullInfo(List<Member> members) {
+    displayMembersOverview(members);
     String memberId = promptForInput("Enter the member ID to view full information: ");
 
  

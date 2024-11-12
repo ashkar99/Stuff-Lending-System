@@ -8,8 +8,6 @@ import controller.MemberDaoInterface;
  * Centralized Viewer class for displaying various system menus.
  */
 public class Viewer extends BaseViewer {
-  private final MemberDaoInterface memberDao = new MemberDaoImpl();
-  private final MemberViewer memberViewer = new MemberViewer(memberDao);
   private final ContractViewer contractViewer = new ContractViewer();
   private final ItemViewer itemViewer = new ItemViewer();
 

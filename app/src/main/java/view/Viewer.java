@@ -10,8 +10,8 @@ import controller.MemberDaoInterface;
 public class Viewer extends BaseViewer {
   private final MemberDaoInterface memberDao = new MemberDaoImpl();
   private final MemberViewer memberViewer = new MemberViewer(memberDao);
-  private final ContractViewer contractViewer = new ContractViewer(memberDao);
-  private final ItemViewer itemViewer = new ItemViewer(memberDao);
+  private final ContractViewer contractViewer = new ContractViewer();
+  private final ItemViewer itemViewer = new ItemViewer();
 
   /**
    * Main menu, providing access to other menus in the system.

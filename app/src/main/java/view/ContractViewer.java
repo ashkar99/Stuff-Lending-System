@@ -1,15 +1,13 @@
 package view;
 
-import controller.ContractDaoImpl;
-import controller.ContractDaoInterface;
+
 import controller.FeedbackMessage;
-import controller.ItemDaoImpl;
-import controller.ItemDaoInterface;
-import controller.MemberDaoInterface;
+
+
 import java.util.List;
 import model.ImmutableContract;
 import model.Item;
-import model.Member;
+
 
 /**
  * ContractViewer is responsible for managing contract-related interactions
@@ -17,9 +15,6 @@ import model.Member;
  * contracts associated with an item.
  */
 public class ContractViewer extends BaseViewer {
-  private final ContractDaoInterface contractDao = new ContractDaoImpl();
-  private final MemberDaoInterface memberDao;
-  private final ItemDaoInterface itemDao;
 
   /**
    * Initializes a new ContractViewer with a reference to MemberDaoInterface
@@ -29,12 +24,8 @@ public class ContractViewer extends BaseViewer {
    *                  information.
    * @throws IllegalArgumentException if memberDao is null.
    */
-  public ContractViewer(MemberDaoInterface memberDao) {
-    if (memberDao == null) {
-      throw new IllegalArgumentException("MemberDaoInterface cannot be null.");
-    }
-    this.memberDao = memberDao;
-    this.itemDao = new ItemDaoImpl(this.memberDao);
+  public ContractViewer() {
+   
   }
 
   /**
@@ -42,21 +33,17 @@ public class ContractViewer extends BaseViewer {
    * borrower's member IDs, item ID, and the start and end days for the contract.
    * Once validated, it initiates the contract creation process.
    */
-  public void createContract() {
+  public String [] createContract() {
     System.out.println("Creating a new contract...");
     String lenderId = promptForInput("Enter lender's member ID: ");
     String borrowerId = promptForInput("Enter borrower's member ID: ");
     String itemId = promptForInput("Enter item ID: ");
-    int startDay = promptForInt("Enter start day (integer): ");
-    int endDay = promptForInt("Enter end day (integer): ");
-
-    Member lender = memberDao.getMemberById(lenderId);
-    Member borrower = memberDao.getMemberById(borrowerId);
-    Item item = itemDao.getItemById(lender, itemId);
-
-    contractDao.createContract(lender, borrower, item, startDay, endDay);
+    String startDay = promptForInput("Enter start day (integer): ");
+    String endDay = promptForInput("Enter end day (integer): ");
+    String [] contract = {lenderId, borrowerId,itemId,startDay,endDay};
     System.out.println(FeedbackMessage.SUCCESS_CONTRACT_CREATION.getMessage());
     waitForUserInput();
+    return contract;
   }
 
   /**

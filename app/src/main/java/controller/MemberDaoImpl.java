@@ -14,7 +14,7 @@ import view.MemberViewer;
  */
 public class MemberDaoImpl implements MemberDaoInterface {
   private MemberRepository memberRepository = new MemberRepository();
-  private MemberViewer memberViewer = new MemberViewer(null);
+  private MemberViewer memberViewer = new MemberViewer();
 
   /**
    * Constructor for the MemberDaoImpl class.
@@ -94,10 +94,11 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public void deleteMember(String memberId, String password) {
+  public void deleteMember() {
+    String[] memberInfo = memberViewer.deleteMember();
     try {
-      Member member = getMemberById(memberId);
-      if (member != null && member.getPassword().equals(password)) {
+      Member member = getMemberById(memberInfo[0]);
+      if (member != null && member.getPassword().equals(memberInfo[1])) {
         memberRepository.removeMember(member);
         // Member successfully deleted, message can be handled in the view.
       } else {

@@ -15,14 +15,14 @@ public interface MemberDaoInterface {
   void generated();
 
   /**
-   * Adds a new member to the system.
+   * Creates a new member to the system.
    *
    * @param name        The name of the new member.
    * @param email       The email address of the new member.
    * @param phoneNumber The phone number of the new member.
    * @param password    The password for the new member.
    */
-  void addMember(String name, String email, String phoneNumber, String password);
+  void createMember();
 
   /**
    * Modifies the details of an existing member.

@@ -5,6 +5,7 @@ import java.util.List;
 import model.Item;
 import model.Member;
 import model.MemberRepository;
+import view.MemberViewer;
 
 /**
  * Implementation of the {@link MemberDaoInterface}, responsible for managing
@@ -13,6 +14,7 @@ import model.MemberRepository;
  */
 public class MemberDaoImpl implements MemberDaoInterface {
   private MemberRepository memberRepository = new MemberRepository();
+  private MemberViewer memberViewer = new MemberViewer(null);
 
   /**
    * Constructor for the MemberDaoImpl class.
@@ -30,7 +32,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
       Member alice = new Member("Alice", "alice@example.com", "2234567890", "password");
       memberRepository.addMembers(alice);
       alice.updateCredits(40);
-      addMember("Charlie", "charlie@example.com", "1122334455", "password");
     } catch (Exception e) {
       throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
@@ -39,13 +40,14 @@ public class MemberDaoImpl implements MemberDaoInterface {
   
 
   @Override
-  public void addMember(String name, String email, String phoneNumber, String password) {
+  public void createMember() {
+    String[] memberInfo = memberViewer.createMember();
     try {
-      checkUnique(email, phoneNumber);
-      if (name.isBlank() || email.isBlank() || phoneNumber.isBlank() || password.isBlank()) {
+      checkUnique(memberInfo[1], memberInfo[3]);
+      if (memberInfo[0].isBlank() || memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank()) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
       }
-      Member newMember = new Member(name, email, phoneNumber, password);
+      Member newMember = new Member(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
       memberRepository.addMembers(newMember);
 
     } catch (IllegalArgumentException e) {

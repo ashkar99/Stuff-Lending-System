@@ -28,13 +28,13 @@ public abstract class BaseViewer {
    * @param message The prompt message to display to the user.
    * @return The user's input as an integer.
    */
-  protected int promptForInt(String message) {
+  protected String promptForInt(String message) {
     System.out.print(message);
     while (!input.hasNextInt()) {
       System.out.print("That's not a valid number. Please enter a number: ");
       input.next();
     }
-    int result = input.nextInt();
+    String result = input.nextLine();
     input.nextLine(); // Consume newline
     return result;
   }

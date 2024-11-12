@@ -67,7 +67,7 @@ public class ItemViewer extends BaseViewer {
     String category = promptForCategory();
     String name = promptForInput("Enter name: ");
     String description = promptForInput("Enter description: ");
-    String cost = promptForInt("Enter cost: ");
+    String cost = promptForInput("Enter cost: ");
     String[] item = { memberId, itemId, category, name, description, cost };
     System.out.println(FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage());
     waitForUserInput();
@@ -83,7 +83,7 @@ public class ItemViewer extends BaseViewer {
     String category = promptForCategory();
     String name = promptForInput("Enter name: ");
     String description = promptForInput("Enter description: ");
-    String cost = promptForInt("Enter cost: ");
+    String cost = promptForInput("Enter cost: ");
     String[] item = { memberId, category, name, description, cost };
     System.out.println(FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage());
     waitForUserInput();

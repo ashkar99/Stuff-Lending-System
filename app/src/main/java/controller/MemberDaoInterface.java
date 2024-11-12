@@ -33,7 +33,7 @@ public interface MemberDaoInterface {
    * @param phoneNumber The new phone number for the member (if applicable).
    * @param password    The new password for the member (if applicable).
    */
-  void modifyMember(String memberId, String name, String email, String phoneNumber, String password);
+  void modifyMember();
 
   /**
    * Deletes a member from the system based on their member ID and password.
@@ -41,7 +41,7 @@ public interface MemberDaoInterface {
    * @param memberId The ID of the member to be deleted.
    * @param password The password of the member, used for verification.
    */
-  void deleteMember(String memberId, String password);
+  void deleteMember();
 
   /**
    * Checks if the provided email or phone number is unique in the system.

@@ -34,7 +34,7 @@ public class ItemViewer extends BaseViewer {
    *
    * @param member The member whose items are to be displayed.
    */
-  public void viewItems(Member member) {
+    public void viewItems(Member member) {
     List<Item> items = member.getItems();
     if (items.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());

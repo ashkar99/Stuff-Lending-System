@@ -3,6 +3,7 @@ package controller;
 import model.ImmutableContract;
 import model.Item;
 import model.Member;
+import view.ContractViewer;
 
 /**
  * Implementation of ContractDaoInterface to manage the creation and validation
@@ -10,10 +11,20 @@ import model.Member;
  */
 public class ContractDaoImpl implements ContractDaoInterface {
   private TimeDaoInterface timeDao = new TimeDaoImpl(); // Using TimeDao to check the current day
+  private ContractViewer contractViewer = new ContractViewer();
+  private MemberDaoInterface memberDao = new MemberDaoImpl();
+  private ItemDaoInterface itemDao = new ItemDaoImpl(memberDao);
 
   @Override
-  public void createContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
+  public void createContract( ) {
     try {
+      String[] contractStrings = contractViewer.createContract();
+      Member lender = memberDao.getMemberById(contractStrings[0]);
+      Member borrower = memberDao.getMemberById(contractStrings[1]);
+      Item item = itemDao.getItemById(lender, contractStrings[2]);
+      int startDay = Integer.parseInt(contractStrings[3]);
+      int endDay = Integer.parseInt(contractStrings[4]);
+
       int currentDay = timeDao.getCurrentDay(); // Get the current day from the TimeDao
 
       if (lender == null || borrower == null || item == null) {
@@ -26,12 +37,12 @@ public class ContractDaoImpl implements ContractDaoInterface {
       }
 
       // Check if the item is available for the given time period
-      if (item.isAvailableForPeriod(startDay, endDay) == false) {
+      if (!item.isAvailableForPeriod(startDay, endDay)) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_UNAVAILABLE.getMessage());
       }
 
       // Check if the borrower has enough funds
-      if (!isEnoughFundsToBorrow(borrower.getCredits(), item.getCostPerDay() * (endDay - startDay + 1))) {
+      if (!isEnoughFundsToBorrow(borrower,item, startDay,endDay)) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
       }
 
@@ -51,8 +62,10 @@ public class ContractDaoImpl implements ContractDaoInterface {
   }
 
   @Override
-  public boolean isEnoughFundsToBorrow(int borrowerFunds, int itemTotalCost) {
+  public boolean isEnoughFundsToBorrow(Member borrower,Item item, int startDay, int endDay) {
     try {
+      int borrowerFunds= borrower.getCredits();
+      int itemTotalCost = item.getCostPerDay() * (endDay - startDay + 1);
       if (borrowerFunds < itemTotalCost) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
       }

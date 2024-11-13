@@ -17,7 +17,7 @@ public interface ContractDaoInterface {
    * @param startDay The start day of the contract period.
    * @param endDay   The end day of the contract period.
    */
-  void createContract(Member lender, Member borrower, Item item, int startDay, int endDay);
+  void createContract();
 
   /**
    * Checks if the borrower has enough funds to borrow the item.
@@ -26,5 +26,5 @@ public interface ContractDaoInterface {
    * @param itemCost      The cost of borrowing the item.
    * @return True if the borrower has enough funds, false otherwise.
    */
-  boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost);
+  boolean isEnoughFundsToBorrow(Member borrowe,Item item, int startDay, int endDay);
 }

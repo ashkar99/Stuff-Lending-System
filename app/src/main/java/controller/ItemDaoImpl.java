@@ -4,6 +4,7 @@ import java.util.List;
 import model.CategoryEnum;
 import model.Item;
 import model.Member;
+import view.FeedbackMessage;
 import view.ItemViewer;
 
 /**

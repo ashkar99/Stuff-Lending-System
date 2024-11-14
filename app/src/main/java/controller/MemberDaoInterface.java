@@ -60,7 +60,7 @@ public interface MemberDaoInterface {
    * @return The {@link Member} object containing the member's details.
    *
    */
-  Member showSpecificMemberInfo(String memberId);
+  void showSpecificMemberInfo();
 
   /**
    * Finds a member by their unique ID.

@@ -26,90 +26,72 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
   @Override
   public void modifyItem() {
-    try {
-      String[] itemStrings = itemViewer.editItemInfo();
-      Member member = memberDao.getMemberById(itemStrings[0]);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
 
-      Item item = getItemById(member, itemStrings[1]);
-      if (item == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
-      }
-      // No need for redundant null checks if name and description are always non-null
-      if (itemStrings[3].isBlank() || itemStrings[4].isBlank() || Integer.valueOf(itemStrings[5]) < 0) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-      }
-      String newName = !itemStrings[3].isBlank() ? itemStrings[3] : item.getName();
-      String newDescription = !itemStrings[4].isBlank() ? itemStrings[4] : item.getDescription();
-      CategoryEnum newCategory = (CategoryEnum.valueOf(itemStrings[2]) != null) ? CategoryEnum.valueOf(itemStrings[2])
-          : item.getCategory();
-      int newCostPerDay = (Integer.valueOf(itemStrings[5]) > 0) ? Integer.valueOf(itemStrings[5])
-          : item.getCostPerDay();
-
-      Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay, item.getOwner());
-      member.removeItem(item);
-      member.addItem(updatedItem);
-
-      // Item successfully updated, message can be handled in view.
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error modifying item: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    String[] itemStrings = itemViewer.editItemInfo();
+    Member member = memberDao.getMemberById(itemStrings[0]);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
+
+    Item item = getItemById(member, itemStrings[1]);
+    if (item == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
+    }
+    // No need for redundant null checks if name and description are always non-null
+    if (itemStrings[3].isBlank() || itemStrings[4].isBlank() || Integer.valueOf(itemStrings[5]) < 0) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+    }
+    String newName = !itemStrings[3].isBlank() ? itemStrings[3] : item.getName();
+    String newDescription = !itemStrings[4].isBlank() ? itemStrings[4] : item.getDescription();
+    CategoryEnum newCategory = (CategoryEnum.valueOf(itemStrings[2]) != null) ? CategoryEnum.valueOf(itemStrings[2])
+        : item.getCategory();
+    int newCostPerDay = (Integer.valueOf(itemStrings[5]) > 0) ? Integer.valueOf(itemStrings[5])
+        : item.getCostPerDay();
+
+    Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay, item.getOwner());
+    member.removeItem(item);
+    member.addItem(updatedItem);
+
   }
 
   @Override
   public void createItem() {
-    try {
-      String[] itemStrings = itemViewer.addNewItem();
-      Member member = memberDao.getMemberById(itemStrings[0]);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
 
-      // Check if any field is empty or invalid
-      if (CategoryEnum.valueOf(itemStrings[1]) == null || itemStrings[2].isBlank() || itemStrings[3].isBlank()
-          || Integer.valueOf(itemStrings[4]) < 0) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-      }
-
-      Item newItem = new Item(CategoryEnum.valueOf(itemStrings[1]), itemStrings[2], itemStrings[3],
-          Integer.valueOf(itemStrings[4]), member);
-      member.addItem(newItem);
-      member.updateCredits(100);
-
-      // Item successfully created, message can be handled in view.
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error creating item: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    String[] itemStrings = itemViewer.addNewItem();
+    Member member = memberDao.getMemberById(itemStrings[0]);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
+
+    // Check if any field is empty or invalid
+    if (CategoryEnum.valueOf(itemStrings[1]) == null || itemStrings[2].isBlank() || itemStrings[3].isBlank()
+        || Integer.valueOf(itemStrings[4]) < 0) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+    }
+
+    Item newItem = new Item(CategoryEnum.valueOf(itemStrings[1]), itemStrings[2], itemStrings[3],
+        Integer.valueOf(itemStrings[4]), member);
+    member.addItem(newItem);
+    member.updateCredits(100);
+
   }
 
   @Override
   public void deleteItem() {
-    try {
-      String itemStrings[] = itemViewer.deleteItem();
-      Member member = memberDao.getMemberById(itemStrings[0]);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
 
-      Item item = getItemById(member, itemStrings[1]);
-      if (item == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
-      }
-
-      member.removeItem(item);
-
-      // Item successfully deleted, message can be handled in view.
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error deleting item: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    String itemStrings[] = itemViewer.deleteItem();
+    Member member = memberDao.getMemberById(itemStrings[0]);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
+
+    Item item = getItemById(member, itemStrings[1]);
+    if (item == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
+    }
+
+    member.removeItem(item);
+
   }
 
   // @Override
@@ -141,17 +123,13 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
   @Override
   public List<Item> getItemsByMember(String memberId) {
-    try {
-      Member member = memberDao.getMemberById(memberId);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
-      return member.getItems();
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error retrieving member's items: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+
+    Member member = memberDao.getMemberById(memberId);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
+    return member.getItems();
+
   }
 
   /**

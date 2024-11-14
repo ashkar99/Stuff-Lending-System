@@ -64,6 +64,6 @@ public enum FeedbackMessage {
    * @return The message as a String.
    */
   public String getMessage() {
-    return message;
+    return message; 
   }
 }

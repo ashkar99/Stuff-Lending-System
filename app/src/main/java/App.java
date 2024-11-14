@@ -22,15 +22,4 @@ public class App extends view.BaseViewer{
     menu.mainMenu();
   }
 
-  public int promptForInt(String message) {
-    System.out.print(message);
-    while (!input.hasNextInt()) {
-      System.out.print("That's not a valid number. Please enter a number: ");
-      input.next();
-    }
-    int result = input.nextInt();
-    input.nextLine(); // Consume newline
-    return result;
-  }
-
 }

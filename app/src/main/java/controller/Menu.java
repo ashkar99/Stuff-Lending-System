@@ -24,8 +24,7 @@ public class Menu extends view.BaseViewer {
   public void mainMenu() {
     boolean running = true;
     while (running) {
-      viewer.mainMenu();
-      int choice = promptForInt(null);
+      int choice = viewer.mainMenu();
 
       switch (choice) {
         case 1 -> memberMenu();
@@ -41,20 +40,25 @@ public class Menu extends view.BaseViewer {
    * Displays the Member Menu.
    */
   private void memberMenu() {
-    boolean running = true;
-    while (running) {
-      int choice = viewer.memberMenu();
-      
-      switch (choice) {
-        case 1 -> memberDao.createMember();
-        case 2 -> memberDao.modifyMember();
-        case 3 -> memberDao.deleteMember();
-        case 4 -> memberViewer.specificMemberFullInfo(memberRepository.getMembers());
-        case 5 -> memberViewer.displayMembersOverview(memberRepository.getMembers());
-        case 6 -> memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
-        case 7 -> running = false;
-        default -> System.out.println("Invalid option. Please try again.");
+    try {
+
+      boolean running = true;
+      while (running) {
+        int choice = viewer.memberMenu();
+
+        switch (choice) {
+          case 1 -> memberDao.createMember();
+          case 2 -> memberDao.modifyMember();
+          case 3 -> memberDao.deleteMember();
+          case 4 -> memberViewer.specificMemberFullInfo(memberRepository.getMembers());
+          case 5 -> memberViewer.displayMembersOverview(memberRepository.getMembers());
+          case 6 -> memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
+          case 7 -> running = false;
+          default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+        }
       }
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
     }
   }
 
@@ -62,6 +66,7 @@ public class Menu extends view.BaseViewer {
    * Displays the Contract Menu.
    */
   private void contractMenu() {
+    try {
     boolean running = true;
     while (running) {
       viewer.contractMenu();
@@ -72,25 +77,32 @@ public class Menu extends view.BaseViewer {
         default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
       }
     }
+  } catch(Exception e) {
+    System.err.println(e.getMessage());
+  }
   }
 
   /**
    * Displays the Item Menu.
    */
   private void itemMenu() {
-    boolean running = true;
-    while (running) {
-      viewer.itemMenu();
+    try {
+      boolean running = true;
+      while (running) {
+        viewer.itemMenu();
 
-      int choice = promptForInt("");
-      switch (choice) {
-        case 1 -> itemDao.createItem();
-        case 2 -> itemDao.modifyItem();
-        case 3 -> itemDao.deleteItem();
-        case 4 -> itemViewer.viewAvailableItems(memberDao.getAvailableItems());
-        case 5 -> running = false;
-        default -> System.out.println("Invalid option. Please try again.");
+        int choice = promptForInt("");
+        switch (choice) {
+          case 1 -> itemDao.createItem();
+          case 2 -> itemDao.modifyItem();
+          case 3 -> itemDao.deleteItem();
+          case 4 -> itemViewer.viewAvailableItems(memberDao.getAvailableItems());
+          case 5 -> running = false;
+          default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+        }
       }
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
     }
   }
 }

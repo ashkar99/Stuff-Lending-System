@@ -12,6 +12,7 @@ import java.util.List;
 public class TestProgram {
 
     private MemberDaoImpl memberDao;
+    private MemberRepository memberRepository;
     private ItemDaoImpl itemDao;
     private ContractDaoImpl contractDao;
     private TimeDaoImpl timeDao;
@@ -25,6 +26,7 @@ public class TestProgram {
     @BeforeEach
     public void setup() {
         memberDao = new MemberDaoImpl();
+        memberRepository = new MemberRepository();
         itemDao = new ItemDaoImpl(memberDao);
         contractDao = new ContractDaoImpl();
         timeDao = new TimeDaoImpl();
@@ -33,12 +35,12 @@ public class TestProgram {
         Member m1 = new Member("M1", "m1@example.com", "1234506789", "password");
         Member m2 = new Member("M2", "m2@example.com", "9876543210", "password");
         Member m3 = new Member("M3", "m3@example.com", "1122434455", "password");
-        memberDao.addMembers(m1);
-        memberDao.addMembers(m2);
-        memberDao.addMembers(m3);
+        memberRepository.addMembers(m1);
+        memberRepository.addMembers(m2);
+        memberRepository.addMembers(m3);
 
         // Print members to check if they exist
-        List<Member> members = memberDao.getMembers();
+        List<Member> members = memberRepository.getMembers();
         System.out.println("Number of members: " + members.size());
         for (Member member : members) {
             System.out.println("Member ID: " + member.getId() + " Name: " + member.getName());
@@ -67,7 +69,7 @@ public class TestProgram {
     @Test
     public void testInitialMemberData() {
         // Test case: 5.1 Member Data
-        List<Member> members = memberDao.getMembers();
+        List<Member> members = memberRepository.getMembers();
         assertEquals(3, members.size(), "There should be 3 members");
 
         // Check M1 details
@@ -90,8 +92,8 @@ public class TestProgram {
     @Test
     public void testCreateMember() {
         // Test case: 1.1 Create Member
-        memberDao.addMember("Allan Turing", "allan@enigma.com", "1234567890", "password");
-        Member member = memberDao.getMembers().get(memberDao.getMembers().size() - 1); // Get the last member added
+        memberDao.createMember("Allan Turing", "allan@enigma.com", "1234567890", "password");
+        Member member = memberRepository.getMembers().get(memberRepository.getMembers().size() - 1); // Get the last member added
         assertNotNull(member, "Member 'Allan Turing' should be created");
         assertEquals("allan@enigma.com", member.getEmail(), "Email should match");
     }

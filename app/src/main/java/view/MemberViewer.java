@@ -117,7 +117,7 @@ public class MemberViewer extends BaseViewer {
    *
    * @param member The member object to display.
    */
-  private void displayMemberInfo(Member member) {
+  public void displayMemberInfo(Member member) {
     System.out.println("----------------------------------------");
     System.out.println("Member ID: " + member.getId());
     System.out.println("Name: " + member.getName());

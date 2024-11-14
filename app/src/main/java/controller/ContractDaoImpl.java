@@ -18,7 +18,7 @@ public class ContractDaoImpl implements ContractDaoInterface {
 
   @Override
   public void createContract( ) {
-    try {
+    
       String[] contractStrings = contractViewer.createContract();
       Member lender = memberDao.getMemberById(contractStrings[0]);
       Member borrower = memberDao.getMemberById(contractStrings[1]);
@@ -54,25 +54,17 @@ public class ContractDaoImpl implements ContractDaoInterface {
       item.addContract(newContract);
       lender.addContract(newContract);
 
-      // Contract successfully created
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error creating contract: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
-  }
+  
 
   @Override
   public boolean isEnoughFundsToBorrow(Member borrower,Item item, int startDay, int endDay) {
-    try {
+  
       int borrowerFunds= borrower.getCredits();
       int itemTotalCost = item.getCostPerDay() * (endDay - startDay + 1);
       if (borrowerFunds < itemTotalCost) {
         throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
       }
       return true;
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error checking borrower's funds: " + e.getMessage(), e);
-    }
-  }
+    } 
 }

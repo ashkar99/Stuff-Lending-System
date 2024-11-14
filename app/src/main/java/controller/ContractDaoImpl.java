@@ -4,6 +4,7 @@ import model.ImmutableContract;
 import model.Item;
 import model.Member;
 import view.ContractViewer;
+import view.FeedbackMessage;
 
 /**
  * Implementation of ContractDaoInterface to manage the creation and validation

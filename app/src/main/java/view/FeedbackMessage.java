@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 /**
  * Enum class that holds all feedback messages a user can receive while using
@@ -52,6 +52,10 @@ public enum FeedbackMessage {
 
   FeedbackMessage(String message) {
     this.message = message;
+  }
+
+  public enum ItemMenu {
+
   }
 
   /**

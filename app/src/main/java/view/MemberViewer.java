@@ -1,9 +1,7 @@
 package view;
 
-import controller.FeedbackMessage;
 import java.util.List;
 import model.Member;
-import model.MemberRepository;
 
 /**
  * Handles member-related actions like creating, editing, deleting members, and

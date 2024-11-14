@@ -1,11 +1,6 @@
 package view;
 
-import controller.FeedbackMessage;
-
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Scanner;
-
 import model.Item;
 import model.Member;
 
@@ -15,7 +10,6 @@ import model.Member;
  * editing, adding, and deleting items.
  */
 public class ItemViewer extends BaseViewer {
-  private final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8);
   private final ContractViewer contractViewer;
 
   /**
@@ -34,7 +28,7 @@ public class ItemViewer extends BaseViewer {
    *
    * @param member The member whose items are to be displayed.
    */
-  public void viewItems(Member member) {
+    public void viewItems(Member member) {
     List<Item> items = member.getItems();
     if (items.isEmpty()) {
       System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());

@@ -87,14 +87,13 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public Member showSpecificMemberInfo(String memberId) {
-
+  public void showSpecificMemberInfo() {
+    String memberId = memberViewer.specificMemberFullInfo(memberRepository.getMembers());
     Member member = getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
-    return new Member(member); // Return a copy of the member
-
+    memberViewer.displayMemberInfo(member);
   }
 
   @Override

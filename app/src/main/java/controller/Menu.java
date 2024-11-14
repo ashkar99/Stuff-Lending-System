@@ -50,7 +50,7 @@ public class Menu extends view.BaseViewer {
           case 1 -> memberDao.createMember();
           case 2 -> memberDao.modifyMember();
           case 3 -> memberDao.deleteMember();
-          case 4 -> memberViewer.specificMemberFullInfo(memberRepository.getMembers());
+          case 4 -> memberDao.showSpecificMemberInfo(); //.specificMemberFullInfo(memberRepository.getMembers());
           case 5 -> memberViewer.displayMembersOverview(memberRepository.getMembers());
           case 6 -> memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
           case 7 -> running = false;

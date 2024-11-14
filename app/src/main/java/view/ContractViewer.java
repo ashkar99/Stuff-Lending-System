@@ -1,9 +1,6 @@
 package view;
 
 
-import controller.FeedbackMessage;
-
-
 import java.util.List;
 import model.ImmutableContract;
 import model.Item;

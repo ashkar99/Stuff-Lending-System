@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-import model.CategoryEnum;
 import model.Item;
 import model.Member;
 
@@ -43,13 +42,7 @@ public interface ItemDaoInterface {
    */
   void deleteItem();
 
-  /**
-   * Retrieves the details of a specific item.
-   *
-   * @param memberId The ID of the member who owns the item.
-   * @param itemId   The ID of the item to view.
-   * @return The item with the specified ID, or null if not found.
-   */
+  void viewAvailableItems();
 
 
   /**

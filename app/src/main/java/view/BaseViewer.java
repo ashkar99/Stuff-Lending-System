@@ -42,14 +42,14 @@ public abstract class BaseViewer {
   /**
    * Prompts the user to press ENTER to return to the menu.
    */
-  protected void waitForUserInput() { // Use in other classes too!!!!!!!!!!!!!!!
+  public void waitForUserInput() { // Use in other classes too!!!!!!!!!!!!!!!
     promptForInput("Press ENTER to go back to the menu: ");
   }
 
       /**
      * Utility method to display feedback messages based on success or failure of actions.
      */
-    private void displayFeedback(boolean success, String successMsg, String errorMsg) {
+    public void displayFeedback(boolean success, String successMsg, String errorMsg) {
       System.out.println(success ? successMsg : errorMsg);
       waitForUserInput();
   }

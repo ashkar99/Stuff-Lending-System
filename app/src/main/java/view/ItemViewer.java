@@ -28,10 +28,10 @@ public class ItemViewer extends BaseViewer {
    *
    * @param member The member whose items are to be displayed.
    */
-    public void viewItems(Member member) {
+  public void viewItems(Member member) {
     List<Item> items = member.getItems();
     if (items.isEmpty()) {
-      System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
     } else {
       for (Item item : items) {
         displayItemInfo(item);
@@ -45,11 +45,10 @@ public class ItemViewer extends BaseViewer {
    */
   public void viewAvailableItems(List<Item> items) {
     if (items.isEmpty()) {
-      System.out.println(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
     } else {
       items.forEach(this::displayItemInfo);
     }
-    waitForUserInput();
   }
 
   /**
@@ -63,8 +62,6 @@ public class ItemViewer extends BaseViewer {
     String description = promptForInput("Enter description: ");
     String cost = promptForInput("Enter cost: ");
     String[] item = { memberId, itemId, category, name, description, cost };
-    System.out.println(FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage());
-    waitForUserInput();
     return item;
   }
 
@@ -79,8 +76,6 @@ public class ItemViewer extends BaseViewer {
     String description = promptForInput("Enter description: ");
     String cost = promptForInput("Enter cost: ");
     String[] item = { memberId, category, name, description, cost };
-    System.out.println(FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage());
-    waitForUserInput();
     return item;
   }
 
@@ -91,8 +86,6 @@ public class ItemViewer extends BaseViewer {
     String memberId = promptForInput("Enter member id: ");
     String itemId = promptForInput("Enter item id: ");
     String[] item = { memberId, itemId };
-    System.out.println(FeedbackMessage.SUCCESS_ITEM_DELETION.getMessage());
-    waitForUserInput();
     return item;
   }
 

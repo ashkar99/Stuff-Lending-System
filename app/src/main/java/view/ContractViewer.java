@@ -38,8 +38,6 @@ public class ContractViewer extends BaseViewer {
     String startDay = promptForInput("Enter start day (integer): ");
     String endDay = promptForInput("Enter end day (integer): ");
     String [] contract = {lenderId, borrowerId,itemId,startDay,endDay};
-    System.out.println(FeedbackMessage.SUCCESS_CONTRACT_CREATION.getMessage());
-    waitForUserInput();
     return contract;
   }
 

@@ -24,6 +24,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   /**
+   * TODO
    * Generates initial data for testing purposes.
    */
   public void generated() {
@@ -39,48 +40,50 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
+  public void findbyList(){
+    memberViewer.findMember(memberRepository.getMembers());
+  }
+
+  @Override
   public void createMember() {
     String[] memberInfo = memberViewer.createMember();
     checkUnique(memberInfo[1], memberInfo[3]);
     if (memberInfo[0].isBlank() || memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank()) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
     }
+
     Member newMember = new Member(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
     memberRepository.addMembers(newMember);
-
+    memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage(), null);
   }
 
   @Override
   public void modifyMember() {
+    findbyList();
     String[] memberInfo = memberViewer.editMemberInfo();
     Member member = getMemberById(memberInfo[0]);
     if (member == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
-
-    // Validate fields (removed null checks since the values are expected to be
-    // non-null)
-    if (memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank() || memberInfo[4].isBlank()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-    }
-
     String newName = !memberInfo[1].isBlank() ? memberInfo[1] : member.getName();
     String newEmail = !memberInfo[2].isBlank() ? memberInfo[2] : member.getEmail();
     String newPassword = !memberInfo[3].isBlank() ? memberInfo[3] : member.getPassword();
     String newPhoneNumber = !memberInfo[4].isBlank() ? memberInfo[4] : member.getPhoneNumber();
 
     member.updateMember(newName, newEmail, newPassword, newPhoneNumber);
+    memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage(), null);
 
   }
 
   @Override
   public void deleteMember() {
+    memberViewer.findMember(memberRepository.getMembers());
     String[] memberInfo = memberViewer.deleteMember();
 
     Member member = getMemberById(memberInfo[0]);
     if (member != null && member.getPassword().equals(memberInfo[1])) {
       memberRepository.removeMember(member);
-      // Member successfully deleted, message can be handled in the view.
+      memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage(), null);
     } else {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
@@ -94,6 +97,16 @@ public class MemberDaoImpl implements MemberDaoInterface {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
     memberViewer.displayMemberInfo(member);
+  }
+
+  @Override
+  public void displayMembersOverview() {
+    memberViewer.displayMembersOverview(memberRepository.getMembers());
+  }
+
+  @Override
+  public void displayMembersWithDetailedItems() {
+    memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
   }
 
   @Override

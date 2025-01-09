@@ -25,9 +25,7 @@ public class MemberViewer extends BaseViewer {
     String email = promptForInput("Enter your email: ");
     String password = promptForInput("Enter your password: ");
     String phoneNumber = promptForInput("Enter your phone number: ");
-    String [] member = {name,email,password,phoneNumber};
-    System.out.println(FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage());
-    waitForUserInput();
+    String[] member = { name, email, password, phoneNumber };
     return member;
   }
 
@@ -41,10 +39,7 @@ public class MemberViewer extends BaseViewer {
     String email = promptForInput("Enter new email: ");
     String password = promptForInput("Enter new password: ");
     String phoneNumber = promptForInput("Enter new phone number: ");
-    String [] member = {memberId,name,email,password,phoneNumber};
-
-    System.out.println(FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage());
-    waitForUserInput();
+    String[] member = { memberId, name, email, password, phoneNumber };
     return member;
   }
 
@@ -55,9 +50,7 @@ public class MemberViewer extends BaseViewer {
   public String[] deleteMember() {
     String memberId = promptForInput("Enter member ID: ");
     String password = promptForInput("Enter password: ");
-    String [] member = {memberId,password};
-    System.out.println(FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage());
-    waitForUserInput();
+    String[] member = { memberId, password };
     return member;
   }
 
@@ -65,13 +58,8 @@ public class MemberViewer extends BaseViewer {
    * Displays detailed information about a specific member based on the member ID.
    */
   public String specificMemberFullInfo(List<Member> members) {
-    displayMembersOverview(members);
+    findMember(members);
     String memberId = promptForInput("Enter the member ID to view full information: ");
-
- 
-      //System.out.println(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    
-    waitForUserInput();
     return memberId;
   }
 
@@ -81,15 +69,33 @@ public class MemberViewer extends BaseViewer {
    */
   public void displayMembersOverview(List<Member> members) {
     if (members.isEmpty()) {
-      System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
     } else {
       for (Member member : members) {
         System.out.println("----------------------------------------");
+
         System.out.println("Member ID: " + member.getId());
         System.out.println("Name: " + member.getName());
         System.out.println("Email: " + member.getEmail());
         System.out.println("Credits: " + member.getCredits());
         System.out.println("Owned items: " + member.getItems().size());
+        System.out.println("----------------------------------------");
+      }
+    }
+    waitForUserInput();
+  }
+
+    /**
+   * Displays a simple list of all members, showing name and ID.
+   */
+  public void findMember(List<Member> members) {
+    if (members.isEmpty()) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
+    } else {
+      for (Member member : members) {
+        System.out.println("----------------------------------------");
+        System.out.println("Member ID: " + member.getId());
+        System.out.println("Name: " + member.getName());
         System.out.println("----------------------------------------");
       }
     }
@@ -100,7 +106,7 @@ public class MemberViewer extends BaseViewer {
    */
   public void displayMembersWithDetailedItems(List<Member> members) {
     if (members.isEmpty()) {
-      System.out.println(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
     } else {
       for (Member member : members) {
         System.out.println("----------------------------------------");
@@ -110,6 +116,7 @@ public class MemberViewer extends BaseViewer {
         System.out.println("----------------------------------------");
       }
     }
+    waitForUserInput();
   }
 
   /**
@@ -126,5 +133,6 @@ public class MemberViewer extends BaseViewer {
     System.out.println("Credits: " + member.getCredits());
     System.out.println("Owned items: " + member.getItems().size());
     System.out.println("----------------------------------------");
+    waitForUserInput();
   }
 }

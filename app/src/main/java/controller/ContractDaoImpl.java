@@ -53,6 +53,7 @@ public class ContractDaoImpl implements ContractDaoInterface {
       lender.updateCredits(item.getCostPerDay() * (endDay - startDay + 1));
       item.addContract(newContract);
       lender.addContract(newContract);
+      contractViewer.displayFeedback(true,FeedbackMessage.SUCCESS_CONTRACT_CREATION.getMessage(),null);
 
     }
   

@@ -62,6 +62,14 @@ public interface MemberDaoInterface {
    */
   void showSpecificMemberInfo();
 
+
+  void displayMembersOverview();
+
+
+  void displayMembersWithDetailedItems();
+
+  void findbyList();
+
   /**
    * Finds a member by their unique ID.
    *

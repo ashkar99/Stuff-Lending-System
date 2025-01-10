@@ -54,10 +54,6 @@ public enum FeedbackMessage {
     this.message = message;
   }
 
-  public enum ItemMenu {
-
-  }
-
   /**
    * Returns the message associated with the enum value.
    *

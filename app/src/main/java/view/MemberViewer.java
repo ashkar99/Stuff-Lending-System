@@ -85,7 +85,7 @@ public class MemberViewer extends BaseViewer {
     waitForUserInput();
   }
 
-    /**
+  /**
    * Displays a simple list of all members, showing name and ID.
    */
   public void findMember(List<Member> members) {
@@ -116,7 +116,6 @@ public class MemberViewer extends BaseViewer {
         System.out.println("----------------------------------------");
       }
     }
-    waitForUserInput();
   }
 
   /**

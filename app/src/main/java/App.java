@@ -4,7 +4,7 @@ import controller.Menu;
 /**
  * Responsible for staring the application.
  */
-public class App extends view.BaseViewer{
+public class App {
   static App app = new App();
   
 

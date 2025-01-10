@@ -46,11 +46,12 @@ public abstract class BaseViewer {
     promptForInput("Press ENTER to go back to the menu: ");
   }
 
-      /**
-     * Utility method to display feedback messages based on success or failure of actions.
-     */
-    public void displayFeedback(boolean success, String successMsg, String errorMsg) {
-      System.out.println(success ? successMsg : errorMsg);
-      waitForUserInput();
+  /**
+   * Utility method to display feedback messages based on success or failure of
+   * actions.
+   */
+  public void displayFeedback(boolean success, String successMsg, String errorMsg) {
+    System.out.println(success ? successMsg : errorMsg);
+    waitForUserInput();
   }
 }

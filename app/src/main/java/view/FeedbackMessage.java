@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 /**
  * Enum class that holds all feedback messages a user can receive while using
@@ -60,6 +60,6 @@ public enum FeedbackMessage {
    * @return The message as a String.
    */
   public String getMessage() {
-    return message;
+    return message; 
   }
 }

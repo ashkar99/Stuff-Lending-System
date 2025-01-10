@@ -5,6 +5,7 @@ import java.util.List;
 import model.Item;
 import model.Member;
 import model.MemberRepository;
+import view.FeedbackMessage;
 import view.MemberViewer;
 
 /**
@@ -23,6 +24,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   /**
+   * TODO
    * Generates initial data for testing purposes.
    */
   public void generated() {
@@ -37,93 +39,74 @@ public class MemberDaoImpl implements MemberDaoInterface {
     }
   }
 
-  
+  @Override
+  public void findbyList() {
+    memberViewer.findMember(memberRepository.getMembers());
+  }
 
   @Override
   public void createMember() {
     String[] memberInfo = memberViewer.createMember();
-    try {
-      checkUnique(memberInfo[1], memberInfo[3]);
-      if (memberInfo[0].isBlank() || memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank()) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-      }
-      Member newMember = new Member(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
-      memberRepository.addMembers(newMember);
-
-    } catch (IllegalArgumentException e) {
-      if (e.getMessage().contains("email")) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage(), e);
-      }
-      if (e.getMessage().contains("phone number")) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage(), e);
-      }
-      throw new IllegalArgumentException("Error adding member: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    checkUnique(memberInfo[1], memberInfo[3]);
+    if (memberInfo[0].isBlank() || memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank()) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
     }
+
+    Member newMember = new Member(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
+    memberRepository.addMembers(newMember);
+    memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage(), null);
   }
 
   @Override
   public void modifyMember() {
+    findbyList();
     String[] memberInfo = memberViewer.editMemberInfo();
-    try {
-      Member member = getMemberById(memberInfo[0]);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
-
-      // Validate fields (removed null checks since the values are expected to be
-      // non-null)
-      if (memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank() || memberInfo[4].isBlank()) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-      }
-
-      String newName = !memberInfo[1].isBlank() ? memberInfo[1] : member.getName();
-      String newEmail = !memberInfo[2].isBlank() ? memberInfo[2] : member.getEmail();
-      String newPassword = !memberInfo[3].isBlank() ? memberInfo[3] : member.getPassword();
-      String newPhoneNumber = !memberInfo[4].isBlank() ? memberInfo[4] : member.getPhoneNumber();
-
-      member.updateMember(newName, newEmail, newPassword, newPhoneNumber);
-
-      // Member successfully updated, message can be handled in the view.
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error modifying member: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+    Member member = getMemberById(memberInfo[0]);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
+    String newName = !memberInfo[1].isBlank() ? memberInfo[1] : member.getName();
+    String newEmail = !memberInfo[2].isBlank() ? memberInfo[2] : member.getEmail();
+    String newPassword = !memberInfo[3].isBlank() ? memberInfo[3] : member.getPassword();
+    String newPhoneNumber = !memberInfo[4].isBlank() ? memberInfo[4] : member.getPhoneNumber();
+
+    member.updateMember(newName, newEmail, newPassword, newPhoneNumber);
+    memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage(), null);
+
   }
 
   @Override
   public void deleteMember() {
+    memberViewer.findMember(memberRepository.getMembers());
     String[] memberInfo = memberViewer.deleteMember();
-    try {
-      Member member = getMemberById(memberInfo[0]);
-      if (member != null && member.getPassword().equals(memberInfo[1])) {
-        memberRepository.removeMember(member);
-        // Member successfully deleted, message can be handled in the view.
-      } else {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Error deleting member: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+
+    Member member = getMemberById(memberInfo[0]);
+    if (member != null && member.getPassword().equals(memberInfo[1])) {
+      memberRepository.removeMember(member);
+      memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage(), null);
+    } else {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
   }
 
   @Override
-  public Member showSpecificMemberInfo(String memberId) {
-    try {
-      Member member = getMemberById(memberId);
-      if (member == null) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-      }
-      return new Member(member); // Return a copy of the member
-    } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
+  public void showSpecificMemberInfo() {
+    String memberId = memberViewer.specificMemberFullInfo(memberRepository.getMembers());
+    Member member = getMemberById(memberId);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
+    memberViewer.displayMemberInfo(member);
+  }
+
+  @Override
+  public void displayMembersOverview() {
+    memberViewer.displayMembersOverview(memberRepository.getMembers());
+  }
+
+  @Override
+  public void displayMembersWithDetailedItems() {
+    memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
   }
 
   @Override
@@ -135,6 +118,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
     }
     return null;
   }
+
   /**
    * Return a list of available items.
    */

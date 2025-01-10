@@ -12,34 +12,23 @@ import model.Member;
  */
 public interface MemberDaoInterface {
 
+  /**
+   * Generated members to test, remove in end.
+   */
   void generated();
 
   /**
    * Creates a new member to the system.
-   *
-   * @param name        The name of the new member.
-   * @param email       The email address of the new member.
-   * @param phoneNumber The phone number of the new member.
-   * @param password    The password for the new member.
    */
   void createMember();
 
   /**
    * Modifies the details of an existing member.
-   *
-   * @param memberId    The ID of the member to be modified.
-   * @param name        The new name for the member (if applicable).
-   * @param email       The new email for the member (if applicable).
-   * @param phoneNumber The new phone number for the member (if applicable).
-   * @param password    The new password for the member (if applicable).
    */
   void modifyMember();
 
   /**
    * Deletes a member from the system based on their member ID and password.
-   *
-   * @param memberId The ID of the member to be deleted.
-   * @param password The password of the member, used for verification.
    */
   void deleteMember();
 
@@ -55,12 +44,23 @@ public interface MemberDaoInterface {
 
   /**
    * Retrieves detailed information for a specific member.
-   *
-   * @param memberId The ID of the member to retrieve.
-   * @return The {@link Member} object containing the member's details.
-   *
    */
-  Member showSpecificMemberInfo(String memberId);
+  void showSpecificMemberInfo();
+
+  /**
+   * Display member overview.
+   */
+  void displayMembersOverview();
+
+  /**
+   * Display Member with thier items.
+   */
+  void displayMembersWithDetailedItems();
+
+  /**
+   * Find members list.
+   */
+  void findbyList();
 
   /**
    * Finds a member by their unique ID.

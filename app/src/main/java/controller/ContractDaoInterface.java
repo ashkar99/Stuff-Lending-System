@@ -10,21 +10,16 @@ public interface ContractDaoInterface {
 
   /**
    * Creates a new contract between a lender and a borrower for a specific item.
-   *
-   * @param lender   The member lending the item.
-   * @param borrower The member borrowing the item.
-   * @param item     The item being lent.
-   * @param startDay The start day of the contract period.
-   * @param endDay   The end day of the contract period.
    */
-  void createContract(Member lender, Member borrower, Item item, int startDay, int endDay);
+  void createContract();
 
   /**
-   * Checks if the borrower has enough funds to borrow the item.
+   * Check if borrower have enough credits to lend the item.
    *
-   * @param borrowerFunds The funds available to the borrower.
-   * @param itemCost      The cost of borrowing the item.
-   * @return True if the borrower has enough funds, false otherwise.
+   * @param borrowe  borrower.
+   * @param item     item.
+   * @param startDay staartday.
+   * @param endDay   endadya.
    */
-  boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost);
+  boolean isEnoughFundsToBorrow(Member borrowe, Item item, int startDay, int endDay);
 }

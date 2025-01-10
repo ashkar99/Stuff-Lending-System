@@ -14,9 +14,6 @@ public class ItemViewer extends BaseViewer {
 
   /**
    * Constructs an ItemViewer with the specified MemberDaoInterface.
-   *
-   * @param memberDao An instance of MemberDaoInterface for accessing
-   *                  member-related data.
    */
   public ItemViewer() {
 

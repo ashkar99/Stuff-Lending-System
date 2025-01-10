@@ -40,7 +40,7 @@ public class MemberDaoImpl implements MemberDaoInterface {
   }
 
   @Override
-  public void findbyList(){
+  public void findbyList() {
     memberViewer.findMember(memberRepository.getMembers());
   }
 

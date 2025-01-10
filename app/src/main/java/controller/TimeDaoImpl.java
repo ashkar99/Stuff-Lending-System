@@ -14,25 +14,24 @@ public class TimeDaoImpl implements TimeDaoInterface {
 
   @Override
   public void advanceDay() {
-   
-      time.advanceDay();
-    } 
-  
+
+    time.advanceDay();
+  }
 
   @Override
   public void advanceDays(int numberOfDays) {
-  
-      if (numberOfDays <= 0) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_NEGATIVE_VALUE.getMessage());
-      }
 
-      time.advanceDays(numberOfDays);
-    
+    if (numberOfDays <= 0) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NEGATIVE_VALUE.getMessage());
+    }
+
+    time.advanceDays(numberOfDays);
+
   }
 
   @Override
   public int getCurrentDay() {
-    
-      return time.getCurrentDay(); 
-    } 
+
+    return time.getCurrentDay();
+  }
 }

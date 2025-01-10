@@ -4,7 +4,7 @@ package view;
 /**
  * Centralized Viewer class for displaying various system menuss.
  */
-public class Viewer extends BaseViewer{
+public class Viewer extends BaseViewer {
 
   /**
    * Main menu, providing access to other menus in the system.

@@ -1,12 +1,13 @@
 package controller;
 
 import view.FeedbackMessage;
-
 import view.Viewer;
 
+/**
+ * Menu class contains the main menu.
+ */
 public class Menu extends view.BaseViewer {
   private MemberDaoInterface memberDao = new MemberDaoImpl();
-
   private ItemDaoInterface itemDao = new ItemDaoImpl(memberDao);
   private ContractDaoInterface contractDao = new ContractDaoImpl();
   private Viewer viewer = new Viewer();
@@ -46,7 +47,7 @@ public class Menu extends view.BaseViewer {
           case 1 -> memberDao.createMember();
           case 2 -> memberDao.modifyMember();
           case 3 -> memberDao.deleteMember();
-          case 4 -> memberDao.showSpecificMemberInfo(); // .specificMemberFullInfo(memberRepository.getMembers());
+          case 4 -> memberDao.showSpecificMemberInfo();
           case 5 -> memberDao.displayMembersOverview();
           case 6 -> memberDao.displayMembersWithDetailedItems();
           case 7 -> running = false;

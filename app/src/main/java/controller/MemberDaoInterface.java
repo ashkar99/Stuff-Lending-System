@@ -33,16 +33,6 @@ public interface MemberDaoInterface {
   void deleteMember();
 
   /**
-   * Checks if the provided email or phone number is unique in the system.
-   *
-   * @param email       The email to check for uniqueness.
-   * @param phoneNumber The phone number to check for uniqueness.
-   * @throws IllegalArgumentException if the email or phone number is already in
-   *                                  use.
-   */
-  void checkUnique(String email, String phoneNumber);
-
-  /**
    * Retrieves detailed information for a specific member.
    */
   void showSpecificMemberInfo();

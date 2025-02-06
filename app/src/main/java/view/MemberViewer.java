@@ -15,26 +15,20 @@ public class MemberViewer extends BaseViewer {
     this.itemViewer = new ItemViewer();
   }
 
-  /**
+   /**
    * Allows a new user to sign in by providing their personal details: name,
    * email, password, and phone number. The method adds the new member to the
    * system.
    */
-  public String promptForName() {
-    return promptForInput("Enter your name: ");
+  public String[] createMember() {
+    String name = promptForInput("Enter your name: ");
+    String email = promptForInput("Enter your email: ");
+    String password = promptForInput("Enter your password: ");
+    String phoneNumber = promptForInput("Enter your phone number: ");
+    String[] member = { name, email, password, phoneNumber };
+    return member;
   }
 
-  public String promptForEmail() {
-    return promptForInput("Enter your email: ");
-  }
-
-  public String promptForPassword() {
-    return promptForInput("Enter your password: ");
-  }
-
-  public String promptForPhoneNumber() {
-    return promptForInput("Enter your phone number: ");
-  }
 
   /**
    * Allows the user to edit member information such as name, email, phone number,

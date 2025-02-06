@@ -92,8 +92,9 @@ public class MemberRepository {
     }
     throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
   }
-    /**
-   * Return a list of available items. TODO  not used method.
+
+  /**
+   * Return a list of available items. TODO not used method.
    */
   public List<Item> getAvailableItems() {
     List<Item> avItems = new ArrayList<>();
@@ -107,6 +108,17 @@ public class MemberRepository {
     return new ArrayList<>(avItems);
   }
 
+  /**
+   * Validates member details by ensuring that no fields are empty and that
+   * the email and phone number are unique.
+   *
+   * @param name        The member's name (must not be blank).
+   * @param email       The member's email (must be unique and not blank).
+   * @param password    The member's password (must not be blank).
+   * @param phoneNumber The member's phone number (must be unique and not blank).
+   * @throws IllegalArgumentException If any field is blank or if the email/phone
+   *                                  number already exists.
+   */
   public void validateMemberDetails(String name, String email, String password, String phoneNumber) {
     if (name.isBlank() || email.isBlank() || password.isBlank() || phoneNumber.isBlank()) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
@@ -114,6 +126,14 @@ public class MemberRepository {
     checkUnique(email, phoneNumber);
   }
 
+  /**
+   * Checks whether the provided email or phone number is already in use by
+   * another member.
+   *
+   * @param email       The email to check for uniqueness.
+   * @param phoneNumber The phone number to check for uniqueness.
+   * @throws IllegalArgumentException If the email or phone number already exists.
+   */
   private void checkUnique(String email, String phoneNumber) {
     for (Member member : members) {
       if (member.getEmail().equals(email) || member.getPhoneNumber().equals(phoneNumber)) {

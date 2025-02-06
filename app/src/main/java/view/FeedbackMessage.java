@@ -15,6 +15,7 @@ public enum FeedbackMessage {
   ERROR_MEMBER_DELETION("Error: Failed to delete the member."),
   ERROR_DUPLICATE_EMAIL("Error: This email is already in use."),
   ERROR_DUPLICATE_PHONE_NUMBER("Error: This phone number is already in use."),
+  ERROR_MEMBER_EXISTS("Error: Member already exists."),
   ERROR_MEMBER_NOT_FOUND("Error: Member not found."),
   ERROR_NO_MEMBERS_TO_DISPLAY("Error: There are no members to display."),
 

@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import model.Member;
-import model.MemberRepository;
 
 /**
  * Handles member-related actions like creating, editing, deleting members, and
@@ -11,7 +10,6 @@ import model.MemberRepository;
 public class MemberViewer extends BaseViewer {
 
   private final ItemViewer itemViewer;
-  private MemberRepository memberRepository = new MemberRepository();
 
   public MemberViewer() {
     this.itemViewer = new ItemViewer();

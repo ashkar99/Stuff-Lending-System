@@ -24,8 +24,28 @@ public class MemberRepository {
    *
    * @param member the {@code Member} to add
    */
-  public void addMembers(Member member) {
-    members.add(member);
+  public void addMembers(String name, String email, String password, String phoneNumber) {
+    Member newMember = new Member(name, email, password, phoneNumber);
+    validateMemberDetails(name, email, password, phoneNumber);
+    members.add(newMember);
+  }
+
+  /**
+   * Update the details of an existing member.
+   *
+   * @param memberInfo to be replaced.
+   */
+  public void updateMember(String[] memberInfo) {
+    Member member = getMemberById(memberInfo[0]);
+    if (member == null) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+    }
+    String newName = !memberInfo[1].isBlank() ? memberInfo[1] : member.getName();
+    String newEmail = !memberInfo[2].isBlank() ? memberInfo[2] : member.getEmail();
+    String newPassword = !memberInfo[3].isBlank() ? memberInfo[3] : member.getPassword();
+    String newPhoneNumber = !memberInfo[4].isBlank() ? memberInfo[4] : member.getPhoneNumber();
+
+    member.updateMember(newName, newEmail, newPassword, newPhoneNumber);
   }
 
   /**
@@ -46,6 +66,21 @@ public class MemberRepository {
    */
   public List<Member> getMembers() {
     return new ArrayList<>(members);
+  }
+
+  /**
+   * Finds a member by their unique ID.
+   *
+   * @param memberId The ID of the member to search for.
+   * @return The {@link Member} object if found, or null if not found.
+   */
+  public Member getMemberById(String memberId) {
+    for (Member member : getMembers()) {
+      if (member.getId().equals(memberId)) {
+        return member;
+      }
+    }
+    return null;
   }
 
   public void validateMemberDetails(String name, String email, String password, String phoneNumber) {

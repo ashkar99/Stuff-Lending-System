@@ -46,14 +46,17 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public void createMember() {
-    String[] memberInfo = memberViewer.createMember();
-    checkUnique(memberInfo[1], memberInfo[3]);
-    if (memberInfo[0].isBlank() || memberInfo[1].isBlank() || memberInfo[2].isBlank() || memberInfo[3].isBlank()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-    }
+    String name = memberViewer.promptForName();
+    String email = memberViewer.promptForEmail();
+    String password = memberViewer.promptForPassword();
+    String phoneNumber = memberViewer.promptForPhoneNumber();
 
-    Member newMember = new Member(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
+    // Delegate validation to the Model layer
+    memberRepository.validateMemberDetails(name, email, password, phoneNumber);
+
+    Member newMember = new Member(name, email, password, phoneNumber);
     memberRepository.addMembers(newMember);
+
     memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage(), null);
   }
 
@@ -136,25 +139,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
     return new ArrayList<>(avItems);
   }
 
-  /**
-   * Checks if the provided email or phone number is already in use by another
-   * member.
-   *
-   * @param email       The email to check.
-   * @param phoneNumber The phone number to check.
-   * @throws IllegalArgumentException if the email or phone number is already in
-   *                                  use.
-   */
-  public void checkUnique(String email, String phoneNumber) {
-    for (Member member : memberRepository.getMembers()) {
-      if (member.getEmail().equals(email)) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_EMAIL.getMessage());
-      }
-      if (member.getPhoneNumber().equals(phoneNumber)) {
-        throw new IllegalArgumentException(FeedbackMessage.ERROR_DUPLICATE_PHONE_NUMBER.getMessage());
-      }
-    }
-  }
 
   @Override
   protected final void finalize() throws Throwable {

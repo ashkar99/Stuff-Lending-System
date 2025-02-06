@@ -51,8 +51,4 @@ public interface MemberDaoInterface {
    */
   void findbyList();
 
-  /**
-   * Get avilebale item.
-   */
-  List<Item> getAvailableItems();
 }

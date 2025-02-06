@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import model.Item;
 import model.Member;
 import model.MemberRepository;
 import view.FeedbackMessage;

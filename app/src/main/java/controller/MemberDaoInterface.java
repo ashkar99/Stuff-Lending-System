@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.List;
-import model.Item;
-
 /**
  * MemberDaoInterface defines the data access methods for managing
  * members in the system. This interface follows the DAO (Data Access Object)

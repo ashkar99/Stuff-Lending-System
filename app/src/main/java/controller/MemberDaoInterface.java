@@ -23,9 +23,9 @@ public interface MemberDaoInterface {
   void createMember();
 
   /**
-   * Modifies the details of an existing member.
+   * Update the details of an existing member.
    */
-  void modifyMember();
+  void updateMember();
 
   /**
    * Deletes a member from the system based on their member ID and password.
@@ -51,14 +51,6 @@ public interface MemberDaoInterface {
    * Find members list.
    */
   void findbyList();
-
-  /**
-   * Finds a member by their unique ID.
-   *
-   * @param memberId The ID of the member to search for.
-   * @return The {@link Member} object if found, or null if not found.
-   */
-  Member getMemberById(String memberId);
 
   /**
    * Get avilebale item.

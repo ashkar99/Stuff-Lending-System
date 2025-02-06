@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.FeedbackMessage;
+
 /**
  * The {@code MemberRepository} class provides storage and management of
  * members.
@@ -45,4 +47,20 @@ public class MemberRepository {
   public List<Member> getMembers() {
     return new ArrayList<>(members);
   }
+
+  public void validateMemberDetails(String name, String email, String password, String phoneNumber) {
+    if (name.isBlank() || email.isBlank() || password.isBlank() || phoneNumber.isBlank()) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+    }
+    checkUnique(email, phoneNumber);
+  }
+
+  private void checkUnique(String email, String phoneNumber) {
+    for (Member member : members) {
+      if (member.getEmail().equals(email) || member.getPhoneNumber().equals(phoneNumber)) {
+        throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_EXISTS.getMessage());
+      }
+    }
+  }
+
 }

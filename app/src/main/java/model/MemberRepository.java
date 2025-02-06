@@ -53,8 +53,14 @@ public class MemberRepository {
    *
    * @param member the {@code Member} to remove
    */
-  public void removeMember(Member member) {
-    members.remove(member);
+  public void removeMember(String[] memberInfo) {
+    Member member = getMemberById(memberInfo[0]);
+    if (member != null && member.getPassword().equals(memberInfo[1])) {
+      members.remove(member);
+    } else {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+    }
+    
   }
 
   /**

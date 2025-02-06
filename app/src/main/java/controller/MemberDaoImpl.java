@@ -69,9 +69,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
   public void showSpecificMemberInfo() {
     String memberId = memberViewer.specificMemberFullInfo(memberRepository.getMembers());
     Member member = memberRepository.getMemberById(memberId);
-    if (member == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    }
     memberViewer.displayMemberInfo(member);
   }
 
@@ -83,23 +80,6 @@ public class MemberDaoImpl implements MemberDaoInterface {
   @Override
   public void displayMembersWithDetailedItems() {
     memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
-  }
-
-  /**
-   * Return a list of available items.
-   */
-  @Override
-  public List<Item> getAvailableItems() {
-    List<Item> avItems = new ArrayList<>();
-    for (Member member : memberRepository.getMembers()) {
-      for (Item item : member.getItems()) {
-        if (item.isAvailable()) {
-          avItems.add(item);
-        }
-
-      }
-    }
-    return new ArrayList<>(avItems);
   }
 
   @Override

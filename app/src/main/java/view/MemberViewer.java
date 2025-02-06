@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import model.Member;
+import model.MemberRepository;
 
 /**
  * Handles member-related actions like creating, editing, deleting members, and
@@ -10,12 +11,13 @@ import model.Member;
 public class MemberViewer extends BaseViewer {
 
   private final ItemViewer itemViewer;
+  private MemberRepository memberRepository = new MemberRepository();
 
   public MemberViewer() {
     this.itemViewer = new ItemViewer();
   }
 
-   /**
+  /**
    * Allows a new user to sign in by providing their personal details: name,
    * email, password, and phone number. The method adds the new member to the
    * system.
@@ -28,7 +30,6 @@ public class MemberViewer extends BaseViewer {
     String[] member = { name, email, password, phoneNumber };
     return member;
   }
-
 
   /**
    * Allows the user to edit member information such as name, email, phone number,
@@ -69,19 +70,15 @@ public class MemberViewer extends BaseViewer {
    * name, email, and phone number.
    */
   public void displayMembersOverview(List<Member> members) {
-    if (members.isEmpty()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
-    } else {
-      for (Member member : members) {
-        System.out.println("----------------------------------------");
+    for (Member member : members) {
+      System.out.println("----------------------------------------");
 
-        System.out.println("Member ID: " + member.getId());
-        System.out.println("Name: " + member.getName());
-        System.out.println("Email: " + member.getEmail());
-        System.out.println("Credits: " + member.getCredits());
-        System.out.println("Owned items: " + member.getItems().size());
-        System.out.println("----------------------------------------");
-      }
+      System.out.println("Member ID: " + member.getId());
+      System.out.println("Name: " + member.getName());
+      System.out.println("Email: " + member.getEmail());
+      System.out.println("Credits: " + member.getCredits());
+      System.out.println("Owned items: " + member.getItems().size());
+      System.out.println("----------------------------------------");
     }
     waitForUserInput();
   }
@@ -90,15 +87,11 @@ public class MemberViewer extends BaseViewer {
    * Displays a simple list of all members, showing name and ID.
    */
   public void findMember(List<Member> members) {
-    if (members.isEmpty()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
-    } else {
-      for (Member member : members) {
-        System.out.println("----------------------------------------");
-        System.out.println("Member ID: " + member.getId());
-        System.out.println("Name: " + member.getName());
-        System.out.println("----------------------------------------");
-      }
+    for (Member member : members) {
+      System.out.println("----------------------------------------");
+      System.out.println("Member ID: " + member.getId());
+      System.out.println("Name: " + member.getName());
+      System.out.println("----------------------------------------");
     }
   }
 
@@ -106,16 +99,12 @@ public class MemberViewer extends BaseViewer {
    * Displays all members along with their detailed items.
    */
   public void displayMembersWithDetailedItems(List<Member> members) {
-    if (members.isEmpty()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
-    } else {
-      for (Member member : members) {
-        System.out.println("----------------------------------------");
-        System.out.println("Name: " + member.getName());
-        System.out.println("Email: " + member.getEmail());
-        itemViewer.viewItems(member);
-        System.out.println("----------------------------------------");
-      }
+    for (Member member : members) {
+      System.out.println("----------------------------------------");
+      System.out.println("Name: " + member.getName());
+      System.out.println("Email: " + member.getEmail());
+      itemViewer.viewItems(member);
+      System.out.println("----------------------------------------");
     }
   }
 

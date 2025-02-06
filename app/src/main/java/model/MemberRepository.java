@@ -60,7 +60,7 @@ public class MemberRepository {
     } else {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
-    
+
   }
 
   /**
@@ -71,7 +71,11 @@ public class MemberRepository {
    * @return a {@code List} of {@code Member} objects
    */
   public List<Member> getMembers() {
-    return new ArrayList<>(members);
+    if (members.isEmpty()) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_MEMBERS_TO_DISPLAY.getMessage());
+    } else {
+      return new ArrayList<>(members);
+    }
   }
 
   /**
@@ -86,7 +90,21 @@ public class MemberRepository {
         return member;
       }
     }
-    return null;
+    throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
+  }
+    /**
+   * Return a list of available items. TODO  not used method.
+   */
+  public List<Item> getAvailableItems() {
+    List<Item> avItems = new ArrayList<>();
+    for (Member member : getMembers()) {
+      for (Item item : member.getItems()) {
+        if (item.isAvailable()) {
+          avItems.add(item);
+        }
+      }
+    }
+    return new ArrayList<>(avItems);
   }
 
   public void validateMemberDetails(String name, String email, String password, String phoneNumber) {

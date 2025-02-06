@@ -61,14 +61,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
   public void deleteMember() {
     memberViewer.findMember(memberRepository.getMembers());
     String[] memberInfo = memberViewer.deleteMember();
-
-    Member member = memberRepository.getMemberById(memberInfo[0]);
-    if (member != null && member.getPassword().equals(memberInfo[1])) {
-      memberRepository.removeMember(member);
-      memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage(), null);
-    } else {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    }
+    memberRepository.removeMember(memberInfo);
+    memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage(), null);
   }
 
   @Override

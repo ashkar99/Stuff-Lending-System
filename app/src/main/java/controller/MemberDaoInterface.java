@@ -2,7 +2,6 @@ package controller;
 
 import java.util.List;
 import model.Item;
-import model.Member;
 
 /**
  * MemberDaoInterface defines the data access methods for managing

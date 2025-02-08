@@ -6,7 +6,7 @@ package view;
  */
 public enum FeedbackMessage {
 
-  // Member related messages
+  // Member-related messages
   SUCCESS_MEMBER_CREATION("Member created successfully!"),
   SUCCESS_MEMBER_DELETION("Member deleted successfully!"),
   SUCCESS_MEMBER_UPDATE("Member information updated successfully!"),
@@ -14,7 +14,9 @@ public enum FeedbackMessage {
   ERROR_MEMBER_UPDATE("Error: Failed to update the member."),
   ERROR_MEMBER_DELETION("Error: Failed to delete the member."),
   ERROR_DUPLICATE_EMAIL("Error: This email is already in use."),
+  ERROR_INVALID_EMAIL("Error: Invalid email format."),
   ERROR_DUPLICATE_PHONE_NUMBER("Error: This phone number is already in use."),
+  ERROR_INVALID_PHONENUMEBER("Error: Invalid phone number format."),
   ERROR_MEMBER_EXISTS("Error: Member already exists."),
   ERROR_MEMBER_NOT_FOUND("Error: Member not found."),
   ERROR_NO_MEMBERS_TO_DISPLAY("Error: There are no members to display."),

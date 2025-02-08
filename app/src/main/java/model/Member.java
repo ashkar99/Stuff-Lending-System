@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import view.FeedbackMessage;
+
 /**
  * The Member class represents a member in the system, who can lend and borrow
  * items.
@@ -108,7 +110,7 @@ public class Member extends FatherOfFunction {
    */
   private void setEmail(String email) {
     if (!isValidEmail(email)) {
-      throw new IllegalArgumentException("Invalid email format.");
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_EMAIL.getMessage());
     }
     this.email = email;
   }
@@ -134,7 +136,7 @@ public class Member extends FatherOfFunction {
    */
   private void setPhoneNumber(String phoneNumber) {
     if (!isValidPhoneNumber(phoneNumber)) {
-      throw new IllegalArgumentException("Invalid phone number format.");
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_PHONENUMEBER.getMessage());
     }
     this.phoneNumber = phoneNumber;
   }
@@ -198,8 +200,6 @@ public class Member extends FatherOfFunction {
   public void updateCredits(int amount) {
     this.credits += amount;
   }
-
-  // Private Methods
 
   /**
    * Validates the email format using a regular expression.

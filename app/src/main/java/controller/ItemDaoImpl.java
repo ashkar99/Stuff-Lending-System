@@ -63,16 +63,6 @@ public class ItemDaoImpl implements ItemDaoInterface {
   }
 
   @Override
-  public List<Item> getItemsByMember(String memberId) {
-
-    Member member = systemManager.getMemberById(memberId);
-    if (member == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    }
-    return member.getItems();
-  }
-
-  @Override
   protected final void finalize() throws Throwable {
     // Empty finalizer to prevent attacks
   }

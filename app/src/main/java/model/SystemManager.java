@@ -93,7 +93,20 @@ public class SystemManager {
     throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
   }
 
-  public void updateItem(Member member, Item item, String[] itemInfo) {
+  public void createItem(String[] itemInfo) {
+    if (itemInfo[1].isBlank() || itemInfo[2].isBlank() || itemInfo[3].isBlank()
+        || Integer.parseInt(itemInfo[4]) < 0) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
+    }
+    Item newItem = new Item(CategoryEnum.valueOf(itemInfo[1]), itemInfo[2], itemInfo[3],
+        Integer.parseInt(itemInfo[4]), getMemberById(itemInfo[0]));
+    getMemberById(itemInfo[0]).addItem(newItem);
+    getMemberById(itemInfo[0]).updateCredits(100);
+
+  }
+
+  public void updateItem(String[] itemInfo) {
+    Item item = getItemById(getMemberById(itemInfo[0]), itemInfo[1]);
     String newName = !itemInfo[3].isBlank() ? itemInfo[3] : item.getName();
     String newDescription = !itemInfo[4].isBlank() ? itemInfo[4] : item.getDescription();
     CategoryEnum newCategory;
@@ -101,9 +114,13 @@ public class SystemManager {
     int newCostPerDay = (!itemInfo[5].isBlank() && Integer.parseInt(itemInfo[5]) > 0)
         ? Integer.parseInt(itemInfo[5])
         : item.getCostPerDay();
-    Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay, member);
-    member.removeItem(item);
-    member.addItem(updatedItem);
+    Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay, getMemberById(itemInfo[0]));
+    getMemberById(itemInfo[0]).removeItem(item);
+    getMemberById(itemInfo[0]).addItem(updatedItem);
+  }
+
+  public void deleteItem(String[] itemInfo) {
+    getMemberById(itemInfo[0]).removeItem(getItemById(getMemberById(itemInfo[0]), itemInfo[1]));
   }
 
   /**

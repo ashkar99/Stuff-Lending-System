@@ -178,6 +178,9 @@ public class Member extends FatherOfFunction {
    *
    */
   public List<Item> getItems() {
+    if (items.isEmpty()) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
+    }
     return new ArrayList<>(items);
   }
 

@@ -45,13 +45,14 @@ graph RL
     controller9 --> controller3
     controller9 --> controller5
     controller9 --> controller7
-    controller8 --> view3
+    
 
     controller1 --> model1
-    controller4 --> model2
+
     
     controller6 --"depends"--> view2 
     controller4--"depends"--> view1
+    controller8 --"depends"--> view3
 
 
     controller9 --> view6

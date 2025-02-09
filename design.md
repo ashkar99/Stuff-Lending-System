@@ -63,8 +63,8 @@ graph RL
     controller1 --> model1
     controller4 --> model2
     
-    view2 --> controller6
-    view1 --> controller4
+    view2 --"depends"--> controller6
+    view1 --"depends"--> controller4
     view1 --"extends"--> view5
     view2 --"extends"--> view5
     view3 --"extends"--> view5

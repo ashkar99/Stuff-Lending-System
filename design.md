@@ -229,7 +229,7 @@ classDiagram
    ImmutableContract "1" -- "1" Member : lender >
    ImmutableContract "1" -- "1" Member : borrower >
    SystemManager "1" --"0..*" Member : manage >
-   SystemManager "1" --"0..*" Time : starts >
+   SystemManager "1" --"0..*" Time : get current time >
 
 
    %% Inheritance

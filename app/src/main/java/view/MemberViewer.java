@@ -8,7 +8,6 @@ import model.Member;
  * displaying member information.
  */
 public class MemberViewer extends BaseViewer {
-
   private final ItemViewer itemViewer;
 
   public MemberViewer() {

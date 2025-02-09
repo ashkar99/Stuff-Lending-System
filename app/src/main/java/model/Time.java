@@ -1,5 +1,7 @@
 package model;
 
+import view.FeedbackMessage;
+
 /**
  * The Time class represents a simple time tracking system, where the "current
  * day" is incremented
@@ -50,7 +52,7 @@ public class Time {
     if (days > 0) {
       dayCounter += days;
     } else {
-      throw new IllegalArgumentException("Days to advance must be greater than 0.");
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_INVAILD_TIME.getMessage());
     }
   }
 }

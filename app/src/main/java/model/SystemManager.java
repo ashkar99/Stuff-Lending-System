@@ -12,6 +12,7 @@ import view.FeedbackMessage;
  */
 public class SystemManager {
   private List<Member> members = new ArrayList<>();
+  private Time time = new Time(0);
 
   /**
    * Constructs an empty {@code systemManager}.
@@ -152,6 +153,50 @@ public class SystemManager {
       }
     }
     return new ArrayList<>(avItems);
+  }
+
+  public void createContract(String[] contractInfo) {
+    Member lender = getMemberById(contractInfo[0]);
+    Member borrower = getMemberById(contractInfo[1]);
+
+    // Fetch the item after verifying that the lender is not null
+    Item item = getItemById(lender, contractInfo[2]);
+
+    int startDay = Integer.parseInt(contractInfo[3]);
+    int endDay = Integer.parseInt(contractInfo[4]);
+
+    int currentDay = time.getCurrentDay();
+
+    // Check if the start day is in the past
+    if (startDay < currentDay) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_CONTRACT_INVALID_TIME.getMessage());
+    }
+
+    // Check if the item is available for the given time period
+    if (!item.isAvailableForPeriod(startDay, endDay)) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_UNAVAILABLE.getMessage());
+    }
+
+    // Check if the borrower has enough funds
+    if (!isEnoughFundsToBorrow(borrower, item, startDay, endDay)) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
+    }
+
+    // Create the contract and update the item and lender
+    ImmutableContract newContract = new ImmutableContract(lender, borrower, item, startDay, endDay);
+    borrower.updateCredits(-item.getCostPerDay() * (endDay - startDay + 1));
+    lender.updateCredits(item.getCostPerDay() * (endDay - startDay + 1));
+    item.addContract(newContract);
+    lender.addContract(newContract);
+  }
+
+  public boolean isEnoughFundsToBorrow(Member borrower, Item item, int startDay, int endDay) {
+    int borrowerFunds = borrower.getCredits();
+    int itemTotalCost = item.getCostPerDay() * (endDay - startDay + 1);
+    if (borrowerFunds < itemTotalCost) {
+      throw new IllegalArgumentException(FeedbackMessage.ERROR_INSUFFICIENT_CREDITS.getMessage());
+    }
+    return true;
   }
 
   /**

@@ -30,56 +30,30 @@ public class ItemDaoImpl implements ItemDaoInterface {
   }
 
   @Override
+  public void createItem() {
+
+    memberDao.findbyList();
+    String[] itemInfo = itemViewer.addNewItem();
+    systemManager.createItem(itemInfo);
+    itemViewer.displayFeedback(true, FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage(), null);
+  }
+
+  @Override
   public void modifyItem() {
 
     memberDao.displayMembersWithDetailedItems();
     String[] itemInfo = itemViewer.editItemInfo();
-    Member member = systemManager.getMemberById(itemInfo[0]);
-    Item item = systemManager.getItemById(member, itemInfo[1]);
 
-    systemManager.updateItem(member, item, itemInfo);
+    systemManager.updateItem(itemInfo);
     itemViewer.displayFeedback(true, FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage(), null);
-  }
-
-  @Override
-  public void createItem() {
-
-    memberDao.findbyList();
-    String[] itemStrings = itemViewer.addNewItem();
-    Member member = systemManager.getMemberById(itemStrings[0]);
-    if (member == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    }
-
-    // Check if any field is empty or invalid
-    if (itemStrings[1].isBlank() || itemStrings[2].isBlank() || itemStrings[3].isBlank()
-        || Integer.parseInt(itemStrings[4]) < 0) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_FIELD_EMPTY.getMessage());
-    }
-
-    Item newItem = new Item(CategoryEnum.valueOf(itemStrings[1]), itemStrings[2], itemStrings[3],
-        Integer.parseInt(itemStrings[4]), member);
-    member.addItem(newItem);
-    member.updateCredits(100);
-    itemViewer.displayFeedback(true, FeedbackMessage.SUCCESS_ITEM_CREATION.getMessage(), null);
   }
 
   @Override
   public void deleteItem() {
 
     memberDao.findbyList();
-    String[] itemStrings = itemViewer.deleteItem();
-    Member member = systemManager.getMemberById(itemStrings[0]);
-    if (member == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    }
-
-    Item item = systemManager.getItemById(member, itemStrings[1]);
-    if (item == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
-    }
-
-    member.removeItem(item);
+    String[] itemInfo = itemViewer.deleteItem();
+    systemManager.deleteItem(itemInfo);
     itemViewer.displayFeedback(true, FeedbackMessage.SUCCESS_ITEM_DELETION.getMessage(), null);
   }
 

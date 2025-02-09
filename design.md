@@ -42,8 +42,13 @@ graph RL
     controller9 --> controller4
     controller9 --> controller1
     controller9 --> controller8
+    
     controller9 --> view6
 
+
+    controller4 --> model7
+    controller6 --> model7
+    controller8 --> model7
 
 
 

@@ -15,7 +15,6 @@ public class ItemViewer extends BaseViewer {
    * Constructs an ItemViewer with the specified MemberDaoInterface.
    */
   public ItemViewer() {
-
     this.contractViewer = new ContractViewer();
   }
 

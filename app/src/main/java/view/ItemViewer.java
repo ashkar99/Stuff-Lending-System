@@ -27,13 +27,9 @@ public class ItemViewer extends BaseViewer {
    */
   public void viewItems(Member member) {
     List<Item> items = member.getItems();
-    if (items.isEmpty()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
-    } else {
-      for (Item item : items) {
-        displayItemInfo(item);
-        contractViewer.viewContract(item);
-      }
+    for (Item item : items) {
+      displayItemInfo(item);
+      contractViewer.viewContract(item);
     }
   }
 
@@ -41,11 +37,7 @@ public class ItemViewer extends BaseViewer {
    * Displays all available items that can be borrowed or viewed.
    */
   public void viewAvailableItems(List<Item> items) {
-    if (items.isEmpty()) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_NO_ITEMS_TO_DISPLAY.getMessage());
-    } else {
-      items.forEach(this::displayItemInfo);
-    }
+    items.forEach(this::displayItemInfo);
   }
 
   /**

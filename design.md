@@ -39,6 +39,14 @@ graph RL
     controller6 --> controller3
     controller8 --> controller1
 
+    controller9 --> controller4
+    controller9 --> controller1
+    controller9 --> controller8
+    controller9 --> view6
+
+
+
+
 
     model2 --"owns"--> model3 
     model2 --"have"--> model5 
@@ -63,8 +71,9 @@ graph RL
     controller1 --> model1
     controller4 --> model2
     
-    view2 --"depends"--> controller6
-    view1 --"depends"--> controller4
+    controller6 --"depends"--> view2 
+    controller4--"depends"--> view1
+
     view1 --"extends"--> view5
     view2 --"extends"--> view5
     view3 --"extends"--> view5

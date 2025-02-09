@@ -32,7 +32,7 @@ graph RL
     view3[class ContractViewer]
     view4[enum FeedbackMessagesEnum]
     view5[class BaseViewer]
-    view6[class View]
+    view6[class Viewer]
     
     end
 
@@ -65,6 +65,11 @@ graph RL
     
     view2 --> controller6
     view1 --> controller4
+    view1 --"Inheritance"--> view5
+    view2 --"Inheritance"--> view5
+    view3 --"Inheritance"--> view5
+    view6 --"Inheritance"--> view5
+
 ```
 
 

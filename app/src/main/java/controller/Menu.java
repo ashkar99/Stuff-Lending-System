@@ -8,7 +8,7 @@ import view.Viewer;
  */
 public class Menu extends view.BaseViewer {
   private MemberDaoInterface memberDao = new MemberDaoImpl();
-  private ItemDaoInterface itemDao = new ItemDaoImpl(memberDao);
+  private ItemDaoInterface itemDao = new ItemDaoImpl();
   private ContractDaoInterface contractDao = new ContractDaoImpl();
   private Viewer viewer = new Viewer();
 

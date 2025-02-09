@@ -21,7 +21,7 @@ public class ItemViewer extends BaseViewer {
   /**
    * Displays all items owned by the specified member, including their contracts.
    *
-   * @param member The member whose items are to be displayed.
+   * @param items The items to be displayed.
    */
   public void viewItems(List<Item> items) {
     for (Item item : items) {

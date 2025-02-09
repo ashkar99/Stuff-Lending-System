@@ -11,18 +11,14 @@ import view.ItemViewer;
  * This class uses the MemberDaoInterface to interact with member data.
  */
 public class ItemDaoImpl implements ItemDaoInterface {
-  private final MemberDaoInterface memberDao; // Made final to ensure immutability
+  private MemberDaoInterface memberDao = new MemberDaoImpl();
   private final ItemViewer itemViewer = new ItemViewer();
   private final SystemManager systemManager = new SystemManager();
 
   /**
    * Constructor for the ItemDaoImpl class.
    */
-  public ItemDaoImpl(MemberDaoInterface memberDaoImpl) {
-    if (memberDaoImpl == null) {
-      throw new IllegalArgumentException("MemberDaoInterface cannot be null.");
-    }
-    this.memberDao = memberDaoImpl; // Store the reference directly if it is immutable.
+  public ItemDaoImpl() {
   }
 
   @Override

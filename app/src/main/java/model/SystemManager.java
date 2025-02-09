@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import view.FeedbackMessage;
 
 /**
@@ -20,10 +19,16 @@ public class SystemManager {
   public SystemManager() {
   }
 
+
+
+   
   /**
    * Adds a new member to the repository.
    *
-   * @param member the {@code Member} to add
+   * @param name member name.
+   * @param email memeber email.
+   * @param password member password.
+   * @param phoneNumber member phone number.
    */
   public void addMembers(String name, String email, String password, String phoneNumber) {
     Member newMember = new Member(name, email, password, phoneNumber);
@@ -52,7 +57,7 @@ public class SystemManager {
   /**
    * Removes a member from the repository.
    *
-   * @param member the {@code Member} to remove
+   * @param memberInfo the {@code Member} to remove.
    */
   public void removeMember(String[] memberInfo) {
     Member member = getMemberById(memberInfo[0]);
@@ -94,6 +99,14 @@ public class SystemManager {
     throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
   }
 
+  /**
+   * Creates a new item and associates it with a member.
+   *
+   * @param itemInfo An array containing item details: member ID, category, name,
+   *                 description, and cost per day.
+   * @throws IllegalArgumentException If any required field is blank or cost per
+   *                                  day is negative.
+   */
   public void createItem(String[] itemInfo) {
     if (itemInfo[1].isBlank() || itemInfo[2].isBlank() || itemInfo[3].isBlank()
         || Integer.parseInt(itemInfo[4]) < 0) {
@@ -103,9 +116,15 @@ public class SystemManager {
         Integer.parseInt(itemInfo[4]), getMemberById(itemInfo[0]));
     getMemberById(itemInfo[0]).addItem(newItem);
     getMemberById(itemInfo[0]).updateCredits(100);
-
   }
 
+  /**
+   * Updates an existing item with new details.
+   *
+   * @param itemInfo An array containing updated item details: member ID, item ID,
+   *                 category, name, description, and cost per day.
+   * @throws IllegalArgumentException If item is not found.
+   */
   public void updateItem(String[] itemInfo) {
     Item item = getItemById(getMemberById(itemInfo[0]), itemInfo[1]);
     String newName = !itemInfo[3].isBlank() ? itemInfo[3] : item.getName();
@@ -120,6 +139,11 @@ public class SystemManager {
     getMemberById(itemInfo[0]).addItem(updatedItem);
   }
 
+  /**
+   * Delete an existing item.
+   *
+   * @param itemInfo Item information who will be deleted.
+   */
   public void deleteItem(String[] itemInfo) {
     getMemberById(itemInfo[0]).removeItem(getItemById(getMemberById(itemInfo[0]), itemInfo[1]));
   }
@@ -141,7 +165,7 @@ public class SystemManager {
   }
 
   /**
-   * Return a list of available items. TODO not used method.
+   * Return a list of available items.
    */
   public List<Item> getAvailableItems() {
     List<Item> avItems = new ArrayList<>();
@@ -155,6 +179,15 @@ public class SystemManager {
     return new ArrayList<>(avItems);
   }
 
+  /**
+   * Creates a new contract between a lender and a borrower for a specific item.
+   *
+   * @param contractInfo An array containing contract details: lender ID, borrower
+   *                     ID, item ID, start day, and end day.
+   * @throws IllegalArgumentException If the contract violates conditions such as
+   *                                  invalid time, item unavailability, or
+   *                                  insufficient borrower funds.
+   */
   public void createContract(String[] contractInfo) {
     Member lender = getMemberById(contractInfo[0]);
     Member borrower = getMemberById(contractInfo[1]);
@@ -190,6 +223,18 @@ public class SystemManager {
     lender.addContract(newContract);
   }
 
+  /**
+   * Checks if the borrower has enough funds to rent an item for a given period.
+   *
+   * @param borrower The member who wants to borrow the item.
+   * @param item     The item to be borrowed.
+   * @param startDay The start day of the rental period.
+   * @param endDay   The end day of the rental period.
+   * @return {@code true} if the borrower has enough credits, otherwise throws an
+   *         exception.
+   * @throws IllegalArgumentException If the borrower does not have enough
+   *                                  credits.
+   */
   public boolean isEnoughFundsToBorrow(Member borrower, Item item, int startDay, int endDay) {
     int borrowerFunds = borrower.getCredits();
     int itemTotalCost = item.getCostPerDay() * (endDay - startDay + 1);

@@ -8,9 +8,16 @@ package model;
 public enum CategoryEnum {
   TOOL, VEHICLE, GAME, TOY, SPORT, OTHER;
 
-  public static CategoryEnum safeCategoryParse(String categoryStr, CategoryEnum defaultCategory) {
+  /**
+   * Check if the category is valid.
+   *
+   * @param newCategory new updated category.
+   * @param defaultCategory previous category.
+   * @return return the new category if vaild, otherwise reutrn the previous one.
+   */
+  public static CategoryEnum safeCategoryParse(String newCategory, CategoryEnum defaultCategory) {
     try {
-      return !categoryStr.isBlank() ? CategoryEnum.valueOf(categoryStr) : defaultCategory;
+      return !newCategory.isBlank() ? CategoryEnum.valueOf(newCategory) : defaultCategory;
     } catch (IllegalArgumentException e) {
       return defaultCategory;
     }

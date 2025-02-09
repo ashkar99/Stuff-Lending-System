@@ -365,6 +365,10 @@ classDiagram
     }
     MemberViewer  -->  ItemViewer
     ItemViewer  --> ContractViewer
+    Baseviewer <|-- Viewer
+    Baseviewer <|-- ItemViewer
+    Baseviewer <|-- ContractViewer
+    Baseviewer <|-- MemberViewer
 
    
 ```

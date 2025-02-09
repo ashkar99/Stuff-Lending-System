@@ -45,7 +45,7 @@ public class Menu extends view.BaseViewer {
 
         switch (choice) {
           case 1 -> memberDao.createMember();
-          case 2 -> memberDao.modifyMember();
+          case 2 -> memberDao.updateMember();
           case 3 -> memberDao.deleteMember();
           case 4 -> memberDao.showSpecificMemberInfo();
           case 5 -> memberDao.displayMembersOverview();

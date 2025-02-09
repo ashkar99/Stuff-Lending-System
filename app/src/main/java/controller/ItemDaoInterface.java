@@ -2,7 +2,6 @@ package controller;
 
 import java.util.List;
 import model.Item;
-import model.Member;
 
 /**
  * Interface to define operations for managing items owned by members.
@@ -36,13 +35,4 @@ public interface ItemDaoInterface {
    * @return A list of items owned by the specified member.
    */
   List<Item> getItemsByMember(String memberId);
-
-  /**
-   * Get item by id.
-   *
-   * @param member to get member's item.
-   * @param itemId to get the item.
-   * @return item by the id.
-   */
-  public Item getItemById(Member member, String itemId);
 }

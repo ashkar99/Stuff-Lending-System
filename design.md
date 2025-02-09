@@ -9,6 +9,7 @@ graph RL
     model4[class CategoryEnum]
     model5[class ImmutableContract]
     model6[class FaterOfFunction]
+    model7[class SystemManager ]
 
     end
 
@@ -21,7 +22,7 @@ graph RL
     controller6[class ItemDaoImpl]       
     controller7[class ContractDaoInterface] 
     controller8[class ContractDaoImpl]
-    controller9[class FeedbackMessagesEnum]
+    controller9[ class Menu]
         
     end
 
@@ -29,6 +30,9 @@ graph RL
     view1[class MemberViewer]
     view2[class ItemViewer]
     view3[class ContractViewer]
+    view4[enum FeedbackMessagesEnum]
+    view5[class BaseViewer]
+    view6[class View]
     
     end
 
@@ -73,10 +77,10 @@ classDiagram
        <<abstract>>
        LocalDate creationDate
        String id
-       String getId()
+       +String getId()
        void setId()
        LocalDate setCreationDate()
-       LocalDate getCreationDate()
+       +LocalDate getCreationDate()
        String generateUniqueId()
        void finalize() throws Throwable
    }
@@ -88,8 +92,8 @@ classDiagram
        -String phoneNumber
        -String password
        -int credits
-       +List~Item~ items
-       +List~ImmutableContract~ lendingHistory
+       -List~Item~ items
+       -List~ImmutableContract~ lendingHistory
        +Member(String name, String email, String phoneNumber, String password)
        +void updateMember(String name, String email, String phoneNumber, String password)
        +String getName()
@@ -113,13 +117,13 @@ classDiagram
 
 
    class Item {
-       +CategoryEnum category
-       +String name
-       +String description
-       +int costPerDay
-       +Member owner
-       +List~ImmutableContract~ lendingHistory
-       +boolean isAvailable
+       -CategoryEnum category
+       -String name
+       -String description
+       -int costPerDay
+       -Member owner
+       -List~ImmutableContract~ lendingHistory
+       -boolean isAvailable
        +Item(CategoryEnum category, String name, String description, int costPerDay, Member owner)
        +void updateItem(CategoryEnum category, String name, String description, int costPerDay)
        +CategoryEnum getCategory()
@@ -140,21 +144,21 @@ classDiagram
 
 
    class Time {
-       +int dayCounter
+       -int dayCounter
        +Time(int dayCounter)
        +int getCurrentDay()
-       +void setCurrentDay(int dayCounter)
+       -void setCurrentDay(int dayCounter)
    }
 
 
    class ImmutableContract {
-       +Member lender
-       +Member borrower
-       +Item item
-       +int startDay
-       +int endDay
-       +int totalCost
-       +String status
+       -Member lender
+       -Member borrower
+       -Item item
+       -int startDay
+       -int endDay
+       -int totalCost
+       -String status
        +ImmutableContract(Member lender, Member borrower, Item item, int startDay, int endDay)
        +Member getLender()
        +Member getBorrower()
@@ -164,6 +168,7 @@ classDiagram
        +int getTotalCost()
        +String getStatus()
        +void completeContract()
+       -int calculateTotalCost()
    }
 
 
@@ -175,6 +180,19 @@ classDiagram
        TOY
        SPORT
        OTHER
+   }
+
+   class SystemManager {
+    -List ~Member~ member
+    +void addMembers(String name, String email, String password, String phonenumber)
+    +void updateMember(String[] memberInfo)
+    +void removeMember(String[] memberInfo)
+    +List<Member> getMembers()
+    +Member getMemberById(String memberId)
+    +void updateItem(Member member, Item item, String[] itemInfo)
+    +Item getItemById(Member member, String itemId)
+    +void validateMemberDetails(String name, String email, String password, String phoneNumber)
+    +void checkUnique(String email, String phoneNumber)
    }
 
 
@@ -283,6 +301,17 @@ classDiagram
     ContractDaoInterface <|.. ContractDaoImpl
     TimeDaoInterface <-- ContractDaoImpl
 
+    class Menu {
+        -MemberDaoInterface memberDao
+        -ItemDaoInterface itemDao
+        -ContractDaoInterface contractDao
+        -Viewer viewer
+        +void mainMenu()
+        -void memberMenu()
+        -void contractMenu()
+        -void itemMenu()
+    }
+
 ````
 
 
@@ -290,8 +319,25 @@ classDiagram
 # Class diagram package view.
 ```mermaid
 classDiagram
+    class Baseviewer {
+        <<abstract>>
+        String promptForInput(String message)
+        int promptForInt(String message)
+        void waitForUserInput()
+        +void displayFeedback(boolean success, String successMsg, String errorMsg)
+    }
+
+    enum FeedbackMessage {
+
+    }
+    class Viewer {
+        String promptForInput(String message)
+        int promptForInt(String message)
+        void waitForUserInput()
+        void displayFeedback(boolean success, String successMsg, String errorMsg)
+    }
     class MemberViewer {
-        +void mainMenu()
+        -ItemViewer itemViewer
         +void createMember()
         +void editMemberInfo()
         +void deleteMember()
@@ -299,18 +345,23 @@ classDiagram
         +void displayMembersOverview()
         +void displayMembersWithDetailedItems()
         +void getAvilbaleItems()
+        +void findMember(List<Member> members)
     }
 
     class ItemViewer {
+        -ContractViewer contractViewer;
         +void viewItems(Member member)
         +void viewAvailableItems(List<Item> items)
         +void editIteminfo()
         +void addNewItem()
         +void deleteItem()
+        -void displayItemInfo(Item item)
     }
 
     class ContractViewer {
+        +String[] createContract()
         +void viewContract(Item item)
+
     }
     MemberViewer  -->  ItemViewer
     ItemViewer  --> ContractViewer

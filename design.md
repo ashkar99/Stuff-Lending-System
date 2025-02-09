@@ -47,12 +47,12 @@ graph RL
     model5 --"borrower"--> model2 
 
     
-    model2 --"Inheritance"--> model6
-    model3 --"Inheritance"--> model6
-    model5 --"Inheritance"--> model6
+    model2 --"extends"--> model6
+    model3 --"extends"--> model6
+    model5 --"extends"--> model6
     
-    view1 --> view2
-    view2 --> view3
+    view1 --"have"--> view2
+    view2 --"have"--> view3
 
     controller6 --"implent"--> controller5  
     controller4 --"implent"--> controller3 
@@ -65,10 +65,10 @@ graph RL
     
     view2 --> controller6
     view1 --> controller4
-    view1 --"Inheritance"--> view5
-    view2 --"Inheritance"--> view5
-    view3 --"Inheritance"--> view5
-    view6 --"Inheritance"--> view5
+    view1 --"extends"--> view5
+    view2 --"extends"--> view5
+    view3 --"extends"--> view5
+    view6 --"extends"--> view5
 
 ```
 

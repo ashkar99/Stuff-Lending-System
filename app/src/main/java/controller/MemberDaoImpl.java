@@ -1,7 +1,7 @@
 package controller;
 
 import model.Member;
-import model.MemberRepository;
+import model.SystemManager;
 import view.FeedbackMessage;
 import view.MemberViewer;
 
@@ -11,7 +11,7 @@ import view.MemberViewer;
  * member information from an internal list.
  */
 public class MemberDaoImpl implements MemberDaoInterface {
-  private MemberRepository memberRepository = new MemberRepository();
+  private SystemManager systemManager = new SystemManager();
   private MemberViewer memberViewer = new MemberViewer();
 
   /**
@@ -26,8 +26,8 @@ public class MemberDaoImpl implements MemberDaoInterface {
    */
   public void generated() {
     try {
-      memberRepository.addMembers("Bob", "bob@example.com", "0987654321", "password");
-      memberRepository.addMembers("Alice", "alice@example.com", "2234567890", "password");
+      systemManager.addMembers("Bob", "bob@example.com", "0987654321", "password");
+      systemManager.addMembers("Alice", "alice@example.com", "2234567890", "password");
     } catch (Exception e) {
       throw new RuntimeException(FeedbackMessage.ERROR_OPERATION_FAILED.getMessage(), e);
     }
@@ -35,13 +35,13 @@ public class MemberDaoImpl implements MemberDaoInterface {
 
   @Override
   public void findbyList() {
-    memberViewer.findMember(memberRepository.getMembers());
+    memberViewer.findMember(systemManager.getMembers());
   }
 
   @Override
   public void createMember() {
     String[] memberInfo = memberViewer.createMember();
-    memberRepository.addMembers(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
+    systemManager.addMembers(memberInfo[0], memberInfo[1], memberInfo[2], memberInfo[3]);
     memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_CREATION.getMessage(), null);
   }
 
@@ -49,34 +49,34 @@ public class MemberDaoImpl implements MemberDaoInterface {
   public void updateMember() {
     findbyList();
     String[] memberInfo = memberViewer.editMemberInfo();
-    memberRepository.updateMember(memberInfo);
+    systemManager.updateMember(memberInfo);
     memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_UPDATE.getMessage(), null);
 
   }
 
   @Override
   public void deleteMember() {
-    memberViewer.findMember(memberRepository.getMembers());
+    memberViewer.findMember(systemManager.getMembers());
     String[] memberInfo = memberViewer.deleteMember();
-    memberRepository.removeMember(memberInfo);
+    systemManager.removeMember(memberInfo);
     memberViewer.displayFeedback(true, FeedbackMessage.SUCCESS_MEMBER_DELETION.getMessage(), null);
   }
 
   @Override
   public void showSpecificMemberInfo() {
-    String memberId = memberViewer.specificMemberFullInfo(memberRepository.getMembers());
-    Member member = memberRepository.getMemberById(memberId);
+    String memberId = memberViewer.specificMemberFullInfo(systemManager.getMembers());
+    Member member = systemManager.getMemberById(memberId);
     memberViewer.displayMemberInfo(member);
   }
 
   @Override
   public void displayMembersOverview() {
-    memberViewer.displayMembersOverview(memberRepository.getMembers());
+    memberViewer.displayMembersOverview(systemManager.getMembers());
   }
 
   @Override
   public void displayMembersWithDetailedItems() {
-    memberViewer.displayMembersWithDetailedItems(memberRepository.getMembers());
+    memberViewer.displayMembersWithDetailedItems(systemManager.getMembers());
   }
 
   @Override

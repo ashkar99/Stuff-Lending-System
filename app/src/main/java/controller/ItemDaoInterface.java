@@ -28,11 +28,4 @@ public interface ItemDaoInterface {
    */
   void viewAvailableItems();
 
-  /**
-   * Retrieves a list of all items owned by a member.
-   *
-   * @param memberId The ID of the member whose items to retrieve.
-   * @return A list of items owned by the specified member.
-   */
-  List<Item> getItemsByMember(String memberId);
 }

@@ -25,8 +25,7 @@ public class ItemViewer extends BaseViewer {
    *
    * @param member The member whose items are to be displayed.
    */
-  public void viewItems(Member member) {
-    List<Item> items = member.getItems();
+  public void viewItems(List<Item> items) {
     for (Item item : items) {
       displayItemInfo(item);
       contractViewer.viewContract(item);

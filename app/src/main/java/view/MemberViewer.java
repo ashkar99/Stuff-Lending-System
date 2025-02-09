@@ -101,7 +101,7 @@ public class MemberViewer extends BaseViewer {
       System.out.println("----------------------------------------");
       System.out.println("Name: " + member.getName());
       System.out.println("Email: " + member.getEmail());
-      itemViewer.viewItems(member);
+      itemViewer.viewItems(member.getItems());
       System.out.println("----------------------------------------");
     }
   }

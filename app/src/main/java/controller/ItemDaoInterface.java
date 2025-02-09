@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.List;
-import model.Item;
 
 /**
  * Interface to define operations for managing items owned by members.

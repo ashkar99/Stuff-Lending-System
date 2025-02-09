@@ -1,9 +1,5 @@
 package controller;
 
-import java.util.List;
-import model.CategoryEnum;
-import model.Item;
-import model.Member;
 import model.SystemManager;
 import view.FeedbackMessage;
 import view.ItemViewer;

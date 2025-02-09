@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import model.Item;
-import model.Member;
 
 /**
  * The ItemViewer class provides methods for displaying and managing items,

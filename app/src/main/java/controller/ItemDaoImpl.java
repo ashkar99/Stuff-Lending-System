@@ -4,6 +4,7 @@ import java.util.List;
 import model.CategoryEnum;
 import model.Item;
 import model.Member;
+import model.SystemManager;
 import view.FeedbackMessage;
 import view.ItemViewer;
 
@@ -16,6 +17,7 @@ import view.ItemViewer;
 public class ItemDaoImpl implements ItemDaoInterface {
   private final MemberDaoInterface memberDao; // Made final to ensure immutability
   private final ItemViewer itemViewer = new ItemViewer();
+  private final SystemManager systemManager = new SystemManager();
 
   /**
    * Constructor for the ItemDaoImpl class.
@@ -31,31 +33,11 @@ public class ItemDaoImpl implements ItemDaoInterface {
   public void modifyItem() {
 
     memberDao.displayMembersWithDetailedItems();
-    String[] itemStrings = itemViewer.editItemInfo();
-    Member member = memberDao.getMemberById(itemStrings[0]);
-    if (member == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
-    }
+    String[] itemInfo = itemViewer.editItemInfo();
+    Member member = systemManager.getMemberById(itemInfo[0]);
+    Item item = systemManager.getItemById(member, itemInfo[1]);
 
-    Item item = getItemById(member, itemStrings[1]);
-    if (item == null) {
-      throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
-    }
-
-    String newName = !itemStrings[3].isBlank() ? itemStrings[3] : item.getName();
-    String newDescription = !itemStrings[4].isBlank() ? itemStrings[4] : item.getDescription();
-    CategoryEnum newCategory;
-    try {
-      newCategory = !itemStrings[2].isBlank() ? CategoryEnum.valueOf(itemStrings[2]) : item.getCategory();
-    } catch (IllegalArgumentException e) {
-      newCategory = item.getCategory(); // Default to the current category if the input is invalid
-    }
-    int newCostPerDay = (!itemStrings[5].isBlank() && Integer.parseInt(itemStrings[5]) > 0)
-        ? Integer.parseInt(itemStrings[5])
-        : item.getCostPerDay();
-    Item updatedItem = new Item(newCategory, newName, newDescription, newCostPerDay, member);
-    member.removeItem(item);
-    member.addItem(updatedItem);
+    systemManager.updateItem(member, item, itemInfo);
     itemViewer.displayFeedback(true, FeedbackMessage.SUCCESS_ITEM_UPDATE.getMessage(), null);
   }
 
@@ -64,7 +46,7 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
     memberDao.findbyList();
     String[] itemStrings = itemViewer.addNewItem();
-    Member member = memberDao.getMemberById(itemStrings[0]);
+    Member member = systemManager.getMemberById(itemStrings[0]);
     if (member == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
@@ -87,12 +69,12 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
     memberDao.findbyList();
     String[] itemStrings = itemViewer.deleteItem();
-    Member member = memberDao.getMemberById(itemStrings[0]);
+    Member member = systemManager.getMemberById(itemStrings[0]);
     if (member == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
 
-    Item item = getItemById(member, itemStrings[1]);
+    Item item = systemManager.getItemById(member, itemStrings[1]);
     if (item == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_ITEM_NOT_FOUND.getMessage());
     }
@@ -103,33 +85,17 @@ public class ItemDaoImpl implements ItemDaoInterface {
 
   @Override
   public void viewAvailableItems() {
-    itemViewer.viewAvailableItems(memberDao.getAvailableItems());
+    itemViewer.viewAvailableItems(systemManager.getAvailableItems());
   }
 
   @Override
   public List<Item> getItemsByMember(String memberId) {
 
-    Member member = memberDao.getMemberById(memberId);
+    Member member = systemManager.getMemberById(memberId);
     if (member == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());
     }
     return member.getItems();
-  }
-
-  /**
-   * Get item by id.
-   *
-   * @param member to get member's item.
-   * @param itemId to get the item.
-   * @return item by the id.
-   */
-  public Item getItemById(Member member, String itemId) {
-    for (Item item : member.getItems()) {
-      if (item.getId().equals(itemId)) {
-        return item;
-      }
-    }
-    return null;
   }
 
   @Override

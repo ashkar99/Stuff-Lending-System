@@ -43,9 +43,9 @@ graph RL
     controller6 --> controller3
     controller8 --> controller1
 
-    controller9 --> controller4
-    controller9 --> controller1
-    controller9 --> controller8
+    controller9 --> controller3
+    controller9 --> controller5
+    controller9 --> controller7
 
     controller1 --> model1
     controller4 --> model2
@@ -228,7 +228,7 @@ classDiagram
    Item "1" -- "0..*" ImmutableContract : is involved in >
    ImmutableContract "1" -- "1" Member : lender >
    ImmutableContract "1" -- "1" Member : borrower >
-   SystemManager "1" --"0..*" Member : manage >
+   SystemManager "1" --"0..*" Member : manage member stuff >
    SystemManager "1" --"0..*" Time : get current time >
 
 
@@ -291,6 +291,7 @@ classDiagram
     }
     MemberDaoInterface <|.. MemberDaoImpl
 
+
     %% ItemDaoInterface and ItemDaoImpl
     class ItemDaoInterface {
         <<Interface>> 
@@ -327,7 +328,6 @@ classDiagram
         +boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost)
     }
     ContractDaoInterface <|.. ContractDaoImpl
-    TimeDaoInterface <-- ContractDaoImpl
 
     class Menu {
         -MemberDaoInterface memberDao
@@ -339,6 +339,7 @@ classDiagram
         -void contractMenu()
         -void itemMenu()
     }
+    Menu -->
 
 ````
 

@@ -41,7 +41,6 @@ graph RL
     controller1 --"implent"--> controller2 
 
     controller6 --> controller3
-    controller8 --> controller1
 
     controller9 --> controller3
     controller9 --> controller5

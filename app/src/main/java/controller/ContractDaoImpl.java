@@ -3,6 +3,7 @@ package controller;
 import model.ImmutableContract;
 import model.Item;
 import model.Member;
+import model.SystemManager;
 import view.ContractViewer;
 import view.FeedbackMessage;
 
@@ -13,15 +14,14 @@ import view.FeedbackMessage;
 public class ContractDaoImpl implements ContractDaoInterface {
   private TimeDaoInterface timeDao = new TimeDaoImpl();
   private ContractViewer contractViewer = new ContractViewer();
-  private MemberDaoInterface memberDao = new MemberDaoImpl();
-  private ItemDaoInterface itemDao = new ItemDaoImpl(memberDao);
+  private SystemManager systemManager = new SystemManager();
 
   @Override
   public void createContract() {
 
     String[] contractStrings = contractViewer.createContract();
-    Member lender = memberDao.getMemberById(contractStrings[0]);
-    Member borrower = memberDao.getMemberById(contractStrings[1]);
+    Member lender = systemManager.getMemberById(contractStrings[0]);
+    Member borrower = systemManager.getMemberById(contractStrings[1]);
 
     // Null check for lender and borrower
     if (lender == null) {
@@ -32,7 +32,7 @@ public class ContractDaoImpl implements ContractDaoInterface {
     }
 
     // Fetch the item after verifying that the lender is not null
-    Item item = itemDao.getItemById(lender, contractStrings[2]);
+    Item item = systemManager.getItemById(lender, contractStrings[2]);
 
     if (item == null) {
       throw new IllegalArgumentException(FeedbackMessage.ERROR_MEMBER_NOT_FOUND.getMessage());

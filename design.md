@@ -327,7 +327,7 @@ classDiagram
         +void displayFeedback(boolean success, String successMsg, String errorMsg)
     }
 
-    enum FeedbackMessage {
+    class enum FeedbackMessage {
 
     }
     class Viewer {

@@ -43,6 +43,7 @@ public enum FeedbackMessage {
 
   // Time-related messages
   TIME_ADVANCED("Time advanced by %d days."),
+  ERROR_INVAILD_TIME("Days to advance must be greater than 0."),
 
   // General error and success messages
   SUCCESS_OPERATION("Operation completed successfully!"),

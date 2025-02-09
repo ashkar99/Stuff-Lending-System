@@ -35,6 +35,10 @@ graph RL
     view6[class Viewer]
     
     end
+    controller6 --"implent"--> controller5  
+    controller4 --"implent"--> controller3 
+    controller8 --"implent"--> controller7  
+    controller1 --"implent"--> controller2 
 
     controller6 --> controller3
     controller8 --> controller1
@@ -42,7 +46,14 @@ graph RL
     controller9 --> controller4
     controller9 --> controller1
     controller9 --> controller8
+
+    controller1 --> model1
+    controller4 --> model2
     
+    controller6 --"depends"--> view2 
+    controller4--"depends"--> view1
+
+
     controller9 --> view6
 
 
@@ -63,21 +74,17 @@ graph RL
     model2 --"extends"--> model6
     model3 --"extends"--> model6
     model5 --"extends"--> model6
+
+    model7 --> model2
+    model7 --> model1
     
     view1 --"have"--> view2
     view2 --"have"--> view3
 
-    controller6 --"implent"--> controller5  
-    controller4 --"implent"--> controller3 
-    controller8 --"implent"--> controller7  
-    controller1 --"implent"--> controller2 
+
     
 
-    controller1 --> model1
-    controller4 --> model2
-    
-    controller6 --"depends"--> view2 
-    controller4--"depends"--> view1
+
 
     view1 --"extends"--> view5
     view2 --"extends"--> view5

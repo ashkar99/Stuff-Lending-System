@@ -1,12 +1,13 @@
 package controller;
 
 import view.FeedbackMessage;
+import view.MenuOption;
 import view.Viewer;
 
 /**
  * Menu class contains the main menu.
  */
-public class Menu extends view.BaseViewer {
+public class Menu {
   private MemberDaoInterface memberDao = new MemberDaoImpl();
   private ItemDaoInterface itemDao = new ItemDaoImpl();
   private ContractDaoInterface contractDao = new ContractDaoImpl();
@@ -22,13 +23,17 @@ public class Menu extends view.BaseViewer {
     boolean running = true;
     while (running) {
       int choice = viewer.mainMenu();
-
-      switch (choice) {
-        case 1 -> memberMenu();
-        case 2 -> contractMenu();
-        case 3 -> itemMenu();
-        case 4 -> running = false;
-        default -> System.out.println("Invalid option. Please try again.");
+      try {
+        MenuOption option = MenuOption.fromChoice(choice);
+        switch (option) {
+          case MAIN_MEMBER_MENU -> memberMenu();
+          case MAIN_CONTRACT_MENU -> contractMenu();
+          case MAIN_ITEM_MENU -> itemMenu();
+          case MAIN_EXIT -> running = false;
+          default -> viewer.displayFeedback(false, null, FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+        }
+      } catch (IllegalArgumentException e) {
+        viewer.displayFeedback(false, null, e.getMessage());
       }
     }
   }
@@ -37,25 +42,24 @@ public class Menu extends view.BaseViewer {
    * Displays the Member Menu.
    */
   private void memberMenu() {
-    try {
-
-      boolean running = true;
-      while (running) {
-        int choice = viewer.memberMenu();
-
-        switch (choice) {
-          case 1 -> memberDao.createMember();
-          case 2 -> memberDao.updateMember();
-          case 3 -> memberDao.deleteMember();
-          case 4 -> memberDao.showSpecificMemberInfo();
-          case 5 -> memberDao.displayMembersOverview();
-          case 6 -> memberDao.displayMembersWithDetailedItems();
-          case 7 -> running = false;
-          default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    boolean running = true;
+    while (running) {
+      int choice = viewer.memberMenu();
+      try {
+        MenuOption option = MenuOption.fromChoice(choice);
+        switch (option) {
+          case MEMBER_CREATE -> memberDao.createMember();
+          case MEMBER_EDIT -> memberDao.updateMember();
+          case MEMBER_DELETE -> memberDao.deleteMember();
+          case MEMBER_SHOW_INFO -> memberDao.showSpecificMemberInfo();
+          case MEMBER_OVERVIEW -> memberDao.displayMembersOverview();
+          case MEMBER_WITH_ITEMS -> memberDao.displayMembersWithDetailedItems();
+          case MEMBER_BACK -> running = false;
+          default -> viewer.displayFeedback(false, null, FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
         }
+      } catch (IllegalArgumentException e) {
+        viewer.displayFeedback(false, null, e.getMessage());
       }
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
     }
   }
 
@@ -63,19 +67,20 @@ public class Menu extends view.BaseViewer {
    * Displays the Contract Menu.
    */
   private void contractMenu() {
-    try {
-      boolean running = true;
-      while (running) {
-        viewer.contractMenu();
-        int choice = promptForInt("");
-        switch (choice) {
-          case 1 -> contractDao.createContract();
-          case 2 -> running = false;
-          default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    boolean running = true;
+    while (running) {
+      viewer.contractMenu();
+      int choice = viewer.promptForInt();
+      try {
+        MenuOption option = MenuOption.fromChoice(choice);
+        switch (option) {
+          case CONTRACT_CREATE -> contractDao.createContract();
+          case CONTRACT_BACK -> running = false;
+          default -> viewer.displayFeedback(false, null, FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
         }
+      } catch (IllegalArgumentException e) {
+        viewer.displayFeedback(false, null, e.getMessage());
       }
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
     }
   }
 
@@ -83,23 +88,24 @@ public class Menu extends view.BaseViewer {
    * Displays the Item Menu.
    */
   private void itemMenu() {
-    try {
-      boolean running = true;
-      while (running) {
-        viewer.itemMenu();
-
-        int choice = promptForInt("");
-        switch (choice) {
-          case 1 -> itemDao.createItem();
-          case 2 -> itemDao.modifyItem();
-          case 3 -> itemDao.deleteItem();
-          case 4 -> itemDao.viewAvailableItems();
-          case 5 -> running = false;
-          default -> System.out.println(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    boolean running = true;
+    while (running) {
+      viewer.itemMenu();
+      int choice = viewer.promptForInt();
+      try {
+        MenuOption option = MenuOption.fromChoice(choice);
+        switch (option) {
+          case ITEM_ADD -> itemDao.createItem();
+          case ITEM_EDIT -> itemDao.modifyItem();
+          case ITEM_DELETE -> itemDao.deleteItem();
+          case ITEM_VIEW_AVAILABLE -> itemDao.viewAvailableItems();
+          case ITEM_BACK -> running = false;
+          default -> viewer.displayFeedback(false, null, FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
         }
+      } catch (IllegalArgumentException e) {
+        viewer.displayFeedback(false, null, e.getMessage());
       }
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
     }
   }
+
 }

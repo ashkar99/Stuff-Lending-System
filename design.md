@@ -312,7 +312,7 @@ classDiagram
         +List~Item~ getItemsByMember(String memberId)
     }
     ItemDaoImpl ..|>  ItemDaoInterface
-    ItemDaoImpl --> MemberDaoInterface
+    ItemDaoImpl "1"-- "1" MemberDaoInterface : belong to
 
     %% ContractDaoInterface and ContractDaoImpl
     class ContractDaoInterface {
@@ -343,7 +343,8 @@ classDiagram
     
     Menu "1"-- "0..*" MemberDaoInterface : have member menu 
     Menu "1"-- "0..*" ItemDaoInterface : have item menu
-    Menu "1"-- "0..*" ContractDaoInterface : have contact menu
+    Menu "1"-- "0..*" ContractDaoInterface : have contact 
+    
 ````
 
 

@@ -413,8 +413,8 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant Menu as Menu
-    participant MV as MemberViewer
     participant MC as MemberDaoImpl
+    participant MV as MemberViewer
     participant SM as SystemManager
     participant M as Member
 

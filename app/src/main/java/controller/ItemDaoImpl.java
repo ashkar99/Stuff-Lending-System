@@ -11,14 +11,16 @@ import view.ItemViewer;
  * This class uses the MemberDaoInterface to interact with member data.
  */
 public class ItemDaoImpl implements ItemDaoInterface {
-  private MemberDaoInterface memberDao = new MemberDaoImpl();
+  private MemberDaoInterface memberDao;
   private final ItemViewer itemViewer = new ItemViewer();
-  private final SystemManager systemManager = new SystemManager();
+  private final SystemManager systemManager;
 
   /**
    * Constructor for the ItemDaoImpl class.
    */
-  public ItemDaoImpl() {
+  public ItemDaoImpl(SystemManager systemManager) {
+    this.systemManager = systemManager;
+    memberDao = new MemberDaoImpl(systemManager);
   }
 
   @Override

@@ -422,16 +422,12 @@ sequenceDiagram
     Menu->>Menu: memberMenu()
     Menu->>MC: createMember()
     MC->>MV: prumpt for createMember()
-    MV->>MC: return a String of member info
-    MC->>SM: addMember(name, email, phoneNumber, password)  %% Send data to controller
+    MV->>MC: return a String[] of member info
+    MC->>SM: addMember(name, email, phoneNumber, password) 
+    SM->>SM: validieteMemberDetails(name, email, phoneNumber, password) 
+    SM->>M: Member(name, email, phoneNumber, password)
+    SM->>SM: store the member in members list
 
-    MC->>M: addMember(name, email, phoneNumber, password)   %% Controller calls Model to add new member
-    M-->>MC: return new Member object with memberId, name, email, creationDate, password.  %% Member is created and returned to Controller
-
-    MC->>MC: store member data in list of members  %% Controller handles saving the new member
-    
-    MC-->>MV: return a copy of Member object to view
-    MV->>MV: display member details to user
 ````
 
 

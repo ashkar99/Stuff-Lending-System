@@ -10,7 +10,11 @@ import view.FeedbackMessage;
  */
 public class ContractDaoImpl implements ContractDaoInterface {
   private ContractViewer contractViewer = new ContractViewer();
-  private SystemManager systemManager = new SystemManager();
+  private SystemManager systemManager;
+
+  public ContractDaoImpl(SystemManager systemManager) {
+    this.systemManager = systemManager;
+  }
 
   @Override
   public void createContract() {

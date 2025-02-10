@@ -1,5 +1,6 @@
 package controller;
 
+import model.SystemManager;
 import view.FeedbackMessage;
 import view.MenuOption;
 import view.Viewer;
@@ -8,10 +9,12 @@ import view.Viewer;
  * Menu class contains the main menu.
  */
 public class Menu {
-  private MemberDaoInterface memberDao = new MemberDaoImpl();
-  private ItemDaoInterface itemDao = new ItemDaoImpl();
-  private ContractDaoInterface contractDao = new ContractDaoImpl();
+  private SystemManager systemManager = new SystemManager();
+  private MemberDaoInterface memberDao = new MemberDaoImpl(systemManager);
+  private ItemDaoInterface itemDao = new ItemDaoImpl(systemManager);
+  private ContractDaoInterface contractDao = new ContractDaoImpl(systemManager);
   private Viewer viewer = new Viewer();
+  
 
   public Menu() {
   }
@@ -24,7 +27,7 @@ public class Menu {
     while (running) {
       int choice = viewer.mainMenu();
       try {
-        MenuOption option = MenuOption.fromChoice(choice);
+        MenuOption option = MenuOption.fromMainMenuChoice(choice);
         switch (option) {
           case MAIN_MEMBER_MENU -> memberMenu();
           case MAIN_CONTRACT_MENU -> contractMenu();
@@ -46,7 +49,7 @@ public class Menu {
     while (running) {
       int choice = viewer.memberMenu();
       try {
-        MenuOption option = MenuOption.fromChoice(choice);
+        MenuOption option = MenuOption.fromMemberMenuChoice(choice);
         switch (option) {
           case MEMBER_CREATE -> memberDao.createMember();
           case MEMBER_EDIT -> memberDao.updateMember();
@@ -72,7 +75,7 @@ public class Menu {
       viewer.contractMenu();
       int choice = viewer.promptForInt();
       try {
-        MenuOption option = MenuOption.fromChoice(choice);
+        MenuOption option = MenuOption.fromContractMenuChoice(choice);
         switch (option) {
           case CONTRACT_CREATE -> contractDao.createContract();
           case CONTRACT_BACK -> running = false;
@@ -93,7 +96,7 @@ public class Menu {
       viewer.itemMenu();
       int choice = viewer.promptForInt();
       try {
-        MenuOption option = MenuOption.fromChoice(choice);
+        MenuOption option = MenuOption.fromItemMenuChoice(choice);
         switch (option) {
           case ITEM_ADD -> itemDao.createItem();
           case ITEM_EDIT -> itemDao.modifyItem();
@@ -107,5 +110,4 @@ public class Menu {
       }
     }
   }
-
 }

@@ -432,8 +432,10 @@ sequenceDiagram
     end
 
     SM->>+M: Member(name, email, phoneNumber, password)
-    M->>M: isValidEmail(email)  validet email format.
-    M->>M: isValidPhoneNumber(phoneNumber) check if phone number is 10 numbers long.
+    loop Valid format
+        M->>M: isValidEmail(email)  validet email format.
+        M->>M: isValidPhoneNumber(phoneNumber) check if phone number is 10 numbers long.
+    end
     M-->>-SM: Member is created successfully.
     SM->>SM: store the member in members list
     SM-->>-MC: member added successfully

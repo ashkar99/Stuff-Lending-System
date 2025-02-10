@@ -340,8 +340,9 @@ classDiagram
         -void contractMenu()
         -void itemMenu()
     }
-    Menu -->
-
+    Menu --> MemberDaoInterface
+    Menu --> ItemDaoInterface
+    Menu --> ContractDaoInterface
 ````
 
 

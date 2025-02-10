@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.checkerframework.checker.units.qual.m;
+
 import view.FeedbackMessage;
 
 /**
@@ -19,15 +22,12 @@ public class SystemManager {
   public SystemManager() {
   }
 
-
-
-   
   /**
    * Adds a new member to the repository.
    *
-   * @param name member name.
-   * @param email memeber email.
-   * @param password member password.
+   * @param name        member name.
+   * @param email       memeber email.
+   * @param password    member password.
    * @param phoneNumber member phone number.
    */
   public void addMembers(String name, String email, String password, String phoneNumber) {
@@ -170,9 +170,11 @@ public class SystemManager {
   public List<Item> getAvailableItems() {
     List<Item> avItems = new ArrayList<>();
     for (Member member : getMembers()) {
-      for (Item item : member.getItems()) {
-        if (item.isAvailable()) {
-          avItems.add(item);
+      if (!member.getItems().isEmpty()) {
+        for (Item item : member.getItems()) {
+          if (item.isAvailable()) {
+            avItems.add(item);
+          }
         }
       }
     }

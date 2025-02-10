@@ -417,7 +417,7 @@ sequenceDiagram
     participant MV as MemberViewer
     participant SM as SystemManager
     participant M as Member
-
+    menu deactive
     %% Scenario: Add a new third member with user input and database interaction
     Menu->>MC: createMember(name, email, phoneNumber, password)
     MC->>MV: prompt for name, email, password, phoneNumber

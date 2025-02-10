@@ -417,18 +417,22 @@ sequenceDiagram
     participant MC as Controller <br/> MemberDaoImpl 
     participant MV as Viewer <br/> MemberViewer
     participant SM as  Model <br/> SystemManager
+    participant M1 as exixting member <br/> Member1
+    participant M1 as exixting member <br/> Member1
     participant M as Model <br/> Member
     
     %% Scenario: Add a new third member with user input and database interaction
-    App->>+ Menu: mainMenu()
+    App->> Menu: mainMenu()
     Menu->>Menu: memberMenu()
     Menu->>MC: createMember()
     MC->>+MV: prumpt for createMember()
     MV-->>-MC: return a String[] of member info
-    MC->>SM: addMember(name, email, phoneNumber, password) 
+    MC->>+SM: addMember(name, email, phoneNumber, password) 
     SM->>SM: validieteMemberDetails(name, email, phoneNumber, password) 
     SM->>M: Member(name, email, phoneNumber, password)
     SM->>SM: store the member in members list
+    SM-->>-MC: member added successfully
+    MC->>MV: Display feedback
 
 ````
 

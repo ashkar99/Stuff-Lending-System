@@ -16,7 +16,7 @@ public class Viewer extends BaseViewer {
     System.out.println("3. Item Menu.");
     System.out.println("4. Exit.");
     System.out.print("Select an option: ");
-    int choice = promptForInt("");
+    int choice = promptForInt();
     return choice;
   }
 
@@ -33,7 +33,7 @@ public class Viewer extends BaseViewer {
     System.out.println("6. Display members and their items.");
     System.out.println("7. Back to main menu.");
     System.out.print("Select an option: ");
-    int choice = promptForInt("");
+    int choice = promptForInt();
     return choice;
   }
 

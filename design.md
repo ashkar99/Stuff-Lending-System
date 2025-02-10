@@ -458,7 +458,7 @@ classDiagram
     }
 
     class MemberViewer {
-        +promptForCreateMember()
+        +promptForCreateMember(): String[]
     }
 
     class SystemManager {
@@ -473,7 +473,12 @@ classDiagram
         -password: String
     }
 
-    ````
+    App --> Menu
+    Menu --> MemberDaoImpl
+    MemberDaoImpl --> MemberViewer
+    MemberDaoImpl --> SystemManager
+    SystemManager --> Member
+    ```
 ![object_diagram](img/object_diagram.png)
 
 

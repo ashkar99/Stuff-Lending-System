@@ -11,13 +11,14 @@ import view.MemberViewer;
  * member information from an internal list.
  */
 public class MemberDaoImpl implements MemberDaoInterface {
-  private SystemManager systemManager = new SystemManager();
+  private SystemManager systemManager;
   private MemberViewer memberViewer = new MemberViewer();
 
   /**
    * Constructor for the MemberDaoImpl class.
    */
-  public MemberDaoImpl() {
+  public MemberDaoImpl(SystemManager systemManager) {
+    this.systemManager = systemManager;
   }
 
   /**

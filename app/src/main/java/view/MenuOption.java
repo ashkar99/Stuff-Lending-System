@@ -42,18 +42,56 @@ public enum MenuOption {
   }
 
   /**
-   * Retrieves the corresponding MenuOption from an integer choice.
-   *
-   * @param choice The numeric choice entered by the user.
-   * @return The corresponding MenuOption.
-   * @throws IllegalArgumentException If the choice is invalid.
+   * Retrieves the corresponding Main Menu option from an integer choice.
    */
-  public static MenuOption fromChoice(int choice) {
-    for (MenuOption option : values()) {
-      if (option.getChoice() == choice) {
-        return option;
-      }
-    }
-    throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+  public static MenuOption fromMainMenuChoice(int choice) {
+    return switch (choice) {
+      case 1 -> MAIN_MEMBER_MENU;
+      case 2 -> MAIN_CONTRACT_MENU;
+      case 3 -> MAIN_ITEM_MENU;
+      case 4 -> MAIN_EXIT;
+      default -> throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    };
+  }
+
+  /**
+   * Retrieves the corresponding Member Menu option from an integer choice.
+   */
+  public static MenuOption fromMemberMenuChoice(int choice) {
+    return switch (choice) {
+      case 1 -> MEMBER_CREATE;
+      case 2 -> MEMBER_EDIT;
+      case 3 -> MEMBER_DELETE;
+      case 4 -> MEMBER_SHOW_INFO;
+      case 5 -> MEMBER_OVERVIEW;
+      case 6 -> MEMBER_WITH_ITEMS;
+      case 7 -> MEMBER_BACK;
+      default -> throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    };
+  }
+
+  /**
+   * Retrieves the corresponding Contract Menu option from an integer choice.
+   */
+  public static MenuOption fromContractMenuChoice(int choice) {
+    return switch (choice) {
+      case 1 -> CONTRACT_CREATE;
+      case 2 -> CONTRACT_BACK;
+      default -> throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    };
+  }
+
+  /**
+   * Retrieves the corresponding Item Menu option from an integer choice.
+   */
+  public static MenuOption fromItemMenuChoice(int choice) {
+    return switch (choice) {
+      case 1 -> ITEM_ADD;
+      case 2 -> ITEM_EDIT;
+      case 3 -> ITEM_DELETE;
+      case 4 -> ITEM_VIEW_AVAILABLE;
+      case 5 -> ITEM_BACK;
+      default -> throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_INPUT.getMessage());
+    };
   }
 }

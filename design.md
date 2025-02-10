@@ -419,9 +419,11 @@ sequenceDiagram
     participant M as Member
     
     %% Scenario: Add a new third member with user input and database interaction
-    Menu->>MC: createMember(name, email, phoneNumber, password)
-    MC->>MV: prompt for name, email, password, phoneNumber
-    MV->>MC: createMember(name, email, phoneNumber, password)  %% Send data to controller
+    Menu->>Menu: memberMenu()
+    Menu->>MC: createMember()
+    MC->>MV: prumpt for createMember()
+    MV->>MC: return a String of member info
+    MC->>SM: addMember(name, email, phoneNumber, password)  %% Send data to controller
 
     MC->>M: addMember(name, email, phoneNumber, password)   %% Controller calls Model to add new member
     M-->>MC: return new Member object with memberId, name, email, creationDate, password.  %% Member is created and returned to Controller

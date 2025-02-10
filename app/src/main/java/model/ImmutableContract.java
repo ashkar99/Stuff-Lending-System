@@ -31,9 +31,9 @@ public final class ImmutableContract extends FatherOfFunction {
   public ImmutableContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
 
     this.id = generateUniqueId(); // generate id in super calss only once.
-    this.lender = lender;
-    this.borrower = borrower; 
-    this.item = item; 
+    this.lender = new Member(lender);
+    this.borrower = new Member(borrower); 
+    this.item = new Item(item); 
     this.startDay = startDay;
     this.endDay = endDay;
     this.totalCost = calculateTotalCost();

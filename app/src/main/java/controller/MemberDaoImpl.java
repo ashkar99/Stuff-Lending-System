@@ -11,7 +11,7 @@ import view.MemberViewer;
  * member information from an internal list.
  */
 public class MemberDaoImpl implements MemberDaoInterface {
-  private SystemManager systemManager;
+  private SystemManager systemManager = new SystemManager();
   private MemberViewer memberViewer = new MemberViewer();
 
   /**

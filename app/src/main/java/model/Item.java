@@ -41,6 +41,19 @@ public class Item extends FatherOfFunction {
   }
 
   /**
+   * Get a deep ccopy of the item.
+   *
+   * @param item deep copy.
+   */
+  public Item(Item item) {
+    this.category = item.getCategory();
+    this.name = item.getName();
+    this.description = item.getDescription();
+    this.costPerDay = item.getCostPerDay();
+    this.owner = item.getOwner();
+  }
+
+  /**
    * Update item information.
    *
    * @param category    Update category.

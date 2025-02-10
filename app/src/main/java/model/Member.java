@@ -33,7 +33,6 @@ public class Member extends FatherOfFunction {
     setId();
     setName(name);
     setEmail(email);
-    System.out.println("NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEW mwmbewe");
     setPhoneNumber(phoneNumber);
     setPassword(password);
     setCreationDate();
@@ -66,7 +65,6 @@ public class Member extends FatherOfFunction {
   public void updateMember(String name, String email, String password, String phoneNumber) {
     setName(name);
     setEmail(email);
-    System.out.println("MEMMMMMMMMMMMMMMMMMMMMMMMMMMMMER UPDATTTTTTTTTTTTTTTTTE");
     setPhoneNumber(phoneNumber);
     setPassword(password);
   }
@@ -137,7 +135,6 @@ public class Member extends FatherOfFunction {
    */
   private void setPhoneNumber(String phoneNumber) {
     if (!isValidPhoneNumber(phoneNumber)) {
-      System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
       throw new IllegalArgumentException(FeedbackMessage.ERROR_INVALID_PHONENUMEBER.getMessage());
     }
     this.phoneNumber = phoneNumber;
@@ -227,7 +224,6 @@ public class Member extends FatherOfFunction {
    *
    */
   private boolean isValidPhoneNumber(String phoneNumber) {
-    System.out.println("SSSSSSSSSSSSSSSSSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSSS");
     String phoneRegex = "\\d{10}"; // Assuming a 10-digit number for simplicity
     Pattern pattern = Pattern.compile(phoneRegex);
     return pattern.matcher(phoneNumber).matches();

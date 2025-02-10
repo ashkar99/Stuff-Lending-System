@@ -13,7 +13,7 @@ import view.ItemViewer;
 public class ItemDaoImpl implements ItemDaoInterface {
   private MemberDaoInterface memberDao;
   private final ItemViewer itemViewer = new ItemViewer();
-  private final SystemManager systemManager;
+  private SystemManager systemManager;
 
   /**
    * Constructor for the ItemDaoImpl class.

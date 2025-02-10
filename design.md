@@ -428,10 +428,13 @@ sequenceDiagram
     MC->>+SM: addMember(name, email, phoneNumber, password) 
     SM->>SM: validieteMemberDetails(name, email, phoneNumber, password) 
     loop check unique 
-        SM->>SM: checking  email and phonenumber if unique
+        SM->>SM: checking email and phonenumber if unique in the exicted members
     end
 
-    SM->>M: Member(name, email, phoneNumber, password)
+    SM->>+M: Member(name, email, phoneNumber, password)
+    M->>M: isValidEmail(email)  validet email format.
+    M->>M: isValidPhoneNumber(phoneNumber) check if phone number is 10 numbers long.
+    M-->>-SM: Member is created successfully.
     SM->>SM: store the member in members list
     SM-->>-MC: member added successfully
     MC->>MV: Display feedback

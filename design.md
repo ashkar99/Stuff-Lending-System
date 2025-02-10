@@ -9,6 +9,7 @@ graph RL
     model4[class CategoryEnum]
     model5[class ImmutableContract]
     model6[class FaterOfFunction]
+    model7[class SystemManager ]
 
     end
 
@@ -21,7 +22,7 @@ graph RL
     controller6[class ItemDaoImpl]       
     controller7[class ContractDaoInterface] 
     controller8[class ContractDaoImpl]
-    controller9[class FeedbackMessagesEnum]
+    controller9[ class Menu]
         
     end
 
@@ -29,11 +30,39 @@ graph RL
     view1[class MemberViewer]
     view2[class ItemViewer]
     view3[class ContractViewer]
+    view4[enum FeedbackMessagesEnum]
+    view5[class BaseViewer]
+    view6[class Viewer]
     
     end
+    controller6 --"implent"--> controller5  
+    controller4 --"implent"--> controller3 
+    controller8 --"implent"--> controller7  
+    controller1 --"implent"--> controller2 
 
     controller6 --> controller3
-    controller8 --> controller1
+
+    controller9 --> controller3
+    controller9 --> controller5
+    controller9 --> controller7
+    
+
+    controller1 --> model1
+
+    
+    controller6 --"depends"--> view2 
+    controller4--"depends"--> view1
+    controller8 --"depends"--> view3
+
+
+    controller9 --> view6
+
+
+    controller4 --> model7
+    controller6 --> model7
+    controller8 --> model7
+
+
 
 
     model2 --"owns"--> model3 
@@ -43,24 +72,26 @@ graph RL
     model5 --"borrower"--> model2 
 
     
-    model2 --"Inheritance"--> model6
-    model3 --"Inheritance"--> model6
-    model5 --"Inheritance"--> model6
-    
-    view1 --> view2
-    view2 --> view3
+    model2 --"extends"--> model6
+    model3 --"extends"--> model6
+    model5 --"extends"--> model6
 
-    controller6 --"implent"--> controller5  
-    controller4 --"implent"--> controller3 
-    controller8 --"implent"--> controller7  
-    controller1 --"implent"--> controller2 
+    model7 --> model2
+    model7 --> model1
+    
+    view1 --"have"--> view2
+    view2 --"have"--> view3
+
+
     
 
-    controller1 --> model1
-    controller4 --> model2
-    
-    view2 --> controller6
-    view1 --> controller4
+
+
+    view1 --"extends"--> view5
+    view2 --"extends"--> view5
+    view3 --"extends"--> view5
+    view6 --"extends"--> view5
+
 ```
 
 
@@ -73,10 +104,10 @@ classDiagram
        <<abstract>>
        LocalDate creationDate
        String id
-       String getId()
+       +String getId()
        void setId()
        LocalDate setCreationDate()
-       LocalDate getCreationDate()
+       +LocalDate getCreationDate()
        String generateUniqueId()
        void finalize() throws Throwable
    }
@@ -88,8 +119,8 @@ classDiagram
        -String phoneNumber
        -String password
        -int credits
-       +List~Item~ items
-       +List~ImmutableContract~ lendingHistory
+       -List~Item~ items
+       -List~ImmutableContract~ lendingHistory
        +Member(String name, String email, String phoneNumber, String password)
        +void updateMember(String name, String email, String phoneNumber, String password)
        +String getName()
@@ -113,13 +144,13 @@ classDiagram
 
 
    class Item {
-       +CategoryEnum category
-       +String name
-       +String description
-       +int costPerDay
-       +Member owner
-       +List~ImmutableContract~ lendingHistory
-       +boolean isAvailable
+       -CategoryEnum category
+       -String name
+       -String description
+       -int costPerDay
+       -Member owner
+       -List~ImmutableContract~ lendingHistory
+       -boolean isAvailable
        +Item(CategoryEnum category, String name, String description, int costPerDay, Member owner)
        +void updateItem(CategoryEnum category, String name, String description, int costPerDay)
        +CategoryEnum getCategory()
@@ -140,21 +171,21 @@ classDiagram
 
 
    class Time {
-       +int dayCounter
+       -int dayCounter
        +Time(int dayCounter)
        +int getCurrentDay()
-       +void setCurrentDay(int dayCounter)
+       -void setCurrentDay(int dayCounter)
    }
 
 
    class ImmutableContract {
-       +Member lender
-       +Member borrower
-       +Item item
-       +int startDay
-       +int endDay
-       +int totalCost
-       +String status
+       -Member lender
+       -Member borrower
+       -Item item
+       -int startDay
+       -int endDay
+       -int totalCost
+       -String status
        +ImmutableContract(Member lender, Member borrower, Item item, int startDay, int endDay)
        +Member getLender()
        +Member getBorrower()
@@ -164,6 +195,7 @@ classDiagram
        +int getTotalCost()
        +String getStatus()
        +void completeContract()
+       -int calculateTotalCost()
    }
 
 
@@ -177,6 +209,19 @@ classDiagram
        OTHER
    }
 
+   class SystemManager {
+    -List ~Member~ member
+    +void addMembers(String name, String email, String password, String phonenumber)
+    +void updateMember(String[] memberInfo)
+    +void removeMember(String[] memberInfo)
+    +List<Member> getMembers()
+    +Member getMemberById(String memberId)
+    +void updateItem(Member member, Item item, String[] itemInfo)
+    +Item getItemById(Member member, String itemId)
+    +void validateMemberDetails(String name, String email, String password, String phoneNumber)
+    +void checkUnique(String email, String phoneNumber)
+   }
+
 
    %% Relationships
    Member "1" -- "0..*" Item : owns >
@@ -184,6 +229,8 @@ classDiagram
    Item "1" -- "0..*" ImmutableContract : is involved in >
    ImmutableContract "1" -- "1" Member : lender >
    ImmutableContract "1" -- "1" Member : borrower >
+   SystemManager "1" --"0..*" Member : manage member stuff >
+   SystemManager "1" --"0..*" Time : get current time >
 
 
    %% Inheritance
@@ -245,6 +292,7 @@ classDiagram
     }
     MemberDaoInterface <|.. MemberDaoImpl
 
+
     %% ItemDaoInterface and ItemDaoImpl
     class ItemDaoInterface {
         <<Interface>> 
@@ -264,7 +312,7 @@ classDiagram
         +List~Item~ getItemsByMember(String memberId)
     }
     ItemDaoImpl ..|>  ItemDaoInterface
-    ItemDaoImpl --> MemberDaoInterface
+    ItemDaoImpl "1"-- "1" MemberDaoInterface : belong to
 
     %% ContractDaoInterface and ContractDaoImpl
     class ContractDaoInterface {
@@ -281,8 +329,22 @@ classDiagram
         +boolean isEnoughFundsToBorrow(int borrowerFunds, int itemCost)
     }
     ContractDaoInterface <|.. ContractDaoImpl
-    TimeDaoInterface <-- ContractDaoImpl
 
+    class Menu {
+        -MemberDaoInterface memberDao
+        -ItemDaoInterface itemDao
+        -ContractDaoInterface contractDao
+        -Viewer viewer
+        +void mainMenu()
+        -void memberMenu()
+        -void contractMenu()
+        -void itemMenu()
+    }
+    
+    Menu "1"-- "0..*" MemberDaoInterface : have member menu 
+    Menu "1"-- "0..*" ItemDaoInterface : have item menu
+    Menu "1"-- "0..*" ContractDaoInterface : have contact 
+    
 ````
 
 
@@ -290,8 +352,26 @@ classDiagram
 # Class diagram package view.
 ```mermaid
 classDiagram
+    class Baseviewer {
+        <<abstract>>
+        String promptForInput(String message)
+        int promptForInt(String message)
+        void waitForUserInput()
+        +void displayFeedback(boolean success, String successMsg, String errorMsg)
+    }
+
+    class enum FeedbackMessage {
+        +enum FeedbackMessage
+        +String getMessage()
+    }   
+    class Viewer {
+        String promptForInput(String message)
+        int promptForInt(String message)
+        void waitForUserInput()
+        void displayFeedback(boolean success, String successMsg, String errorMsg)
+    }
     class MemberViewer {
-        +void mainMenu()
+        -ItemViewer itemViewer
         +void createMember()
         +void editMemberInfo()
         +void deleteMember()
@@ -299,21 +379,30 @@ classDiagram
         +void displayMembersOverview()
         +void displayMembersWithDetailedItems()
         +void getAvilbaleItems()
+        +void findMember(List<Member> members)
     }
 
     class ItemViewer {
+        -ContractViewer contractViewer;
         +void viewItems(Member member)
         +void viewAvailableItems(List<Item> items)
         +void editIteminfo()
         +void addNewItem()
         +void deleteItem()
+        -void displayItemInfo(Item item)
     }
 
     class ContractViewer {
+        +String[] createContract()
         +void viewContract(Item item)
+
     }
-    MemberViewer  -->  ItemViewer
-    ItemViewer  --> ContractViewer
+    MemberViewer "1"--"0..*"  ItemViewer 
+    ItemViewer  "1"--"0..*"  ContractViewer 
+    Baseviewer <|-- Viewer
+    Baseviewer <|-- ItemViewer
+    Baseviewer <|-- ContractViewer
+    Baseviewer <|-- MemberViewer
 
    
 ```
@@ -323,27 +412,40 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
-    participant MV as MemberViewer
-    participant MC as MemberDaoImpl
-    participant M as Member
-
-    %% Scenario: Add a new third member with user input and database interaction
-    MV->>MV: prompt for name, email, password, phoneNumber
-    MV->>MC: createMember(name, email, phoneNumber, password)  %% Send data to controller
-
-    MC->>M: addMember(name, email, phoneNumber, password)   %% Controller calls Model to add new member
-    M-->>MC: return new Member object with memberId, name, email, creationDate, password.  %% Member is created and returned to Controller
-
-    MC->>MC: store member data in list of members  %% Controller handles saving the new member
+    participant App as App 
+    participant Menu as Controller <br/> Menu
+    participant MC as Controller <br/> MemberDaoImpl 
+    participant MV as Viewer <br/> MemberViewer
+    participant SM as  Model <br/> SystemManager
+    participant M as Model <br/> Member
     
-    MC-->>MV: return a copy of Member object to view
-    MV->>MV: display member details to user
+    %% Scenario: Add a new third member with user input and database interaction
+    App->> Menu: mainMenu()
+    Menu->>Menu: memberMenu()
+    Menu->>MC: createMember()
+    MC->>+MV: prumpt for createMember()
+    MV-->>-MC: return a String[] of member info
+    MC->>+SM: addMember(name, email, phoneNumber, password) 
+    SM->>SM: validieteMemberDetails(name, email, phoneNumber, password) 
+    loop check unique 
+        SM->>SM: checking email and phonenumber if unique in the exicted members
+        SM->>+M: Member(name, email, phoneNumber, password)
+        M->>M: isValidEmail(email)  validet email format.
+        M->>M: isValidPhoneNumber(phoneNumber) check if phone number is 10 numbers long.
+    end
+    M-->>-SM: Member is created successfully.
+    SM->>SM: store the member in members list
+    SM-->>-MC: member added successfully
+    MC->>MV: Display feedback
+
 ````
 
 
 
 # ObjectDiagram
-![object_diagram](img/object_diagram.png)
+
+
+![object_diagram](img/object-diagram.png)
 
 
 

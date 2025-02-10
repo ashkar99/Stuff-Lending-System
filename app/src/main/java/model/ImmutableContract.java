@@ -31,11 +31,9 @@ public final class ImmutableContract extends FatherOfFunction {
   public ImmutableContract(Member lender, Member borrower, Item item, int startDay, int endDay) {
 
     this.id = generateUniqueId(); // generate id in super calss only once.
-    this.lender = new Member(lender.getName(), lender.getEmail(), lender.getPhoneNumber(), lender.getPassword());
-    this.borrower = new Member(borrower.getName(), borrower.getEmail(), borrower.getPhoneNumber(),
-        borrower.getPassword()); // Defensive copy
-    this.item = new Item(item.getCategory(), item.getName(), item.getDescription(), item.getCostPerDay(),
-        item.getOwner()); // Defensive copy
+    this.lender = lender;
+    this.borrower = borrower; 
+    this.item = item; 
     this.startDay = startDay;
     this.endDay = endDay;
     this.totalCost = calculateTotalCost();
@@ -48,7 +46,7 @@ public final class ImmutableContract extends FatherOfFunction {
    * @return A copy of the lender as a {@link Member}.
    */
   public Member getLender() {
-    return new Member(lender.getName(), lender.getEmail(), lender.getPhoneNumber(), lender.getPassword());
+    return new Member(lender);
   }
 
   /**
@@ -57,7 +55,7 @@ public final class ImmutableContract extends FatherOfFunction {
    * @return A copy of the borrower as a {@link Member}.
    */
   public Member getBorrower() {
-    return new Member(borrower.getName(), borrower.getEmail(), borrower.getPhoneNumber(), borrower.getPassword());
+    return new Member(borrower);
   }
 
   /**

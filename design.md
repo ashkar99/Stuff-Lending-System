@@ -443,6 +443,42 @@ sequenceDiagram
 
 
 # ObjectDiagram
+```mermaid
+classDiagram
+    class App {
+    }
+
+    class Menu {
+        +mainMenu()
+        +memberMenu()
+    }
+
+    class MemberDaoImpl {
+        +createMember()
+    }
+
+    class MemberViewer {
+        +promptForCreateMember(): String[]
+    }
+
+    class SystemManager {
+        +validateMemberDetails(name, email, phoneNumber, password)
+        +storeMember(member: Member)
+    }
+
+    class Member {
+        -name: String
+        -email: String
+        -phoneNumber: String
+        -password: String
+    }
+
+    App --> Menu
+    Menu --> MemberDaoImpl
+    MemberDaoImpl --> MemberViewer
+    MemberDaoImpl --> SystemManager
+    SystemManager --> Member
+    ````
 ![object_diagram](img/object_diagram.png)
 
 

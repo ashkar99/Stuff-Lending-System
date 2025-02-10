@@ -413,7 +413,7 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant Menu as Menu
-    participant MC as MemberDaoImpl\n pa
+    participant MC as MemberDaoImpl <br/> pa
     participant MV as MemberViewer
     participant SM as SystemManager
     participant M as Member

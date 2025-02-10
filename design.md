@@ -427,8 +427,8 @@ sequenceDiagram
     MV-->>-MC: return a String[] of member info
     MC->>SM: addMember(name, email, phoneNumber, password) 
     SM->>SM: validieteMemberDetails(name, email, phoneNumber, password) 
-    SM->>+M: Member(name, email, phoneNumber, password)
-    M-->>-SM: store the member in members list
+    SM->>M: Member(name, email, phoneNumber, password)
+    SM->>SM: store the member in members list
 
 ````
 

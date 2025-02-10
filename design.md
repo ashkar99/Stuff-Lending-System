@@ -412,12 +412,15 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
+    participant Menu as Menu
     participant MV as MemberViewer
     participant MC as MemberDaoImpl
+    participant SM as SystemManager
     participant M as Member
 
     %% Scenario: Add a new third member with user input and database interaction
-    MV->>MV: prompt for name, email, password, phoneNumber
+    Menu->>MC: createMember(name, email, phoneNumber, password)
+    MC->>MV: prompt for name, email, password, phoneNumber
     MV->>MC: createMember(name, email, phoneNumber, password)  %% Send data to controller
 
     MC->>M: addMember(name, email, phoneNumber, password)   %% Controller calls Model to add new member

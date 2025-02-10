@@ -341,9 +341,9 @@ classDiagram
         -void itemMenu()
     }
     
-    Menu "1"-- "0..*" MemberDaoInterface : have member menu >
-    Menu --> ItemDaoInterface
-    Menu --> ContractDaoInterface
+    Menu "1"-- "0..*" MemberDaoInterface : have member menu 
+    Menu "1"-- "0..*" ItemDaoInterface : have item menu
+    Menu "1"-- "0..*" ContractDaoInterface : have contact menu
 ````
 
 

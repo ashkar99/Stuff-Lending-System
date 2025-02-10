@@ -420,7 +420,7 @@ sequenceDiagram
     participant M as Model <br/> Member
     
     %% Scenario: Add a new third member with user input and database interaction
-    App->>+ Menu: mainMenu()
+    App-->>+ Menu: mainMenu()
     Menu->>Menu: memberMenu()
     Menu->>MC: createMember()
     MC->>+MV: prumpt for createMember()

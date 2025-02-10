@@ -423,8 +423,8 @@ sequenceDiagram
     App->> Menu: mainMenu()
     Menu->>Menu: memberMenu()
     Menu->>MC: createMember()
-    MC->>MV: prumpt for createMember()
-    MV->>MC: return a String[] of member info
+    MC->>+MV: prumpt for createMember()
+    MV-->>-MC: return a String[] of member info
     MC->>SM: addMember(name, email, phoneNumber, password) 
     SM->>SM: validieteMemberDetails(name, email, phoneNumber, password) 
     SM->>M: Member(name, email, phoneNumber, password)

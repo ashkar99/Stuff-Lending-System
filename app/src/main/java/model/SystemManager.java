@@ -31,8 +31,8 @@ public class SystemManager {
    * @param phoneNumber member phone number.
    */
   public void addMembers(String name, String email, String password, String phoneNumber) {
-    Member newMember = new Member(name, email, password, phoneNumber);
     validateMemberDetails(name, email, password, phoneNumber);
+    Member newMember = new Member(name, email, password, phoneNumber);
     members.add(newMember);
   }
 

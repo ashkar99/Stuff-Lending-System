@@ -25,7 +25,6 @@ public abstract class BaseViewer {
    * Prompts the user for an integer input, handling invalid input until a valid
    * integer is provided.
    *
-   * @param message The prompt message to display to the user.
    * @return The user's input as an integer.
    */
   public int promptForInt() {

@@ -361,8 +361,9 @@ classDiagram
     }
 
     class enum FeedbackMessage {
-
-    }
+        +enum FeedbackMessage
+        +String getMessage()
+    }   
     class Viewer {
         String promptForInput(String message)
         int promptForInt(String message)
@@ -396,8 +397,8 @@ classDiagram
         +void viewContract(Item item)
 
     }
-    MemberViewer  -->  ItemViewer
-    ItemViewer  --> ContractViewer
+    MemberViewer "1"--"0..*"  ItemViewer 
+    ItemViewer  "1"--"0..*"  ContractViewer 
     Baseviewer <|-- Viewer
     Baseviewer <|-- ItemViewer
     Baseviewer <|-- ContractViewer

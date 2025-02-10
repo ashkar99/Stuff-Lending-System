@@ -412,13 +412,15 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Menu as Menu
-    participant MC as MemberDaoImpl <br/> pa
-    participant MV as MemberViewer
-    participant SM as SystemManager
-    participant M as Member
+    participant App as App 
+    participant Menu as Controller <br/> Menu
+    participant MC as Controller <br/> MemberDaoImpl 
+    participant MV as Viewer <br/> MemberViewer
+    participant SM as  Model <br/> SystemManager
+    participant M as Model <br/> Member
     
     %% Scenario: Add a new third member with user input and database interaction
+    App->> Menu: mainMenu()
     Menu->>Menu: memberMenu()
     Menu->>MC: createMember()
     MC->>MV: prumpt for createMember()
